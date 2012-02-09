@@ -1,4 +1,4 @@
-/* Fuck Kalen and hieu*sffdf*/
+
 
 package android.hieu;
 

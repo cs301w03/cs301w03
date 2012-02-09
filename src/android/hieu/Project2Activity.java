@@ -9,5 +9,6 @@ public class Project2Activity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        System.out.println("Is there anybody out there?\n");
     }
 }

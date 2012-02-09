@@ -1,3 +1,5 @@
+/* Fuck Kalen and hieu*/
+
 package android.hieu;
 
 import android.app.Activity;

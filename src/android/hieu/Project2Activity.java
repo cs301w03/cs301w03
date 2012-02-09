@@ -12,6 +12,6 @@ public class Project2Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         System.out.println("Is there anybody out there?\n");
-        System.out.println("Not if you can hear me!\n");
+        System.out.println("Not if you can hear meHieu NGO!\n");
     }
 }

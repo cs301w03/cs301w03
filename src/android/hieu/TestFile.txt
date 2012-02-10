@@ -14,3 +14,5 @@ Edited by Hieu Ngo.
 Edited by Hieu Ngo from his laptop.
 
 Edit by Hieu Ngo on the lap machine with the purpose of testing the "pull" function on his laptop.
+
+git worked just fine on Hieu Ngo's lap.

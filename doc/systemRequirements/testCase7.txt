@@ -1,0 +1,23 @@
+# group 2, created by Stephen Romansky February 19th
+# As a user, I want some method of helping me take consistent photos
+
+#Remarks: if something is enclosed in slashes //, then it this information is not
+#		 necesarily used in our program. We may implement a different method that 
+#		 conceptually does a similar action.
+
+#Detailed textual usecase 7
+
+Use Case Number: 		7
+
+Tests:
+	--Verify the program can take consistent photos of the same object
+		under different scenarios
+			i.e. under differnt types of lighting, or on different parts
+			of the body
+	--Verify the photo was taken and stored properly
+
+Notes: 
+	Created February 19th by Stephen Romansky
+
+Open Issues:
+	This use case hasn't been implemented yet.

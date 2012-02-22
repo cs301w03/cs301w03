@@ -1,0 +1,26 @@
+# group 2, created by Stephen Romansky February 19th
+# As a user, I should be able to compare pictures in some manner
+
+#Remarks: if something is enclosed in slashes //, then it this information is not
+#		 necesarily used in our program. We may implement a different method that 
+#		 conceptually does a similar action.
+
+#Detailed textual usecase 9
+
+Use Case Number: 		9
+
+Tests:
+	--Handle the case when there are an insufficent amount of photos
+		for the user to compare i.e. when total photos is less than 2
+	--Make sure the user is able to select photos
+	--Handle the case if the user has selected less than two photos to compare
+	--Test to see if multiple photos will display
+	--Test to see what the maximum number of photos may be displayed on the 
+		screen, that allow the user to spot any differences in the photos
+	--test if the user is able to close the view
+
+Notes: 
+	Created February 19th by Stephen Romansky
+
+Open Issues:
+	This use case hasn't been implemented yet.

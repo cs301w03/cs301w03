@@ -1,0 +1,49 @@
+# group 2, created by Stephen Romansky February 19th
+# As a user, I want some method of helping me take consistent photos, so that
+# when I show the doctor any progression such as the growth of a mole is evident.
+
+
+#Remarks: if something is enclosed in slashes //, then it this information is not
+#		 necesarily used in our program. We may implement a different method that 
+#		 conceptually does a similar action.
+
+#Detailed textual usecase 7
+
+Use Case Number: 		7
+Use Case Name: 			Consistent Photos
+Participating Actors: 	User
+
+Goal: 		To enable the user the ability to take consistent photos.
+	
+Trigger:	When the user is trying to take a picture some sort of auto focus
+			should occur to help the user take their picture. 
+
+Precondition:	The user is taking a picture.
+
+Postcondition:	The program has aided the user in taking their picture
+
+Basic Flow:
+	1. Begin taking photo
+	2. The application helps focus the camera to provide a consistent looking image
+
+Exceptions:	
+	2.1 The user points the camera at something the camera cannot distinguish any 
+		features from such as a blank canvas.
+
+Qualities: 	--Easy to use, and is automatically done for the user. 
+			--Quick, it doesn't consume a lot of the users time to focus the camera.
+
+
+Constraints:	Takes consistent photos of the same object.
+
+Includes:	# I don't have any off hand
+
+Extends:
+
+Related Artifacts:
+
+Notes: 
+	Created February 19th by Stephen Romansky
+
+Open Issues:
+	This use case hasn't been implemented yet.

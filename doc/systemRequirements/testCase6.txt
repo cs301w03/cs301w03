@@ -1,0 +1,26 @@
+# group 2, created by Stephen Romansky February 19th
+# As a user, I want to be able to review any photos I have taken and view them so that
+# I can see any changes
+
+#Remarks: if something is enclosed in slashes //, then it this information is not
+#		 necesarily used in our program. We may implement a different method that 
+#		 conceptually does a similar action.
+
+#Detailed textual usecase 6
+
+Use Case Number: 		6
+
+Tests:
+	--Make sure the program handles when the user tries to open no photos
+	--Make sure the program checks the integrity of a photo if possible to 
+		make sure it is infact a photo.
+	--Make sure the program closes a photo after it has been viewed properly
+	--Make sure the program can open a photo properly.
+
+
+
+Notes: 
+	Created February 19th by Stephen Romansky
+
+Open Issues:
+	This use case hasn't been implemented yet.

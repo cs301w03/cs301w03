@@ -30,4 +30,76 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>doc/UI Images/Newphototaken.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Tanvir Sajed/git/cs301w03/doc/UI Images/Newphototaken.jpg</location>
+		</link>
+		<link>
+			<name>doc/UI Images/Newphototaken2.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Tanvir Sajed/git/cs301w03/doc/UI Images/Newphototaken2.jpg</location>
+		</link>
+		<link>
+			<name>doc/UI Images/Organizationlist.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Tanvir Sajed/git/cs301w03/doc/UI Images/Organizationlist.jpg</location>
+		</link>
+		<link>
+			<name>doc/UI Images/Organizationselection.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Tanvir Sajed/git/cs301w03/doc/UI Images/Organizationselection.jpg</location>
+		</link>
+		<link>
+			<name>doc/UI Images/comparemode.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Tanvir Sajed/git/cs301w03/doc/UI Images/comparemode.jpg</location>
+		</link>
+		<link>
+			<name>doc/UI Images/createreminder.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Tanvir Sajed/git/cs301w03/doc/UI Images/createreminder.jpg</location>
+		</link>
+		<link>
+			<name>doc/UI Images/createskincondition.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Tanvir Sajed/git/cs301w03/doc/UI Images/createskincondition.jpg</location>
+		</link>
+		<link>
+			<name>doc/UI Images/editreminder.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Tanvir Sajed/git/cs301w03/doc/UI Images/editreminder.jpg</location>
+		</link>
+		<link>
+			<name>doc/UI Images/mainmenu1.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Tanvir Sajed/git/cs301w03/doc/UI Images/mainmenu1.jpg</location>
+		</link>
+		<link>
+			<name>doc/UI Images/photoviewlist.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Tanvir Sajed/git/cs301w03/doc/UI Images/photoviewlist.jpg</location>
+		</link>
+		<link>
+			<name>doc/UI Images/reminderlist.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Tanvir Sajed/git/cs301w03/doc/UI Images/reminderlist.jpg</location>
+		</link>
+		<link>
+			<name>doc/UI Images/selectphotostocompare.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Tanvir Sajed/git/cs301w03/doc/UI Images/selectphotostocompare.jpg</location>
+		</link>
+		<link>
+			<name>doc/UI Images/takephotomoment.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Tanvir Sajed/git/cs301w03/doc/UI Images/takephotomoment.jpg</location>
+		</link>
+		<link>
+			<name>doc/UI Images/viewphoto.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Tanvir Sajed/git/cs301w03/doc/UI Images/viewphoto.jpg</location>
+		</link>
+	</linkedResources>
 </projectDescription>

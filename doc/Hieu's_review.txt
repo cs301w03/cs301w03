@@ -1,0 +1,38 @@
+1/ Comparemode: This means we should add the "compare" button under "photos" field of an entry
+
+2/ createskincondition: What is described here is very similar to my tentative design for the database. Basically, a new skin condition is an entry in my database and we can assign an entry to some group if we want to do so. To be consistent with my design interface, I suggest Tri and Tanvir should add "date" and "other details" fields to the "create" interface. Also, the exiting "group" field should have an "+" button so that we can attach the newly added entry to a new group
+
+Concern: Should we allow user to enter group name or just to choose some existing predefined groups like what Tanvir and Tri did
+
+3/mainmenu1: The visual body selection is kinda unrealistic in the sense that not all body
+parts can be chosen. What if user wants to choose "heel" or "breast"? We should just leave
+the group name for the user to enter. This means we should add "create skin condition" and 
+remove the "select skin conditions" 
+   According to my design, user can only compare photos of the same skin condition
+(Does it make sense to compare photos of different skin areas?). I link newly taken photo to an existing entry ( skin condition ) or make a new entry (skin condition) for the newly taken photo if it doesn't exist
+  to reflect the change I mention above, the "select skin conditions" should be renamed as "view skin condition". The "compare images" is embedded in the screen upon choosing some specific skin condition
+
+4/ Newphototaken: We didn't expect that we need to shape a particular interface to do our work but luckily enough we kinda shaped the same interface. A PHOTO MUST BE LINKED TO SOME CONDITION. 
+   The time and date are automatically recorded by the system
+
+5/ Newphototaken2: This means upon clicking some skin condition in the list view of all conditions, the displayed screen for the chosen skin condition should have "take photo" under the list of existing photos ( next to "compare photos" maybe ? )
+
+6/ Organizationlist: I suggest we should have separate views for skin conditions and for group. Upon clicking a group, we should all the skin conditions belonging to the group.
+   Should we place "create new skin condition " in the "menu" instead?
+
+7/ Organizationselection: Based on my logic, an entry in the database is corresponding to 
+a skin condition and the group is just bunch of skin conditions in the same skin area. This means we don't need to show the list of groups, just the list of existing skin conditions for the newly taken photo to be linked to ( also, we should have an "add" button which is just another trigger for "create skin condition" in case the target skin condition doesn't exist before the taken photo)
+
+selectphotocompare, takephotomoment and viewphoto look fine to me. However, we need to better our interfaces anyway.
+
+createreminder, editreminder relate to Kalen's work…
+
+
+USE CASE PART: 
+
+Use case 6: This is just a basic use case --> this looks ok to me
+
+Use case 7: this is kinda consistent with the "zoom in" and "zoom out" in Tri and Tanvir's interface
+
+Use case 8 and 9: in the interface, we don't have confirm button yet. 
+

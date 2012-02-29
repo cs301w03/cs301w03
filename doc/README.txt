@@ -12,3 +12,5 @@ The project release plan is found in
 	
 The glossary and index of terms can be found on our wiki 
 	https://github.com/cs301w03/cs301w03/wiki/Glossary-and-Information-Sources
+	
+The UML diagrams are found in the main project2 (default package).ucd

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="(default package)" size="854,604" id="" metadata="uml2-1.0" initialized="true" scrolledX="308" tag="1000" key="32303037303533312D313030302070726F6A656374322F68636E676F">
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="(default package)" size="854,604" id="" metadata="uml2-1.0" initialized="true" scrolledX="-17" tag="1000" key="32303037303533312D313030302070726F6A656374322F68636E676F">
   <children xsi:type="editmodel:ClassEditModel" name="TakePhotoActivity" location="26,24" size="164,114" id="uml.pro2/TakePhotoActivity" runTimeClassModel="update,transparentLayer(),retakePhoto(),timeStamp()">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="115,54">
@@ -32,25 +32,25 @@
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" id="uml.pro2/Image@image+uml.pro2/DbAdapter$DatabaseHelper@databaseHelper" source="//@children.2" target="//@children.3/@children.2/@children.0" targetEnd="//@children.2/@sourceConnections.0/@children.1" label="//@children.2/@sourceConnections.0/@children.2" sourceEnd="//@children.2/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
       <children xsi:type="editmodel:AssociationEndEditModel" name="image" location="69,0" id="uml.pro2/Image@image+uml.pro2/DbAdapter$DatabaseHelper@databaseHelper|uml.pro2/Image#image" attachSource="true" multiplicityLabel="//@children.2/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.2/@sourceConnections.0/@children.0/@children.0" aggregationKind="Composition" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - image" location="966,501" size="41,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="*" location="1021,501" size="5,11" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" - image" location="968,502" size="39,10" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="1021,502" size="5,10" anchorKind="FirstPart"/>
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" name="databaseHelper" location="81,29" id="uml.pro2/Image@image+uml.pro2/DbAdapter$DatabaseHelper@databaseHelper|uml.pro2/DbAdapter$DatabaseHelper#databaseHelper" multiplicityLabel="//@children.2/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.2/@sourceConnections.0/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - databaseHelper" location="1028,455" size="88,11" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="1008,455" size="6,11" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" + databaseHelper" location="1028,454" size="91,10" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="1008,454" size="6,10" anchorKind="LastPart"/>
       </children>
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,10" anchorKind="MiddlePart"/>
     </sourceConnections>
-    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="uml.pro2/Group@group+uml.pro2/Image@image" source="//@children.2" target="//@children.19" targetEnd="//@children.2/@sourceConnections.1/@children.1" label="//@children.2/@sourceConnections.1/@children.2" sourceEnd="//@children.2/@sourceConnections.1/@children.0" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:AssociationEndEditModel" name="image" location="0,29" id="uml.pro2/Group@group+uml.pro2/Image@image|uml.pro2/Image#image" attachSource="true" multiplicityLabel="//@children.2/@sourceConnections.1/@children.0/@children.1" roleLabel="//@children.2/@sourceConnections.1/@children.0/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - image" location="897,530" size="41,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="*" location="933,555" size="5,11" anchorKind="FirstPart"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="uml.pro2/Image@image+uml.pro2/Group@group" source="//@children.2" target="//@children.19" targetEnd="//@children.2/@sourceConnections.1/@children.1" label="//@children.2/@sourceConnections.1/@children.2" sourceEnd="//@children.2/@sourceConnections.1/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="image" location="0,30" id="uml.pro2/Image@image+uml.pro2/Group@group|uml.pro2/Image#image" attachSource="true" multiplicityLabel="//@children.2/@sourceConnections.1/@children.0/@children.1" roleLabel="//@children.2/@sourceConnections.1/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - image" location="899,532" size="39,10" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="933,556" size="5,10" anchorKind="FirstPart"/>
       </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="group" location="84,19" id="uml.pro2/Group@group+uml.pro2/Image@image|uml.pro2/Group#group" multiplicityLabel="//@children.2/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.2/@sourceConnections.1/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - group" location="856,530" size="38,11" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="*" location="856,555" size="5,11" anchorKind="LastPart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="group" location="84,20" id="uml.pro2/Image@image+uml.pro2/Group@group|uml.pro2/Group#group" multiplicityLabel="//@children.2/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.2/@sourceConnections.1/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" + group" location="856,532" size="42,10" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="856,556" size="5,10" anchorKind="LastPart"/>
       </children>
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,10" anchorKind="MiddlePart"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
@@ -70,24 +70,24 @@
     </children>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="uml.pro2/DbAdapter@dbAdapter+uml.pro2/SkinModel@skinModel" source="//@children.3" target="//@children.12" targetEnd="//@children.3/@sourceConnections.0/@children.1" label="//@children.3/@sourceConnections.0/@children.2" sourceEnd="//@children.3/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
       <children xsi:type="editmodel:AssociationEndEditModel" name="dbAdapter" location="101,0" id="uml.pro2/DbAdapter@dbAdapter+uml.pro2/SkinModel@skinModel|uml.pro2/DbAdapter#dbAdapter" attachSource="true" multiplicityLabel="//@children.3/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.3/@sourceConnections.0/@children.0/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - dbAdapter" location="1038,303" size="61,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="1018,303" size="6,11" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" - dbAdapter" location="1038,304" size="59,10" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="1018,304" size="6,10" anchorKind="FirstPart"/>
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" name="skinModel" location="56,40" id="uml.pro2/DbAdapter@dbAdapter+uml.pro2/SkinModel@skinModel|uml.pro2/SkinModel#skinModel" multiplicityLabel="//@children.3/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.3/@sourceConnections.0/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" + skinModel" location="1038,257" size="64,11" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="1018,257" size="6,11" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" + skinModel" location="1038,257" size="62,10" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="1018,257" size="6,10" anchorKind="LastPart"/>
       </children>
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,10" anchorKind="MiddlePart"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="uml.pro2/DbAdapter@dbAdapter+uml.pro2/FModel@fModel" source="//@children.3" target="//@children.5" targetEnd="//@children.3/@sourceConnections.1/@children.2" label="//@children.3/@sourceConnections.1/@children.0" sourceEnd="//@children.3/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" name="dbAdapter" location="101,0" id="uml.pro2/DbAdapter@dbAdapter+uml.pro2/FModel@fModel|uml.pro2/DbAdapter#dbAdapter" attachSource="true" multiplicityLabel="//@children.3/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.3/@sourceConnections.1/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - dbAdapter" location="1038,303" size="61,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="1018,303" size="6,11" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" - dbAdapter" location="1038,304" size="59,10" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="1018,304" size="6,10" anchorKind="FirstPart"/>
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" name="fModel" location="71,150" id="uml.pro2/DbAdapter@dbAdapter+uml.pro2/FModel@fModel|uml.pro2/FModel#fModel" multiplicityLabel="//@children.3/@sourceConnections.1/@children.2/@children.1" roleLabel="//@children.3/@sourceConnections.1/@children.2/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" + fModel" location="1038,163" size="48,11" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="1018,163" size="6,11" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" + fModel" location="1038,163" size="46,10" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="1018,163" size="6,10" anchorKind="LastPart"/>
       </children>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
@@ -106,7 +106,7 @@
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.12/@sourceConnections.0 //@children.3/@sourceConnections.1" name="FModel" location="960,6" size="144,150" id="uml.pro2/FModel" runTimeClassModel="notifyViews(),FModel(),deleteView(LV;),addView(LV;)">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.12/@sourceConnections.0 //@children.3/@sourceConnections.1" name="FModel" location="960,6" size="144,150" id="uml.pro2/FModel" runTimeClassModel="FModel(),notifyViews(),deleteView(LV;),addView(LV;)">
     <children xsi:type="editmodel:CompartmentEditModel" size="121,18">
       <children xsi:type="editmodel:AttributeEditModel" name="views" id="uml.pro2/FModel#views"/>
     </children>
@@ -149,46 +149,46 @@
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="uml.pro2/SkinObserverApplication@skinObserverApplication+uml.pro2/SkinController@skinController" source="//@children.9" target="//@children.11" targetEnd="//@children.9/@sourceConnections.0/@children.1" label="//@children.9/@sourceConnections.0/@children.2" sourceEnd="//@children.9/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
       <children xsi:type="editmodel:AssociationEndEditModel" name="skinObserverApplication" location="32,40" id="uml.pro2/SkinObserverApplication@skinObserverApplication+uml.pro2/SkinController@skinController|uml.pro2/SkinObserverApplication#skinObserverApplication" attachSource="true" multiplicityLabel="//@children.9/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.9/@sourceConnections.0/@children.0/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - skinObserverApplication" location="699,317" size="131,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="679,317" size="6,11" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" - skinObserverApplication" location="699,317" size="125,10" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="679,317" size="6,10" anchorKind="FirstPart"/>
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" name="skinController" location="107,0" id="uml.pro2/SkinObserverApplication@skinObserverApplication+uml.pro2/SkinController@skinController|uml.pro2/SkinController#skinController" multiplicityLabel="//@children.9/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.9/@sourceConnections.0/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" + skinController" location="605,418" size="83,11" automaticRelocationAllowed="false" locationOnWireFromSource="28.000000000000004" distanceFromWire="-46.0" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="679,462" size="6,11" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" + skinController" location="606,418" size="81,10" automaticRelocationAllowed="false" locationOnWireFromSource="28.000000000000004" distanceFromWire="-46.0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="679,463" size="6,10" anchorKind="LastPart"/>
       </children>
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,10" anchorKind="MiddlePart"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" id="uml.pro2/SkinModel@skinModel+uml.pro2/SkinObserverApplication@skinObserverApplication" source="//@children.9" target="//@children.12" targetEnd="//@children.9/@sourceConnections.1/@children.1" label="//@children.9/@sourceConnections.1/@children.2" sourceEnd="//@children.9/@sourceConnections.1/@children.0" connectionRouterKind="Manhattan">
       <children xsi:type="editmodel:AssociationEndEditModel" name="skinObserverApplication" location="211,17" id="uml.pro2/SkinModel@skinModel+uml.pro2/SkinObserverApplication@skinObserverApplication|uml.pro2/SkinObserverApplication#skinObserverApplication" attachSource="true" multiplicityLabel="//@children.9/@sourceConnections.1/@children.0/@children.1" roleLabel="//@children.9/@sourceConnections.1/@children.0/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" + skinObserverApplication" location="878,294" size="135,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="878,269" size="6,11" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" + skinObserverApplication" location="878,294" size="130,10" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="878,270" size="6,10" anchorKind="FirstPart"/>
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" name="skinModel" location="0,30" id="uml.pro2/SkinModel@skinModel+uml.pro2/SkinObserverApplication@skinObserverApplication|uml.pro2/SkinModel#skinModel" multiplicityLabel="//@children.9/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.9/@sourceConnections.1/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - skinModel" location="926,240" size="60,11" automaticRelocationAllowed="false" locationOnWireFromSource="6.999999999999999" distanceFromWire="-5.000000000000002" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="962,247" size="6,11" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" - skinModel" location="928,240" size="57,10" automaticRelocationAllowed="false" locationOnWireFromSource="6.999999999999999" distanceFromWire="-5.000000000000002" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="962,247" size="6,10" anchorKind="LastPart"/>
       </children>
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,10" anchorKind="MiddlePart"/>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="uml.pro2/Controller@controller+uml.pro2/SkinObserverApplication@skinObserverApplication" source="//@children.9" target="//@children.10" targetEnd="//@children.9/@sourceConnections.2/@children.2" label="//@children.9/@sourceConnections.2/@children.0" sourceEnd="//@children.9/@sourceConnections.2/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" name="skinObserverApplication" location="89,0" id="uml.pro2/Controller@controller+uml.pro2/SkinObserverApplication@skinObserverApplication|uml.pro2/SkinObserverApplication#skinObserverApplication" attachSource="true" multiplicityLabel="//@children.9/@sourceConnections.2/@children.1/@children.1" roleLabel="//@children.9/@sourceConnections.2/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" + skinObserverApplication" location="756,252" size="135,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="736,252" size="6,11" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" + skinObserverApplication" location="756,253" size="130,10" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="736,253" size="6,10" anchorKind="FirstPart"/>
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" name="controller" location="54,51" id="uml.pro2/Controller@controller+uml.pro2/SkinObserverApplication@skinObserverApplication|uml.pro2/Controller#controller" multiplicityLabel="//@children.9/@sourceConnections.2/@children.2/@children.1" roleLabel="//@children.9/@sourceConnections.2/@children.2/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - controller" location="765,105" size="58,11" automaticRelocationAllowed="false" locationOnWireFromSource="70.0" distanceFromWire="-45.0" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="736,97" size="6,11" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" - controller" location="766,105" size="56,10" automaticRelocationAllowed="false" locationOnWireFromSource="70.0" distanceFromWire="-45.0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="736,97" size="6,10" anchorKind="LastPart"/>
       </children>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" id="uml.pro2/Controller@controller1+uml.pro2/SkinObserverApplication@skinObserverApplication1" source="//@children.9" target="//@children.10" targetEnd="//@children.9/@sourceConnections.3/@children.2" label="//@children.9/@sourceConnections.3/@children.0" sourceEnd="//@children.9/@sourceConnections.3/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" name="skinObserverApplication1" location="0,5" id="uml.pro2/Controller@controller1+uml.pro2/SkinObserverApplication@skinObserverApplication1|uml.pro2/SkinObserverApplication#skinObserverApplication1" attachSource="true" multiplicityLabel="//@children.9/@sourceConnections.3/@children.1/@children.1" roleLabel="//@children.9/@sourceConnections.3/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" + skinObserverApplication1" location="545,239" size="141,11" automaticRelocationAllowed="false" locationOnWireFromSource="26.000000000000004" distanceFromWire="-30.999999999999996" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="647,257" size="6,11" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" + skinObserverApplication1" location="547,239" size="136,10" automaticRelocationAllowed="false" locationOnWireFromSource="26.000000000000004" distanceFromWire="-30.999999999999996" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="647,258" size="6,10" anchorKind="FirstPart"/>
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" name="controller1" location="0,24" id="uml.pro2/Controller@controller1+uml.pro2/SkinObserverApplication@skinObserverApplication1|uml.pro2/Controller#controller1" multiplicityLabel="//@children.9/@sourceConnections.3/@children.2/@children.1" roleLabel="//@children.9/@sourceConnections.3/@children.2/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - controller1" location="624,45" size="64,11" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="682,70" size="6,11" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" - controller1" location="626,46" size="62,10" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="682,70" size="6,10" anchorKind="LastPart"/>
       </children>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
@@ -198,25 +198,25 @@
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" id="uml.pro2/SkinModel@skinModel+uml.pro2/Controller@controller" source="//@children.10" target="//@children.12" targetEnd="//@children.10/@sourceConnections.0/@children.2" label="//@children.10/@sourceConnections.0/@children.0" sourceEnd="//@children.10/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" name="controller" location="110,41" id="uml.pro2/SkinModel@skinModel+uml.pro2/Controller@controller|uml.pro2/Controller#controller" attachSource="true" multiplicityLabel="//@children.10/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.10/@sourceConnections.0/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" + controller" location="826,120" size="62,11" automaticRelocationAllowed="false" locationOnWireFromSource="10.0" distanceFromWire="-45.0" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="798,63" size="6,11" automaticRelocationAllowed="false" locationOnWireFromSource="-46.0" distanceFromWire="12.0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" + controller" location="827,120" size="61,10" automaticRelocationAllowed="false" locationOnWireFromSource="10.0" distanceFromWire="-45.0" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="798,63" size="6,10" automaticRelocationAllowed="false" locationOnWireFromSource="-46.0" distanceFromWire="12.0" anchorKind="FirstPart"/>
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" name="skinModel" location="0,6" id="uml.pro2/SkinModel@skinModel+uml.pro2/Controller@controller|uml.pro2/SkinModel#skinModel" multiplicityLabel="//@children.10/@sourceConnections.0/@children.2/@children.1" roleLabel="//@children.10/@sourceConnections.0/@children.2/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" + skinModel" location="904,223" size="64,11" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="*" location="963,198" size="5,11" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" + skinModel" location="906,223" size="62,10" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="963,199" size="5,10" anchorKind="LastPart"/>
       </children>
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" id="uml.pro2/SkinModel@skinModel1+uml.pro2/Controller@controller1" source="//@children.10" target="//@children.12" targetEnd="//@children.10/@sourceConnections.1/@children.2" label="//@children.10/@sourceConnections.1/@children.0" sourceEnd="//@children.10/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,10" anchorKind="MiddlePart"/>
       <children xsi:type="editmodel:AssociationEndEditModel" name="controller1" location="18,51" id="uml.pro2/SkinModel@skinModel1+uml.pro2/Controller@controller1|uml.pro2/Controller#controller1" attachSource="true" multiplicityLabel="//@children.10/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.10/@sourceConnections.1/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" + controller1" location="638,97" size="68,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="720,97" size="6,11" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" + controller1" location="639,97" size="67,10" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="720,97" size="6,10" anchorKind="FirstPart"/>
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" name="skinModel1" location="0,18" id="uml.pro2/SkinModel@skinModel1+uml.pro2/Controller@controller1|uml.pro2/SkinModel#skinModel1" multiplicityLabel="//@children.10/@sourceConnections.1/@children.2/@children.1" roleLabel="//@children.10/@sourceConnections.1/@children.2/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" + skinModel1" location="915,193" size="70,11" automaticRelocationAllowed="false" locationOnWireFromSource="106.0" distanceFromWire="29.999999999999968" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="962,210" size="6,11" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" + skinModel1" location="916,193" size="68,10" automaticRelocationAllowed="false" locationOnWireFromSource="106.0" distanceFromWire="29.999999999999968" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="962,211" size="6,10" anchorKind="LastPart"/>
       </children>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
@@ -241,14 +241,14 @@
     </sourceConnections>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" id="uml.pro2/SkinModel@skinModel+uml.pro2/SkinController@skinController" source="//@children.12" target="//@children.11" targetEnd="//@children.12/@sourceConnections.1/@children.1" label="//@children.12/@sourceConnections.1/@children.2" sourceEnd="//@children.12/@sourceConnections.1/@children.0" connectionRouterKind="Manhattan">
       <children xsi:type="editmodel:AssociationEndEditModel" name="skinModel" location="31,40" id="uml.pro2/SkinModel@skinModel+uml.pro2/SkinController@skinController|uml.pro2/SkinModel#skinModel" attachSource="true" multiplicityLabel="//@children.12/@sourceConnections.1/@children.0/@children.1" roleLabel="//@children.12/@sourceConnections.1/@children.0/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - skinModel" location="1020,264" size="60,11" automaticRelocationAllowed="false" locationOnWireFromSource="-107.99999999999999" distanceFromWire="44.00000000000004" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="993,257" size="6,11" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" - skinModel" location="1022,264" size="57,10" automaticRelocationAllowed="false" locationOnWireFromSource="-107.99999999999999" distanceFromWire="44.00000000000004" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="993,257" size="6,10" anchorKind="FirstPart"/>
       </children>
       <children xsi:type="editmodel:AssociationEndEditModel" name="skinController" location="140,24" id="uml.pro2/SkinModel@skinModel+uml.pro2/SkinController@skinController|uml.pro2/SkinController#skinController" multiplicityLabel="//@children.12/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.12/@sourceConnections.1/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" + skinController" location="732,511" size="83,11" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="732,486" size="6,11" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name=" + skinController" location="732,511" size="81,10" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="732,487" size="6,10" anchorKind="LastPart"/>
       </children>
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,10" anchorKind="MiddlePart"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
@@ -323,15 +323,15 @@
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="uml.pro2/Image@image+uml.pro2/SkinCondition@skinCondition" source="//@children.20" target="//@children.2" targetEnd="//@children.20/@sourceConnections.0/@children.1" label="//@children.20/@sourceConnections.0/@children.2" sourceEnd="//@children.20/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:AssociationEndEditModel" name="skinCondition" location="128,0" id="uml.pro2/Image@image+uml.pro2/SkinCondition@skinCondition|uml.pro2/SkinCondition#skinCondition" attachSource="true" multiplicityLabel="//@children.20/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.20/@sourceConnections.0/@children.0/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - skinCondition" location="659,565" size="77,11" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="*" location="750,565" size="5,11" anchorKind="FirstPart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="skinCondition" location="138,10" id="uml.pro2/Image@image+uml.pro2/SkinCondition@skinCondition|uml.pro2/SkinCondition#skinCondition" attachSource="true" multiplicityLabel="//@children.20/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.20/@sourceConnections.0/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" + skinCondition" location="760,600" size="79,10" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="760,576" size="5,10" anchorKind="FirstPart"/>
       </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="image" location="0,58" id="uml.pro2/Image@image+uml.pro2/SkinCondition@skinCondition|uml.pro2/Image#image" multiplicityLabel="//@children.20/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.20/@sourceConnections.0/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - image" location="897,559" size="41,11" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="*" location="933,584" size="5,11" anchorKind="LastPart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="image" location="10,68" id="uml.pro2/Image@image+uml.pro2/SkinCondition@skinCondition|uml.pro2/Image#image" multiplicityLabel="//@children.20/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.20/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - image" location="962,594" size="39,10" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="943,594" size="5,10" anchorKind="LastPart"/>
       </children>
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,11" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,10" anchorKind="MiddlePart"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>

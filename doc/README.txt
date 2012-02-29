@@ -1,8 +1,11 @@
 the use cases and use case tests based on the user stories can be found in 
 	doc/releasePlanning
 	
-The UI mockup and story board may be found inside
+The UI mockup may be found inside
 	doc/UI\ Images
+	
+The UI 	story board may be found inside
+	doc/Storyboard
 	
 The project release plan is found in
 	doc/releasePlanning

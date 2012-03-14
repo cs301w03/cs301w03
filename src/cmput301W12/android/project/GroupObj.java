@@ -14,4 +14,19 @@ public class GroupObj extends ContainObj {
 		// TODO Auto-generated constructor stub
 	}
 
+	/* (non-Javadoc)
+	 * @see cmput301W12.android.project.ContainObj#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		// TODO Auto-generated method stub
+		if(o instanceof GroupObj == false){
+			return false;
+		}else{
+			return this.getItemId() == ((GroupObj) o).getItemId();
+		}
+
+	}
+
+
 }

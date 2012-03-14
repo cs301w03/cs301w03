@@ -150,13 +150,13 @@ public class PhotoObj {
 
 	public boolean attachToManyContainers(Collection<? extends ContainObj> containers){
 		boolean result = true;
-		
+
 		for(ContainObj co : containers){
 			if(this.attachToContainer(co) == false){
 				result = false;
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -173,17 +173,17 @@ public class PhotoObj {
 
 	public boolean detachFromManyContainers(Collection<? extends ContainObj> containers){
 		boolean result = true;
-		
+
 		for(ContainObj co : containers){
 			if(this.detachFromContainer(co) == false){
 				result = false;
 			}
 		}
-		
+
 		return result;
 	}
 
-	
+
 	@Override
 	public boolean equals(Object o) {
 		// TODO Auto-generated method stub
@@ -192,25 +192,6 @@ public class PhotoObj {
 		}else{
 			return this.photoId == ((PhotoObj) o).photoId;
 		}
-	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		String toStringName;
-
-		Iterator<GroupObj> iterGroup = this.groups.iterator();
-		Iterator<SkinConditionObj> iterSkin = this.skinConditions.iterator();
-
-		if(iterGroup.hasNext()) {
-			GroupObj groupObj = iterGroup.next();
-		}
-
-		if(iterSkin.hasNext()){
-			SkinConditionObj skinObj = iterSkin.next();
-		}
-
-		String oneRepresentativeGroup = groupObj.
 	}
 
 

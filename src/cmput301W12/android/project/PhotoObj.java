@@ -3,6 +3,7 @@ package cmput301W12.android.project;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class PhotoObj {
@@ -10,8 +11,8 @@ public class PhotoObj {
 	private String location;
 	private Timestamp timeStamp;
 	private String name;
-	private Set<GroupObj> groups;
-	private Set<SkinConditionObj> skinConditions;
+	protected Set<GroupObj> groups;
+	protected Set<SkinConditionObj> skinConditions;
 
 	/**
 	 * Constructors for the PhotoObj object.
@@ -31,111 +32,186 @@ public class PhotoObj {
 		this.groups = groups;
 		this.skinConditions = skinConditions;
 	}
-	
+
 	public PhotoObj(int photoId, String location, Timestamp timeStamp, 
 			Set<GroupObj> groups, Set<SkinConditionObj> skinConditions ){
 		this(photoId, location, timeStamp, timeStamp.toString(), groups, skinConditions);
 	}
-	
+
 	public PhotoObj(int photoId, String location, Timestamp timeStamp, String name){
 		this(photoId, location, timeStamp, name, 
 				new HashSet<GroupObj>(), new HashSet<SkinConditionObj>());
 	}
-	
+
 	public PhotoObj(int photoId, String location, Timestamp timeStamp){
 		this(photoId, location, timeStamp, timeStamp.toString(), 
 				new HashSet<GroupObj>(), new HashSet<SkinConditionObj>())	;
 	}
-	
+
+
 	/**
-	 * getters for properties of the PhotoObj object.
-	 * @return
+	 * @return the photoId
 	 */
-	public int getPhotoId(){
-		return this.photoId;
+	public int getPhotoId() {
+		return photoId;
 	}
-	
-	public String getLocation(){
-		return this.location;
-	}
-	
-	public Timestamp getTimeStamp(){
-		return this.timeStamp;
-	}
-	
-	public String getName(){
-		return this.name;
-	}
-	
-	public Set<GroupObj> getGroups(){
-		return this.groups;
-	}
-	
-	public Set<SkinConditionObj> getSkinConditions(){
-		return this.skinConditions;
-	}
-	
+
 	/**
-	 * setters for properties of the PhotoObj object.
+	 * @param photoId the photoId to set
 	 */
-	
-	public void setPhotoId(int newPhotoId){
-		this.photoId = newPhotoId;
+	public void setPhotoId(int photoId) {
+		this.photoId = photoId;
 	}
-	
-	public void setLocation(String newLocation){
-	 this.location = newLocation;
+
+	/**
+	 * @return the location
+	 */
+	public String getLocation() {
+		return location;
 	}
-	
-	public void setTimeStamp(Timestamp newTimeStamp){
-		this.timeStamp = newTimeStamp;
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setLocation(String location) {
+		this.location = location;
 	}
-	
-	public void setName(String newName){
-	 this.name = newName;
+
+	/**
+	 * @return the timeStamp
+	 */
+	public Timestamp getTimeStamp() {
+		return timeStamp;
 	}
-	
-	public void setGroups(Set<GroupObj> newGroups){
-		this.groups = newGroups;
+
+	/**
+	 * @param timeStamp the timeStamp to set
+	 */
+	public void setTimeStamp(Timestamp timeStamp) {
+		this.timeStamp = timeStamp;
 	}
-	
-	public void setSkinConditions(Set<SkinConditionObj> newSkinConditions){
-		this.skinConditions = newSkinConditions;
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
-	
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the groups
+	 */
+	public Set<GroupObj> getGroups() {
+		return groups;
+	}
+
+	/**
+	 * @param groups the groups to set
+	 */
+	public void setGroups(Set<GroupObj> groups) {
+		this.groups = groups;
+	}
+
+	/**
+	 * @return the skinConditions
+	 */
+	public Set<SkinConditionObj> getSkinConditions() {
+		return skinConditions;
+	}
+
+	/**
+	 * @param skinConditions the skinConditions to set
+	 */
+	public void setSkinConditions(Set<SkinConditionObj> skinConditions) {
+		this.skinConditions = skinConditions;
+	}
+
 	/**
 	 * Methods
 	 */
-	
-	public boolean addGroup(GroupObj groupObj){
-		return this.groups.add(groupObj);
+
+	public boolean attachToContainer(ContainObj containObj){
+		boolean result1 = false, result2 = false;
+		if(containObj instanceof GroupObj){
+			result1 = ( this.groups.add((GroupObj)containObj) && containObj.photos.add(this) ) ;
+		}
+		if(containObj instanceof SkinConditionObj){
+			result2 = ( this.skinConditions.add((SkinConditionObj) containObj) && containObj.photos.add(this) );
+		}
+		return result1 && result2;
 	}
-	
-	public boolean addSkinCondition(SkinConditionObj skinConditionObj){
-		return this.skinConditions.add(skinConditionObj);
+
+	public boolean attachToManyContainers(Collection<? extends ContainObj> containers){
+		boolean result = true;
+		
+		for(ContainObj co : containers){
+			if(this.attachToContainer(co) == false){
+				result = false;
+			}
+		}
+		
+		return result;
 	}
-	
-	public boolean addManyGroups(Collection<GroupObj> groups){
-		return this.groups.addAll(groups);
+
+	public boolean detachFromContainer(ContainObj containObj){
+		boolean result1 = false, result2 = false;
+		if(containObj instanceof GroupObj){
+			result1 = ( this.groups.remove((GroupObj)containObj) && containObj.photos.remove(this) ) ;
+		}
+		if(containObj instanceof SkinConditionObj){
+			result2 = ( this.skinConditions.remove((SkinConditionObj) containObj) && containObj.photos.remove(this) );
+		}
+		return result1 && result2;
 	}
-	
-	public boolean addManySkinConditions(Collection<SkinConditionObj> skinConditions){
-		return this.skinConditions.addAll(skinConditions);
+
+	public boolean detachFromManyContainers(Collection<? extends ContainObj> containers){
+		boolean result = true;
+		
+		for(ContainObj co : containers){
+			if(this.detachFromContainer(co) == false){
+				result = false;
+			}
+		}
+		
+		return result;
 	}
+
 	
-	public boolean removeGroup(GroupObj groupObj){
-		return this.groups.remove(groupObj);
+	@Override
+	public boolean equals(Object o) {
+		// TODO Auto-generated method stub
+		if(o instanceof PhotoObj == false){
+			return false;
+		}else{
+			return this.photoId == ((PhotoObj) o).photoId;
+		}
 	}
-	
-	public boolean removeSkinCondition(SkinConditionObj skinObj){
-		return this.skinConditions.remove(skinObj);
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		String toStringName;
+
+		Iterator<GroupObj> iterGroup = this.groups.iterator();
+		Iterator<SkinConditionObj> iterSkin = this.skinConditions.iterator();
+
+		if(iterGroup.hasNext()) {
+			GroupObj groupObj = iterGroup.next();
+		}
+
+		if(iterSkin.hasNext()){
+			SkinConditionObj skinObj = iterSkin.next();
+		}
+
+		String oneRepresentativeGroup = groupObj.
 	}
-	
-	public boolean removeManyGroups(Collection<GroupObj> groups){
-		return this.groups.removeAll(groups);
-	}
-	
-	public boolean removeManySkinConditions(Collection<SkinConditionObj> skinConditions){
-		return this.skinConditions.removeAll(skinConditions);
-	}
+
+
 }

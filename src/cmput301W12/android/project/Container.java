@@ -4,18 +4,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class Container {
-	private int itemId;
+	private int itemId = Photo.INVALID_ID;
 	private String name;
 	protected Set<Integer> photos;
 
-	public Container(int itemId, String name, Set<Integer> photos){
-		this.itemId = itemId;
+	public Container(String name, Set<Integer> photos){
 		this.name = name;
 		this.photos = photos;
 	}
 
-	public Container(int itemId, String name){
-		this.itemId = itemId;
+	public Container(String name){
 		this.name = name;
 		this.photos = new HashSet<Integer>();
 	}

@@ -4,13 +4,13 @@ import java.util.Set;
 
 public class Group extends Container {
 
-	public Group(int groupId, String name, Set<Integer> photos) {
-		super(groupId, name, photos);
+	public Group(String name, Set<Integer> photos) {
+		super(name, photos);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Group(int groupId, String name) {
-		super(groupId, name);
+	public Group(String name) {
+		super(name);
 		// TODO Auto-generated constructor stub
 	}
 

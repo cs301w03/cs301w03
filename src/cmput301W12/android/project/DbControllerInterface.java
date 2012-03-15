@@ -17,18 +17,29 @@ public interface DbControllerInterface {
 	
 	public Set<Photo> getAllPhoto();
 	
-///**
-//	 * Fetch all photos of a group or skin condition with the itemId.
-//	 * If itemId = DbAdapter.INVALID_ID then fetch all photos of all containers
-//	 * of particular type ( GROUP or SKINCONDITION).
-//	 * option = OptionType.GROUP to fetch from the group.
-//	 * option = OptionType.SKINCONDITION to fetch from the skin condition.
-//	 * @param itemId
-//	 * @param option
-//	 * @return 
-//	 */
+
+	/**
+	 * Fetch all photos of a group or skin condition with the itemId.
+	 * If itemId = DbAdapter.INVALID_ID then fetch all photos of all containers
+	 * of particular type ( GROUP or SKINCONDITION).
+	 * option = OptionType.PHOTOGROUP to fetch from the group.
+	 * option = OptionType.PHOTOSKIN to fetch from the skin condition.
+	 * @param itemId
+	 * @param option
+	 * @return 
+	 */
 
 	public Set<Photo> getAllPhotoOfAContainer(int itemId, OptionType option);
+	
+	/**
+	 * Fetch all containers (groups or skins conditions) of the photo with the provided photoId.
+	 * If the photoId = DbAdapter.INVALID_ID then fetch all containers(groups or skin conditions)
+	 * option = OptionType.GROUP for fetching all groups
+	 * option = OptionType.SKINCONDITION for fetching all skin conditions.
+	 * @param option
+	 * @return the Cursor has two columns : GROUPID and GROUPNAME or SKINCONDITIONID and
+	 * SKINNAME. 
+	 */
 	
 	public Set<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option);
 	//	
@@ -39,28 +50,28 @@ public interface DbControllerInterface {
 	//	public Cursor fetchAllPhotoObj();
 	//	
 	//	
-	//	/**
-	//	 * Fetch all photos of a group or skin condition with the itemId.
-	//	 * If itemId = DbAdapter.INVALID_ID then fetch all photos of all containers
-	//	 * of particular type ( GROUP or SKINCONDITION).
-	//	 * option = OptionType.GROUP to fetch from the group.
-	//	 * option = OptionType.SKINCONDITION to fetch from the skin condition.
-	//	 * @param itemId
-	//	 * @param option
-	//	 * @return The Cursor has all the columns of table PHOTO_TABLE: PHOTOID, LOCATION,
-	//	 * TIMESTAMP and NAME.
-	//	 */
+//	/**
+//		 * Fetch all photos of a group or skin condition with the itemId.
+//		 * If itemId = DbAdapter.INVALID_ID then fetch all photos of all containers
+//		 * of particular type ( GROUP or SKINCONDITION).
+//		 * option = OptionType.GROUP to fetch from the group.
+//		 * option = OptionType.SKINCONDITION to fetch from the skin condition.
+//		 * @param itemId
+//		 * @param option
+//		 * @return The Cursor has all the columns of table PHOTO_TABLE: PHOTOID, LOCATION,
+//		 * TIMESTAMP and NAME.
+//		 */
 	//	public Cursor fetchAllPhotoObjConnected(int itemId, OptionType option);
 	//	
-	//	/**
-	//	 * Fetch all containers (groups or skins conditions) of the photo with the provided photoId.
-	//	 * If the photoId = DbAdapter.INVALID_ID then fetch all containers(groups or skin conditions)
-	//	 * option = OptionType.GROUP for fetching all groups
-	//	 * option = OptionType.SKINCONDITION for fetching all skin conditions.
-	//	 * @param option
-	//	 * @return the Cursor has two columns : GROUPID and GROUPNAME or SKINCONDITIONID and
-	//	 * SKINNAME. 
-	//	 */
+//		/**
+//		 * Fetch all containers (groups or skins conditions) of the photo with the provided photoId.
+//		 * If the photoId = DbAdapter.INVALID_ID then fetch all containers(groups or skin conditions)
+//		 * option = OptionType.GROUP for fetching all groups
+//		 * option = OptionType.SKINCONDITION for fetching all skin conditions.
+//		 * @param option
+//		 * @return the Cursor has two columns : GROUPID and GROUPNAME or SKINCONDITIONID and
+//		 * SKINNAME. 
+//		 */
 	//	public Cursor fetchAllContainers(int photoId, OptionType option);
 	//	
 	//	/**

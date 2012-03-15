@@ -18,13 +18,13 @@ public class SkinCondition extends Container {
 		}
 	}
 
-	public SkinCondition(int skinConditionId, String name) {
-		super(skinConditionId, name);
+	public SkinCondition(String name) {
+		super(name);
 		// TODO Auto-generated constructor stub
 	}
 
-	public SkinCondition(int skinConditionId, String name, Set<Integer> photos) {
-		super(skinConditionId, name, photos);
+	public SkinCondition(String name, Set<Integer> photos) {
+		super(name, photos);
 		// TODO Auto-generated constructor stub
 	}
 	

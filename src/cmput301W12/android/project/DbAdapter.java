@@ -350,29 +350,12 @@ public class DbAdapter {
 		return mCursor;
 	}
 
-	/**
-	 * Delete the entry with the given rowId from the given table. 
-	 * CHECK: Does the "ROWID" always exist in any table? YES!
-	 * @param rowId id of the fuel to delete
-	 * @param table from which the entry is removed
-	 * @return true if some row is deleted, false if no row is deleted.
-	 * NOTICE: the rowId is infact identical to the primary key in PHOTO_TABLE, GROUP_TABLE and SKIN_TABLE.
-	 */
-	
 	public int deleteEntry(long rowId, OptionType option) {
 		String id = DbAdapter.returnIdColumn(option);
 		return mDb.delete(DbAdapter.returnTableName(option), id + " = ?s", new String[]{rowId + ""}) ;
 	}
-
-	/**
-	 * 
-	 * @param photoId
-	 * @param newLocation
-	 * @param newTimeStamp
-	 * @param newName
-	 * @return
-	 */
-	public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, String newName ){
+	
+		public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, String newName ){
 
 		ContentValues initialValues = new ContentValues();
 

@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Photo {
+public class Photo implements Comparable<Photo> {
 	private int photoId = INVALID_ID;
 	private String location;
 	private Timestamp timeStamp;
@@ -14,7 +14,7 @@ public class Photo {
 	protected Set<Integer> groups;
 	protected Set<Integer> skinConditions;
 
-	private static final int INVALID_ID = -1;
+	protected static final int INVALID_ID = -1;
 
 
 	/**
@@ -195,9 +195,11 @@ public class Photo {
 		if(o instanceof Photo == false){
 			return false;
 		}else{
-			return this.photoId == ((Photo) o).photoId;
+			return ( this.photoId == ((Photo) o).photoId || this.location.equals(((Photo) o).location)) ;
 		}
 	}
 
-
+	public int compareTo(Photo obj){
+		return (int) (this.timeStamp.getTime() - obj.timeStamp.getTime());
+	}
 }

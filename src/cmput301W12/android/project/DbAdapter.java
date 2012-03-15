@@ -358,14 +358,15 @@ public class DbAdapter {
 	 * @return true if some row is deleted, false if no row is deleted.
 	 * NOTICE: the rowId is infact identical to the primary key in PHOTO_TABLE, GROUP_TABLE and SKIN_TABLE.
 	 */
+	
 	public int deleteEntry(long rowId, OptionType option) {
 		String id = DbAdapter.returnIdColumn(option);
 		return mDb.delete(DbAdapter.returnTableName(option), id + " = ?s", new String[]{rowId + ""}) ;
 	}
 
 	/**
-	 * Update photo
-	 * @param rowId
+	 * 
+	 * @param photoId
 	 * @param newLocation
 	 * @param newTimeStamp
 	 * @param newName

@@ -2,14 +2,14 @@ package cmput301W12.android.project;
 
 import java.util.Set;
 
-public class GroupObj extends ContainObj {
+public class Group extends ContainObj {
 
-	public GroupObj(int groupId, String name, Set<Integer> photos) {
+	public Group(int groupId, String name, Set<Integer> photos) {
 		super(groupId, name, photos);
 		// TODO Auto-generated constructor stub
 	}
 
-	public GroupObj(int groupId, String name) {
+	public Group(int groupId, String name) {
 		super(groupId, name);
 		// TODO Auto-generated constructor stub
 	}
@@ -20,11 +20,11 @@ public class GroupObj extends ContainObj {
 	@Override
 	public boolean equals(Object o) {
 		// TODO Auto-generated method stub
-		if(o instanceof GroupObj == false){
+		if(o instanceof Group == false){
 			return false;
 		}else{
-			return this.getItemId() == ((GroupObj) o).getItemId() ||
-									this.getName() == ((GroupObj) o).getName();
+			return this.getItemId() == ((Group) o).getItemId() ||
+									this.getName() == ((Group) o).getName();
 		}
 
 	}

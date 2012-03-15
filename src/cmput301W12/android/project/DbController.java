@@ -28,7 +28,7 @@ public class DbController implements DbControllerInterface {
 
 
 	@Override
-	public PhotoObj addPhotoObj(PhotoObj phoObj) {
+	public Photo addPhotoObj(Photo phoObj) {
 		// TODO Auto-generated method stub
 		String location = phoObj.getLocation();
 		Timestamp timeStamp  = phoObj.getTimeStamp();
@@ -50,39 +50,39 @@ public class DbController implements DbControllerInterface {
 		return phoObj;
 	}
 
-	@Override
-	public Cursor fetchAllPhotoObj() {
+
+	private Cursor fetchAllPhotoObj() {
 		// TODO Auto-generated method stub
 		return this.mDbAdap.fetchAllEntries(OptionType.PHOTO);
 	}
 
-	@Override
-	public Cursor fetchAllPhotoObjConnected(int itemId, OptionType option) {
+
+	private Cursor fetchAllPhotoObjConnected(int itemId, OptionType option) {
 		// TODO Auto-generated method stub
 		return this.mDbAdap.fetchAllPhotosOfAContainer(itemId, option);
 	}
 
-	@Override
-	public Cursor fetchAllContainers(int photoId, OptionType option) {
+
+	private Cursor fetchAllContainers(int photoId, OptionType option) {
 		// TODO Auto-generated method stub
 		return this.mDbAdap.fetchAllContainersOfAPhoto(photoId, option);
 	}
 
-	@Override
+	
 	public ContainObj addContainObj(ContainObj containObj) {
 		// TODO Auto-generated method stub
 		String name = containObj.getName();
 		Set<Integer> listOfPhotoIds= containObj.getPhotos();
 
 
-		if(containObj instanceof GroupObj){
+		if(containObj instanceof Group){
 			for(Integer id : listOfPhotoIds){
 				int groupId= (int) this.mDbAdap.addGroup(name);
 				containObj.setItemId(groupId);
 				this.mDbAdap.addPhotoGroup(id, groupId );
 			}
 		} 
-		else if(containObj instanceof SkinConditionObj){
+		else if(containObj instanceof SkinCondition){
 			for(Integer id : listOfPhotoIds){
 				int skinId = (int) this.mDbAdap.addSkinCondition(name);
 				containObj.setItemId(skinId);

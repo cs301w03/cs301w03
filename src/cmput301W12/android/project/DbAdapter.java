@@ -68,6 +68,8 @@ public class DbAdapter {
 	private SQLiteDatabase mDb;
 	private final Context mCtx;
 
+	private static DbAdapter dbAdap = null;
+
 
 	/**
 	 * Database creation sql statement
@@ -139,8 +141,15 @@ public class DbAdapter {
 	 * 
 	 * @param ctx the Context within which to work
 	 */
-	public DbAdapter(Context ctx) {
+	private DbAdapter(Context ctx) {
 		this.mCtx = ctx;
+	}
+
+	public static DbAdapter getDbAdapter(Context ctx){
+		if(dbAdap == null){
+			dbAdap = new DbAdapter(ctx);
+		}
+		return dbAdap;
 	}
 
 	/**
@@ -216,7 +225,7 @@ public class DbAdapter {
 		}else if(option == OptionType.PHOTO){
 			itemName = PHOTONAME;
 		}
-		
+
 		return itemName;
 	}
 
@@ -323,7 +332,7 @@ public class DbAdapter {
 		}
 		return mCursor;
 	}
-	
+
 	/**
 	 * Use OptionType.GROUP in the third argument for search a Photo - group row.
 	 * Use OptionType.SKINCONDITION in the third argument for search a photo - skin condition row.
@@ -434,21 +443,34 @@ public class DbAdapter {
 
 
 	/**
-	 * fetch all containers associated with the indicated photo. table = PHOTOGROUP_TABLE for
-	 * retrieving all groups associated with the photo, table = PHOTOSKIN_TABLE for retrieving all
+	 * fetch all containers associated with the indicated photo. option = OptionType. PHOTOGROUP for
+	 * retrieving all groups associated with the photo, option = OptionType.PHOTOSKIN for retrieving all
 	 * skin conditions associated with the photo.
 	 * @param photoId
 	 * @param table
 	 * @return
 	 */
 	public Cursor fetchAllContainersOfAPhoto(int photoId, OptionType option){
-		String idName = DbAdapter.returnIdColumn(option);
-		String tableName = DbAdapter.returnTableName(option);
-
-		Cursor mCursor = mDb.query(true, tableName, 
-				new String[]{idName}, PHOTOID + "  =  " + photoId, null, null, null, null, null);
-
+		String itemIdName = "";
+		String itemTable = "";
+		String itemName = "";
+		if(option == OptionType.PHOTOGROUP){
+			itemIdName = GROUPID;
+			itemTable = GROUP_TABLE;
+			itemName = GROUPNAME;
+		}else if(option == OptionType.PHOTOSKIN){
+			itemTable = SKIN_TABLE;
+			itemIdName = SKINCONDITIONID;
+			itemName = SKINNAME;
+		}
+		String lookUpTable = DbAdapter.returnTableName(option);
+		String preparedStatement = "select ?s, ?s from ?s , ?s " +
+				" where ?s.?s = ?s.?s and PHOTOID = ?s";
+		String[] args = {itemIdName, itemName, itemTable, lookUpTable, 
+				itemTable, itemIdName, lookUpTable, itemIdName, photoId + "" };
+		Cursor mCursor = mDb.rawQuery(preparedStatement, args);
 		return mCursor;
+
 	}
 
 	/**
@@ -460,14 +482,22 @@ public class DbAdapter {
 	 * @return
 	 */
 	public Cursor fetchAllPhotosOfAContainer(int containerId, OptionType option){
-		String idName = DbAdapter.returnIdColumn(option);
-		String tableName = DbAdapter.returnTableName(option);
+		String itemIdName = "";
+		String lookUpTable = DbAdapter.returnTableName(option);
 
-		Cursor mCursor = mDb.query(true, tableName, 
-				new String[]{PHOTOID}, idName + " = " + containerId, null, null, null, null, null);
-
+		if(option == OptionType.PHOTOGROUP){
+			itemIdName = GROUPID;
+		}else if(option == OptionType.PHOTOSKIN){
+			itemIdName = SKINCONDITIONID;
+		}
+		
+		String preparedStatement = "select ?s, ?s, ?s, ?s,  from ?s , ?s " +
+				" where ?s.?s = ?s.?s and ?s = ?s";
+		String[] args = {PHOTOID, LOCATION, TIMESTAMP, PHOTONAME, 
+				PHOTO_TABLE, lookUpTable, PHOTO_TABLE, PHOTOID, lookUpTable, PHOTOID , 
+				containerId + "", itemIdName};
+		Cursor mCursor = mDb.rawQuery(preparedStatement, args);
 		return mCursor;
-
 
 	}
 

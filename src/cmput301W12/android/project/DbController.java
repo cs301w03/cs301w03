@@ -1,51 +1,96 @@
 package cmput301W12.android.project;
 
+import java.sql.Timestamp;
+import java.util.Set;
 import android.content.Context;
 import android.database.Cursor;
 
 public class DbController implements DbControllerInterface {
-	DbAdapter dbAdap;
-	
+	private DbAdapter mDbAdap;
+
+	private static DbController dbCon = null;
+
 	private DbController(Context ct){
-		this.dbAdap = new DbAdapter(ct);
-		this.dbAdap = this.dbAdap.open();
-	}
-	
-	public void close(){
-		this.dbAdap.close();
+		this.mDbAdap = DbAdapter.getDbAdapter(ct);
+		this.mDbAdap = this.mDbAdap.open();
 	}
 
-	
+	public static DbController getDbController(Context ct){
+		if(dbCon == null){
+			dbCon = new DbController(ct);
+		}
+		return dbCon;
+	}
+
+	public void close(){
+		this.mDbAdap.close();
+	}
+
+
 	@Override
 	public PhotoObj addPhotoObj(PhotoObj phoObj) {
 		// TODO Auto-generated method stub
-		return null;
+		String location = phoObj.getLocation();
+		Timestamp timeStamp  = phoObj.getTimeStamp();
+		String name = phoObj.getName();
+		int photoId = ( int) this.mDbAdap.addPhoto(location, timeStamp, name);
+		phoObj.setPhotoId(photoId);
+
+		Set<Integer> listOfGroupId = phoObj.getGroups();
+		Set<Integer> listOfSkinId = phoObj.getSkinConditions();
+
+		for(Integer id : listOfGroupId){
+			this.mDbAdap.addPhotoGroup(photoId,id);
+		}
+
+		for(Integer id : listOfSkinId	){
+			this.mDbAdap.addPhotoSkinCondition(photoId, id);
+		}
+
+		return phoObj;
 	}
 
 	@Override
 	public Cursor fetchAllPhotoObj() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.mDbAdap.fetchAllEntries(OptionType.PHOTO);
 	}
 
 	@Override
 	public Cursor fetchAllPhotoObjConnected(int itemId, OptionType option) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.mDbAdap.fetchAllPhotosOfAContainer(itemId, option);
 	}
 
 	@Override
 	public Cursor fetchAllContainers(int photoId, OptionType option) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.mDbAdap.fetchAllContainersOfAPhoto(photoId, option);
 	}
 
 	@Override
-	public int createContainer(OptionType option) {
+	public ContainObj addContainObj(ContainObj containObj) {
 		// TODO Auto-generated method stub
-		return 0;
+		String name = containObj.getName();
+		Set<Integer> listOfPhotoIds= containObj.getPhotos();
+
+
+		if(containObj instanceof GroupObj){
+			for(Integer id : listOfPhotoIds){
+				int groupId= (int) this.mDbAdap.addGroup(name);
+				containObj.setItemId(groupId);
+				this.mDbAdap.addPhotoGroup(id, groupId );
+			}
+		} 
+		else if(containObj instanceof SkinConditionObj){
+			for(Integer id : listOfPhotoIds){
+				int skinId = (int) this.mDbAdap.addSkinCondition(name);
+				containObj.setItemId(skinId);
+				this.mDbAdap.addPhotoSkinCondition(id, skinId);
+			}
+		}
+
+		return containObj;
 	}
-	
-	
-	
 }
+

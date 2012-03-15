@@ -49,7 +49,7 @@ public interface DbControllerInterface {
 	 * group or skin condition.
 	 * @return the GROUPID or SKINCONDITIONID of the new group or skin
 	 */
-	public int createContainer(OptionType option);
+	public ContainObj addContainObj(ContainObj containObj);
 	
 	// NOTICE: The three methods above are enough for project part 3. Specifically,
 	// TRI: call fetchAllContainers(DbAdapter.INVALID_ID, OptionType.GROUP) to obtain all the groups.

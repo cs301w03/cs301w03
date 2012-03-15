@@ -2,7 +2,7 @@ package cmput301W12.android.project;
 
 import java.util.Set;
 
-public class SkinCondition extends Contain {
+public class SkinCondition extends Container {
 
 	/* (non-Javadoc)
 	 * @see cmput301W12.android.project.ContainObj#equals(java.lang.Object)

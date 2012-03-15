@@ -2,7 +2,7 @@ package cmput301W12.android.project;
 
 import java.util.Set;
 
-public class Group extends Contain {
+public class Group extends Container {
 
 	public Group(int groupId, String name, Set<Integer> photos) {
 		super(groupId, name, photos);

@@ -11,9 +11,9 @@ public interface DbControllerInterface {
 	 * @param phoObj
 	 * @return
 	 */
-	public Photo addPhotoObj(Photo phoObj);
+	public Photo addPhoto(Photo photo);
 
-	public ContainObj addContainObj(ContainObj containObj);
+	public Contain addContainObj(Contain container);
 	
 	public Photo getAllPhoto();
 	

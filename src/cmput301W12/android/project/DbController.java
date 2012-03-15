@@ -69,7 +69,7 @@ public class DbController implements DbControllerInterface {
 	}
 
 	
-	public Contain addContainObj(Contain containObj) {
+	public Container addContainObj(Container containObj) {
 		// TODO Auto-generated method stub
 		String name = containObj.getName();
 		Set<Integer> listOfPhotoIds= containObj.getPhotos();

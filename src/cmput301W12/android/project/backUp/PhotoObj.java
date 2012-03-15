@@ -1,4 +1,4 @@
-package cmput301W12.android.project;
+package cmput301W12.android.project.backUp;
 
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -7,19 +7,15 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class PhotoObj {
-	private int photoId = INVALID_ID;
+	private int photoId;
 	private String location;
 	private Timestamp timeStamp;
 	private String name;
-	protected Set<Integer> groups;
-	protected Set<Integer> skinConditions;
-
-	private static final int INVALID_ID = -1;
-
+	protected Set<GroupObj> groups;
+	protected Set<SkinConditionObj> skinConditions;
 
 	/**
-	 * Constructors for the PhotoObj object. NOTICE: the default photoId is INVALID_ID. The photoId 
-	 * can only be changed by setter.
+	 * Constructors for the PhotoObj object.
 	 * @param photoId
 	 * @param location
 	 * @param timeStamp
@@ -27,29 +23,29 @@ public class PhotoObj {
 	 * @param groups
 	 * @param skinConditions
 	 */
-	public PhotoObj(String location, Timestamp timeStamp,
-			String name, Set<Integer> groups, Set<Integer> skinConditions){
-		//this.photoId = photoId;
+	public PhotoObj(int photoId, String location, Timestamp timeStamp,
+			String name, Set<GroupObj> groups, Set<SkinConditionObj> skinConditions){
+		this.photoId = photoId;
 		this.location = location;
 		this.timeStamp = timeStamp;
+		this.name = name;
+		this.groups = groups;
+		this.skinConditions = skinConditions;
+	}
 
-		if(name == null){
-			this.name = this.timeStamp.toString();
-		}else{
-			this.name = name;
-		}
+	public PhotoObj(int photoId, String location, Timestamp timeStamp, 
+			Set<GroupObj> groups, Set<SkinConditionObj> skinConditions ){
+		this(photoId, location, timeStamp, timeStamp.toString(), groups, skinConditions);
+	}
 
-		if(groups == null){
-			this.groups = new HashSet<Integer>();
-		}else{			
-			this.groups = groups;
-		}
+	public PhotoObj(int photoId, String location, Timestamp timeStamp, String name){
+		this(photoId, location, timeStamp, name, 
+				new HashSet<GroupObj>(), new HashSet<SkinConditionObj>());
+	}
 
-		if(skinConditions == null){
-			this.groups = new HashSet<Integer>();
-		}else{
-			this.skinConditions = skinConditions;
-		}
+	public PhotoObj(int photoId, String location, Timestamp timeStamp){
+		this(photoId, location, timeStamp, timeStamp.toString(), 
+				new HashSet<GroupObj>(), new HashSet<SkinConditionObj>())	;
 	}
 
 
@@ -112,43 +108,42 @@ public class PhotoObj {
 	/**
 	 * @return the groups
 	 */
-	public Set<Integer> getGroups() {
+	public Set<GroupObj> getGroups() {
 		return groups;
 	}
 
 	/**
 	 * @param groups the groups to set
 	 */
-	public void setGroups(Set<Integer> groups) {
+	public void setGroups(Set<GroupObj> groups) {
 		this.groups = groups;
 	}
 
 	/**
 	 * @return the skinConditions
 	 */
-	public Set<Integer> getSkinConditions() {
+	public Set<SkinConditionObj> getSkinConditions() {
 		return skinConditions;
 	}
 
 	/**
 	 * @param skinConditions the skinConditions to set
 	 */
-	public void setSkinConditions(Set<Integer> skinConditions) {
+	public void setSkinConditions(Set<SkinConditionObj> skinConditions) {
 		this.skinConditions = skinConditions;
 	}
 
 	/**
 	 * Methods
 	 */
-	
-	/*
-	public boolean attachToContainer(int itemId, OptionType option){
+
+	public boolean attachToContainer(ContainObj containObj){
 		boolean result1 = false, result2 = false;
-		if(option == OptionType.GROUP){
-			result1 = ( this.groups.add(itemId) && containObj.photos.add(this.photoId) ) ;
+		if(containObj instanceof GroupObj){
+			result1 = ( this.groups.add((GroupObj)containObj) && containObj.photos.add(this) ) ;
 		}
 		if(containObj instanceof SkinConditionObj){
-			result2 = ( this.skinConditions.add(containObj.getItemId()) && containObj.photos.add(this.photoId) );
+			result2 = ( this.skinConditions.add((SkinConditionObj) containObj) && containObj.photos.add(this) );
 		}
 		return result1 && result2;
 	}
@@ -168,10 +163,10 @@ public class PhotoObj {
 	public boolean detachFromContainer(ContainObj containObj){
 		boolean result1 = false, result2 = false;
 		if(containObj instanceof GroupObj){
-			result1 = ( this.groups.remove(containObj.getItemId()) && containObj.photos.remove(this.photoId) ) ;
+			result1 = ( this.groups.remove((GroupObj)containObj) && containObj.photos.remove(this) ) ;
 		}
 		if(containObj instanceof SkinConditionObj){
-			result2 = ( this.skinConditions.remove(containObj.getItemId()) && containObj.photos.remove(this.photoId) );
+			result2 = ( this.skinConditions.remove((SkinConditionObj) containObj) && containObj.photos.remove(this) );
 		}
 		return result1 && result2;
 	}
@@ -187,7 +182,7 @@ public class PhotoObj {
 
 		return result;
 	}
-*/
+
 
 	@Override
 	public boolean equals(Object o) {

@@ -20,7 +20,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cmput301W12.android.project;
+package cmput301W12.android.project.backUp;
 
 import java.sql.Timestamp;
 import android.content.ContentValues;
@@ -41,10 +41,6 @@ import android.util.Log;
  * retrieve or modify a specific field. 
  */
 public class DbAdapter {
-	
-	public enum OptionType {
-		PHOTO, GROUP, SKINCONDITION, PHOTOGROUP, PHOTOSKIN
-	}
 
 	public static final String PHOTOID = "Photo ID";
 	public static final String LOCATION = "Location";
@@ -241,50 +237,25 @@ public class DbAdapter {
 		return mDb.insert(PHOTOSKIN_TABLE, null, initialValues);
 	}
 
-	public static String returnIdColumn(OptionType option){
+	public static String returnIdColumn(String table){
 		String id = "";
-		switch(option){
-		case PHOTO:
+		if(table.equalsIgnoreCase(PHOTO_TABLE) == true){
 			id = PHOTOID;
-			break;
-		case GROUP:
+		}
+		if(table.equalsIgnoreCase(GROUP_TABLE) == true){
 			id = GROUPID;
-			break;
-		case SKINCONDITION:
+		}
+		if(table.equalsIgnoreCase(SKIN_TABLE) == true){
 			id = SKINCONDITIONID;
-			break;
-		case PHOTOGROUP:
+		}
+		if(table.equalsIgnoreCase(PHOTOGROUP_TABLE) == true){
 			id = "ROWID";
-			break;
-		case PHOTOSKIN:
+		}
+		if(table.equalsIgnoreCase(PHOTOSKIN_TABLE) == true){
 			id = "ROWID";
-			break;
 		}
 		return id;
 	}
-	
-	public static String returnTableName(OptionType option){
-		String tableName = "";
-		switch(option){
-		case PHOTO:
-			tableName = PHOTO_TABLE;
-			break;
-		case GROUP:
-			tableName = GROUP_TABLE;
-			break;
-		case SKINCONDITION:
-			tableName = SKIN_TABLE;
-			break;
-		case PHOTOGROUP:
-			tableName = PHOTOGROUP_TABLE;
-			break;
-		case PHOTOSKIN:
-			tableName = PHOTOSKIN_TABLE;
-			break;
-		}
-		return tableName;
-	}
-
 
 	/**
 	 * Delete the entry with the given rowId from the given table. 
@@ -294,9 +265,9 @@ public class DbAdapter {
 	 * @return true if some row is deleted, false if no row is deleted.
 	 * NOTICE: the rowId is infact identical to the primary key in PHOTO_TABLE, GROUP_TABLE and SKIN_TABLE.
 	 */
-	public int deleteEntry(long rowId, OptionType option) {
-		String id = DbAdapter.returnIdColumn(option);
-		return mDb.delete(DbAdapter.returnTableName(option), id + " = ?s", new String[]{rowId + ""}) ;
+	public int deleteEntry(long rowId, String table) {
+		String id = DbAdapter.returnIdColumn(table);
+		return mDb.delete(table, id + " = ?s", new String[]{rowId + ""}) ;
 	}
 
 	/**
@@ -324,7 +295,7 @@ public class DbAdapter {
 		}
 
 		return mDb.update(PHOTO_TABLE, initialValues , 
-				DbAdapter.returnIdColumn(OptionType.PHOTO) + " = ?s", new String[]{photoId + ""});
+				DbAdapter.returnIdColumn(PHOTO_TABLE) + " = ?s", new String[]{photoId + ""});
 	}
 	/**
 	 * Update group
@@ -340,7 +311,7 @@ public class DbAdapter {
 		}
 
 		return mDb.update(GROUP_TABLE, initialValues , 
-				DbAdapter.returnIdColumn(OptionType.GROUP) + " = ?s", new String[]{groupId + ""});
+				DbAdapter.returnIdColumn(GROUP_TABLE) + " = ?s", new String[]{groupId + ""});
 	}
 
 	/**
@@ -357,7 +328,7 @@ public class DbAdapter {
 		}
 
 		return mDb.update(SKIN_TABLE, initialValues ,
-				DbAdapter.returnIdColumn(OptionType.SKINCONDITION) + " = ?s", new String[]{skinId + ""});
+				DbAdapter.returnIdColumn(SKIN_TABLE) + " = ?s", new String[]{skinId + ""});
 	}
 
 	public int updatePhotoGroup(long rowId, int photoId, int groupId	){
@@ -365,7 +336,7 @@ public class DbAdapter {
 		cv.put(PHOTOID, photoId);
 		cv.put(GROUPID,groupId);
 		return mDb.update(PHOTOGROUP_TABLE, cv, 
-				DbAdapter.returnIdColumn(OptionType.PHOTOGROUP) + " = " + rowId, null);
+				DbAdapter.returnIdColumn(PHOTOGROUP_TABLE) + " = " + rowId, null);
 	}
 
 	public int updatePhotoSkin(long rowId, int photoId, int skinId	){
@@ -373,7 +344,7 @@ public class DbAdapter {
 		cv.put(PHOTOID, photoId);
 		cv.put(SKINCONDITIONID,skinId);
 		return mDb.update(PHOTOSKIN_TABLE, cv, 
-				DbAdapter.returnIdColumn(OptionType.PHOTOSKIN) + " = " + rowId, null);
+				DbAdapter.returnIdColumn(PHOTOSKIN_TABLE) + " = " + rowId, null);
 	}
 
 	
@@ -386,11 +357,16 @@ public class DbAdapter {
 	 * @param table
 	 * @return
 	 */
-	public Cursor fetchAllContainersOfAPhoto(int photoId, OptionType option){
-		String idName = DbAdapter.returnIdColumn(option);
-		String tableName = DbAdapter.returnTableName(option);
+	public Cursor fetchAllContainersOfAPhoto(int photoId, String table){
+		String idName = "";
 
-		Cursor mCursor = mDb.query(true, tableName, 
+		if(table.equalsIgnoreCase(PHOTOGROUP_TABLE) == true){
+			idName = GROUPID;
+		}else if(table.equalsIgnoreCase(PHOTOSKIN_TABLE) == true){
+			idName = SKINCONDITIONID;
+		}
+
+		Cursor mCursor = mDb.query(true, table, 
 				new String[]{idName}, PHOTOID + " = " + photoId, null, null, null, null, null);
 
 		return mCursor;
@@ -404,11 +380,16 @@ public class DbAdapter {
 	 * @param table
 	 * @return
 	 */
-	public Cursor fetchAllPhotosOfAContainer(int containerId, OptionType option){
-		String idName = DbAdapter.returnIdColumn(option);
-		String tableName = DbAdapter.returnTableName(option);
+	public Cursor fetchAllPhotosOfAContainer(int containerId, String table){
+		String idName = "";
 
-		Cursor mCursor = mDb.query(true, tableName, 
+		if(table.equalsIgnoreCase(PHOTOGROUP_TABLE) == true){
+			idName = GROUPID;
+		}else if(table.equalsIgnoreCase(PHOTOSKIN_TABLE) == true){
+			idName = SKINCONDITIONID;
+		}
+
+		Cursor mCursor = mDb.query(true, table, 
 				new String[]{PHOTOID}, idName + " = " + containerId, null, null, null, null, null);
 
 		return mCursor;
@@ -421,18 +402,18 @@ public class DbAdapter {
 	 * 
 	 * @return Cursor over all entries
 	 */
-	public Cursor fetchAllEntries(OptionType option) {
-		String table = DbAdapter.returnTableName(option);
+	public Cursor fetchAllEntries(String table) {
+
 		return mDb.query(table, null, 
 				null, null, null, null, null);
 	}
 
-	public Cursor fetchAnEntry(long rowId, OptionType option) throws SQLException {
+	public Cursor fetchAnEntry(long rowId, String table) throws SQLException {
 
 		Cursor mCursor =
 
-				mDb.query(true, DbAdapter.returnTableName(option), null, 
-						DbAdapter.returnIdColumn(option) + " = " + rowId, null, null, null, null, null);
+				mDb.query(true, table, null, 
+						DbAdapter.returnIdColumn(table) + " = " + rowId, null, null, null, null, null);
 		if (mCursor != null) {
 			mCursor.moveToFirst();
 		}

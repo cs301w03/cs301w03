@@ -1,4 +1,4 @@
-package cmput301W12.android.project;
+package cmput301W12.android.project.backUp;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -7,9 +7,9 @@ import java.util.Set;
 public class ContainObj {
 	private int itemId;
 	private String name;
-	protected Set<Integer> photos;
+	protected Set<PhotoObj> photos;
 
-	public ContainObj(int itemId, String name, Set<Integer> photos){
+	public ContainObj(int itemId, String name, Set<PhotoObj> photos){
 		this.itemId = itemId;
 		this.name = name;
 		this.photos = photos;
@@ -18,7 +18,7 @@ public class ContainObj {
 	public ContainObj(int itemId, String name){
 		this.itemId = itemId;
 		this.name = name;
-		this.photos = new HashSet<Integer>();
+		this.photos = new HashSet<PhotoObj>();
 	}
 
 
@@ -53,17 +53,17 @@ public class ContainObj {
 	/**
 	 * @return the photos
 	 */
-	public Set<Integer> getPhotos() {
+	public Set<PhotoObj> getPhotos() {
 		return photos;
 	}
 
 	/**
 	 * @param photos the photos to set
 	 */
-	public void setPhotos(Set<Integer> photos) {
+	public void setPhotos(Set<PhotoObj> photos) {
 		this.photos = photos;
 	}
-/*
+
 	public boolean attachPhoto(PhotoObj phoObj){
 		return phoObj.attachToContainer(this);
 	}
@@ -80,14 +80,14 @@ public class ContainObj {
 		return result;
 	}
 
-	public boolean detachPhoto(Integer phoObj){
+	public boolean detachPhoto(PhotoObj phoObj){
 		return phoObj.detachFromContainer(this);
 	}
 
-	public boolean removeManyPhotos(Collection<Integer> photos){
+	public boolean removeManyPhotos(Collection<PhotoObj> photos){
 		boolean result = true;
 
-		for(Integer po : photos){
+		for(PhotoObj po : photos){
 			if(po.detachFromContainer(this) == false){
 				result = false;
 			}
@@ -96,5 +96,4 @@ public class ContainObj {
 		return result;
 
 	}
-	*/
 }

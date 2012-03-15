@@ -1,10 +1,10 @@
-package cmput301W12.android.project;
+package cmput301W12.android.project.backUp;
 
 import java.util.Set;
 
 public class GroupObj extends ContainObj {
 
-	public GroupObj(int groupId, String name, Set<Integer> photos) {
+	public GroupObj(int groupId, String name, Set<PhotoObj> photos) {
 		super(groupId, name, photos);
 		// TODO Auto-generated constructor stub
 	}

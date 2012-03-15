@@ -1,4 +1,4 @@
-package cmput301W12.android.project;
+package cmput301W12.android.project.backUp;
 
 import java.util.Set;
 
@@ -22,7 +22,7 @@ public class SkinConditionObj extends ContainObj {
 		// TODO Auto-generated constructor stub
 	}
 
-	public SkinConditionObj(int skinConditionId, String name, Set<Integer> photos) {
+	public SkinConditionObj(int skinConditionId, String name, Set<PhotoObj> photos) {
 		super(skinConditionId, name, photos);
 		// TODO Auto-generated constructor stub
 	}

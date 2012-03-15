@@ -3,5 +3,10 @@
 
     <string name="hello">Hello World, Project2Activity!</string>
     <string name="app_name">Project2</string>
+    <string name="takeAPhoto">Take a photo</string>
+    <string name="viewAllPhotos">View all photos</string>
+    <string name="groupByGroup">View photos by Group</string>
+    <string name="groupByCondition">View photos by Skin Condition</string>
+    <string name="mainMenu">Menu</string>
 
 </resources>

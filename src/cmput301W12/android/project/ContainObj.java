@@ -1,10 +1,9 @@
 package cmput301W12.android.project;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ContainObj {
+public abstract class ContainObj {
 	private int itemId;
 	private String name;
 	protected Set<Integer> photos;

@@ -23,7 +23,8 @@ public class GroupObj extends ContainObj {
 		if(o instanceof GroupObj == false){
 			return false;
 		}else{
-			return this.getItemId() == ((GroupObj) o).getItemId();
+			return this.getItemId() == ((GroupObj) o).getItemId() ||
+									this.getName() == ((GroupObj) o).getName();
 		}
 
 	}

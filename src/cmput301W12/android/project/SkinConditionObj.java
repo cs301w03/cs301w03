@@ -13,7 +13,8 @@ public class SkinConditionObj extends ContainObj {
 		if(o instanceof SkinConditionObj == false){
 			return false;
 		}else{
-			return this.getItemId() == ((SkinConditionObj) o).getItemId();
+			return this.getItemId() == ((SkinConditionObj) o).getItemId() ||
+									this.getName() == ((SkinConditionObj) o).getName();
 		}
 	}
 
@@ -27,6 +28,4 @@ public class SkinConditionObj extends ContainObj {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-
 }

@@ -1,12 +1,12 @@
 package cmput301W12.android.project;
 
-import java.util.Set;
 import android.content.Context;
+import android.database.Cursor;
 
 public class DbController implements DbControllerInterface {
 	DbAdapter dbAdap;
 	
-	public DbController(Context ct){
+	private DbController(Context ct){
 		this.dbAdap = new DbAdapter(ct);
 		this.dbAdap = this.dbAdap.open();
 	}
@@ -15,22 +15,35 @@ public class DbController implements DbControllerInterface {
 		this.dbAdap.close();
 	}
 
+	
 	@Override
-	public PhotoObj addPhotoObject(PhotoObj phoObj) {
+	public PhotoObj addPhotoObj(PhotoObj phoObj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<PhotoObj> fetchAllPhotoObj(int itemId, OptionType option) {
+	public Cursor fetchAllPhotoObj() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<? extends ContainObj> fetchAllContainers(OptionType option) {
+	public Cursor fetchAllPhotoObjConnected(int itemId, OptionType option) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Cursor fetchAllContainers(int photoId, OptionType option) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int createContainer(OptionType option) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

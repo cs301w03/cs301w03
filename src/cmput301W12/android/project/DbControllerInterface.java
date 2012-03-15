@@ -1,6 +1,5 @@
 package cmput301W12.android.project;
 
-import java.util.Set;
 import android.database.Cursor;
 
 public interface DbControllerInterface {

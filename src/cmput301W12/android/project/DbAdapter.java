@@ -41,10 +41,6 @@ import android.util.Log;
  * retrieve or modify a specific field. 
  */
 public class DbAdapter {
-	
-	public enum OptionType {
-		PHOTO, GROUP, SKINCONDITION, PHOTOGROUP, PHOTOSKIN
-	}
 
 	public static final String PHOTOID = "Photo ID";
 	public static final String LOCATION = "Location";
@@ -167,6 +163,64 @@ public class DbAdapter {
 	}
 
 
+	public static String returnIdColumn(OptionType option){
+		String id = "";
+		switch(option){
+		case PHOTO:
+			id = PHOTOID;
+			break;
+		case GROUP:
+			id = GROUPID;
+			break;
+		case SKINCONDITION:
+			id = SKINCONDITIONID;
+			break;
+		case PHOTOGROUP:
+			id = "ROWID";
+			break;
+		case PHOTOSKIN:
+			id = "ROWID";
+			break;
+		}
+		return id;
+	}
+
+	public static String returnTableName(OptionType option){
+		String tableName = "";
+		switch(option){
+		case PHOTO:
+			tableName = PHOTO_TABLE;
+			break;
+		case GROUP:
+			tableName = GROUP_TABLE;
+			break;
+		case SKINCONDITION:
+			tableName = SKIN_TABLE;
+			break;
+		case PHOTOGROUP:
+			tableName = PHOTOGROUP_TABLE;
+			break;
+		case PHOTOSKIN:
+			tableName = PHOTOSKIN_TABLE;
+			break;
+		}
+		return tableName;
+	}
+
+	public static String returnItemName(OptionType option){
+		String itemName = "";
+		if(option == OptionType.GROUP){
+			itemName = GROUPNAME;
+		}else if(option == OptionType.SKINCONDITION){
+			itemName = SKINNAME;
+		}else if(option == OptionType.PHOTO){
+			itemName = PHOTONAME;
+		}
+		
+		return itemName;
+	}
+
+
 	/**
 	 * Add a new photo entry using the location, timeStamp and name provided. 
 	 * If the new photo entry is successfully added, return the new PHOTOID for that entry, otherwise return
@@ -241,50 +295,51 @@ public class DbAdapter {
 		return mDb.insert(PHOTOSKIN_TABLE, null, initialValues);
 	}
 
-	public static String returnIdColumn(OptionType option){
-		String id = "";
-		switch(option){
-		case PHOTO:
-			id = PHOTOID;
-			break;
-		case GROUP:
-			id = GROUPID;
-			break;
-		case SKINCONDITION:
-			id = SKINCONDITIONID;
-			break;
-		case PHOTOGROUP:
-			id = "ROWID";
-			break;
-		case PHOTOSKIN:
-			id = "ROWID";
-			break;
+	/**
+	 * Search for photo with the provided location.
+	 * @param location
+	 * @return a Cursor that has PHOTOID column containing the photoId.
+	 */
+	public Cursor searchForPhoto(String location){
+		Cursor mCursor = mDb.query(true, PHOTO_TABLE, 
+				new String[]{PHOTOID}, LOCATION + "  =  " + location, null, null, null, null, null);
+		if(mCursor != null){
+			mCursor.moveToFirst();
 		}
-		return id;
-	}
-	
-	public static String returnTableName(OptionType option){
-		String tableName = "";
-		switch(option){
-		case PHOTO:
-			tableName = PHOTO_TABLE;
-			break;
-		case GROUP:
-			tableName = GROUP_TABLE;
-			break;
-		case SKINCONDITION:
-			tableName = SKIN_TABLE;
-			break;
-		case PHOTOGROUP:
-			tableName = PHOTOGROUP_TABLE;
-			break;
-		case PHOTOSKIN:
-			tableName = PHOTOSKIN_TABLE;
-			break;
-		}
-		return tableName;
+		return mCursor;
 	}
 
+	/**
+	 * Search for the container(group or skin condition) 
+	 * @param name
+	 * @param option
+	 * @return
+	 */
+	public Cursor searchForContainer(String name, OptionType option){
+		Cursor mCursor = mDb.query(true, DbAdapter.returnTableName(option), 
+				new String[]{DbAdapter.returnIdColumn(option)}, DbAdapter.returnItemName(option) + "  =  " + name, null, null, null, null, null);
+		if(mCursor != null){
+			mCursor.moveToFirst();
+		}
+		return mCursor;
+	}
+	
+	/**
+	 * Use OptionType.GROUP in the third argument for search a Photo - group row.
+	 * Use OptionType.SKINCONDITION in the third argument for search a photo - skin condition row.
+	 * @param photoId
+	 * @param itemId
+	 * @param option
+	 * @return
+	 */
+	public Cursor searchForPhotoContainer(int photoId, int itemId, OptionType option){
+		Cursor mCursor = mDb.query(true, DbAdapter.returnTableName(option), 
+				new String[]{"ROWID"}, PHOTOID + "  =  " + photoId + " and " + DbAdapter.returnIdColumn(option) + " = " + itemId, null, null, null, null, null);
+		if(mCursor != null){
+			mCursor.moveToFirst();
+		}
+		return mCursor;
+	}
 
 	/**
 	 * Delete the entry with the given rowId from the given table. 
@@ -376,8 +431,8 @@ public class DbAdapter {
 				DbAdapter.returnIdColumn(OptionType.PHOTOSKIN) + " = " + rowId, null);
 	}
 
-	
-	
+
+
 	/**
 	 * fetch all containers associated with the indicated photo. table = PHOTOGROUP_TABLE for
 	 * retrieving all groups associated with the photo, table = PHOTOSKIN_TABLE for retrieving all
@@ -391,7 +446,7 @@ public class DbAdapter {
 		String tableName = DbAdapter.returnTableName(option);
 
 		Cursor mCursor = mDb.query(true, tableName, 
-				new String[]{idName}, PHOTOID + " = " + photoId, null, null, null, null, null);
+				new String[]{idName}, PHOTOID + "  =  " + photoId, null, null, null, null, null);
 
 		return mCursor;
 	}

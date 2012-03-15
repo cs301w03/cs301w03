@@ -13,13 +13,24 @@ public interface DbControllerInterface {
 	 */
 	public Photo addPhoto(Photo photo);
 
-	public Contain addContainObj(Contain container);
+	public Container addContainObj(Container container);
 	
-	public Photo getAllPhoto();
+	public Set<Photo> getAllPhoto();
 	
+///**
+//	 * Fetch all photos of a group or skin condition with the itemId.
+//	 * If itemId = DbAdapter.INVALID_ID then fetch all photos of all containers
+//	 * of particular type ( GROUP or SKINCONDITION).
+//	 * option = OptionType.GROUP to fetch from the group.
+//	 * option = OptionType.SKINCONDITION to fetch from the skin condition.
+//	 * @param itemId
+//	 * @param option
+//	 * @return 
+//	 */
+
 	public Set<Photo> getAllPhotoOfAContainer(int itemId, OptionType option);
 	
-	public Set<Contain>
+	public Set<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option);
 	//	
 	//	/**
 	//	 * Fetch all photos in the database.

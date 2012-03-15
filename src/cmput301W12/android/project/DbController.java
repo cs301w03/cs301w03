@@ -28,7 +28,7 @@ public class DbController implements DbControllerInterface {
 
 
 	@Override
-	public Photo addPhotoObj(Photo phoObj) {
+	public Photo addPhoto(Photo phoObj) {
 		// TODO Auto-generated method stub
 		String location = phoObj.getLocation();
 		Timestamp timeStamp  = phoObj.getTimeStamp();
@@ -50,25 +50,6 @@ public class DbController implements DbControllerInterface {
 		return phoObj;
 	}
 
-
-	private Cursor fetchAllPhotoObj() {
-		// TODO Auto-generated method stub
-		return this.mDbAdap.fetchAllEntries(OptionType.PHOTO);
-	}
-
-
-	private Cursor fetchAllPhotoObjConnected(int itemId, OptionType option) {
-		// TODO Auto-generated method stub
-		return this.mDbAdap.fetchAllPhotosOfAContainer(itemId, option);
-	}
-
-
-	private Cursor fetchAllContainers(int photoId, OptionType option) {
-		// TODO Auto-generated method stub
-		return this.mDbAdap.fetchAllContainersOfAPhoto(photoId, option);
-	}
-
-	
 	public Container addContainObj(Container containObj) {
 		// TODO Auto-generated method stub
 		String name = containObj.getName();
@@ -92,5 +73,26 @@ public class DbController implements DbControllerInterface {
 
 		return containObj;
 	}
-}
+
+	public 
+
+	private Cursor fetchAllPhotoObj() {
+		// TODO Auto-generated method stub
+		return this.mDbAdap.fetchAllEntries(OptionType.PHOTO);
+	}
+
+
+	private Cursor fetchAllPhotoObjConnected(int itemId, OptionType option) {
+		// TODO Auto-generated method stub
+		return this.mDbAdap.fetchAllPhotosOfAContainer(itemId, option);
+	}
+
+
+	private Cursor fetchAllContainers(int photoId, OptionType option) {
+		// TODO Auto-generated method stub
+		return this.mDbAdap.fetchAllContainersOfAPhoto(photoId, option);
+	}
+
+	
+	}
 

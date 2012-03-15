@@ -1,6 +1,6 @@
 package cmput301W12.android.project;
 
-import android.database.Cursor;
+import java.util.Set;
 
 public interface DbControllerInterface {
 	public void close();
@@ -15,8 +15,11 @@ public interface DbControllerInterface {
 
 	public ContainObj addContainObj(ContainObj containObj);
 	
+	public Photo getAllPhoto();
 	
+	public Set<Photo> getAllPhotoOfAContainer(int itemId, OptionType option);
 	
+	public Set<Contain>
 	//	
 	//	/**
 	//	 * Fetch all photos in the database.

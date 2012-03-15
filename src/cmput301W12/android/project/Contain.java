@@ -3,18 +3,18 @@ package cmput301W12.android.project;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class ContainObj {
+public abstract class Contain {
 	private int itemId;
 	private String name;
 	protected Set<Integer> photos;
 
-	public ContainObj(int itemId, String name, Set<Integer> photos){
+	public Contain(int itemId, String name, Set<Integer> photos){
 		this.itemId = itemId;
 		this.name = name;
 		this.photos = photos;
 	}
 
-	public ContainObj(int itemId, String name){
+	public Contain(int itemId, String name){
 		this.itemId = itemId;
 		this.name = name;
 		this.photos = new HashSet<Integer>();

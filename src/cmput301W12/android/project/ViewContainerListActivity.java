@@ -18,7 +18,6 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_text_view);
-        
         fillData();
         
         registerForContextMenu(getListView());
@@ -26,9 +25,9 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
     
     private void fillData() {
         
-        Group g1 = new Group("Head");
-        Group g2 = new Group("Left Feet");
-        Group g3 = new Group("Right Feet");
+        Group g1 = new Group("abc");
+        Group g2 = new Group("Feet");
+        Group g3 = new Group("Right");
         
         Group[] gl = {g1,g2,g3};
         

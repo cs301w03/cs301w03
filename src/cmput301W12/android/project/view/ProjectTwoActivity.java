@@ -13,8 +13,10 @@ import cmput301W12.android.project.R;
      * The ProjectTwoActivity.java file displays a menu that allows the user
      * to either take a picture, or to view their photo library.
      * 
-     * @author Stephen Romansky
      *
+     * 
+     * @author Stephen Romansky
+     * Date: March 15th, 2012
      */
 
 

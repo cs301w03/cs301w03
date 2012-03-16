@@ -32,6 +32,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 //        Group g2 = new Group("Feet");
 //        Group g3 = new Group("Right");
 //        Group[] gl = {g1,g2,g3};
+    	Container[] array = null;
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null)
 		{
@@ -39,14 +40,17 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 			Set<? extends Container> setCon = null;
 			if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
 			{
-				setCon = controller.getAllContainersOfAPhoto(Photo.INVALID_ID, OptionType.PHOTOGROUP);
+				setCon = controller.getAllContainers(OptionType.GROUP);
+				array = new Group[setCon.size()];
+				setCon.toArray(array);
 			}
 			else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
 			{
-				setCon = controller.getAllContainersOfAPhoto(Photo.INVALID_ID, OptionType.PHOTOSKIN);
+				setCon = controller.getAllContainers(OptionType.SKINCONDITION);
+				array = new Group[setCon.size()];
+				setCon.toArray(array);
 			}
-			Container[] array = (Container[]) setCon.toArray();
-	    	
+			
 	    	ContainerArrayAdapter conAdapter = new ContainerArrayAdapter(this, array);
 	    	setListAdapter(conAdapter);
 		}

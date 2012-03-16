@@ -34,7 +34,6 @@ public interface DbControllerInterface {
 	
 	public SortedSet<Photo> getAllPhoto();
 	
-
 	/**
 	 * Fetch all photos of a group or skin condition with the itemId.
 	 * If itemId = DbAdapter.INVALID_ID then fetch all photos of all containers
@@ -97,6 +96,8 @@ public interface DbControllerInterface {
 	//	 * group or skin condition.
 	//	 * @return the GROUPID or SKINCONDITIONID of the new group or skin
 	//	 */
+
+	Set<? extends Container> getAllContainers(OptionType option);
 
 	// NOTICE: The three methods above are enough for project part 3. Specifically,
 	// TRI: call fetchAllContainers(DbAdapter.INVALID_ID, OptionType.GROUP) to obtain all the groups.

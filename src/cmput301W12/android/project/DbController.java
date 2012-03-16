@@ -230,6 +230,63 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		return this.mDbAdap.fetchAllContainersOfAPhoto(photoId, option);
 	}
 
+	public Set<? extends Container> getAllContainers(OptionType option)
+	{
+		Cursor cursor = this.mDbAdap.fetchAllContainers(option);
+		boolean repeat = true;
+
+		Container container;
+
+		int itemId;
+		String name = "";
+		String column = "";
+
+		if(option == OptionType.GROUP){
+			Set<Group> aSet = new HashSet<Group>();
+
+			if (cursor != null) {
+//				if(cursor.isFirst() == false)
+//					repeat = cursor.moveToFirst();
+			}
+			cursor.moveToNext();
+			while(repeat){
+				//repeat = cursor.moveToNext();
+				itemId = cursor.getInt(1);
+				name = cursor.getString(2);
+
+				container = new Group(name);
+				container.setItemId(itemId);
+				aSet.add((Group) container);
+				repeat = cursor.moveToNext();
+			}
+
+			return aSet;
+		}else if (option == OptionType.SKINCONDITION){
+
+			if (cursor != null) {
+//				if(cursor.isFirst()== false)
+//					repeat = cursor.moveToFirst();
+			}
+
+			Set<SkinCondition> aSet = new HashSet<SkinCondition>();
+
+			while(repeat){
+				itemId = cursor.getInt(2);
+				name = cursor.getString(3);
+
+				container = new SkinCondition(name);
+				container.setItemId(itemId);
+
+				aSet.add((SkinCondition)container);
+				repeat = cursor.moveToNext();
+			}
+
+			return aSet;
+		}
+
+		return null;
+	}
+
 
 }
 

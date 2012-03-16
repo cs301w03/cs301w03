@@ -50,5 +50,9 @@ public class SkinObserverController implements FController {
 			OptionType option) {
 		return dbCon.getAllContainersOfAPhoto(photoId, option);
 	}
+	
+	public Set<? extends Container> getAllContainers(OptionType option){
+		return dbCon.getAllContainers(option);
+	}
 
 }

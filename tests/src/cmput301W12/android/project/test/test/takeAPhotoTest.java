@@ -13,9 +13,10 @@ import cmput301W12.android.project.view.TakeAPhotoActivity;
 /**
  * This is a unit test for the take a photo activity. It covers the following tests.
  *      --
+ *
  * 
  * @author Stephen Romansky
- *
+ * Date: March 15th, 2012
  */
 
 public class takeAPhotoTest extends ActivityInstrumentationTestCase2<TakeAPhotoActivity>

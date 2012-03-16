@@ -3,6 +3,12 @@ package cmput301W12.android.project.test.test;
 import android.test.ActivityInstrumentationTestCase2;
 import cmput301W12.android.project.view.ProjectTwoActivity;
 
+/**
+ * 
+ * @author Stephen Romansky
+ * Date: March 15th, 2012
+ */
+
 
 public class ProjectTwoActivityTester extends
         ActivityInstrumentationTestCase2<ProjectTwoActivity>

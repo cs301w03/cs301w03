@@ -4,14 +4,9 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal" >
     
-    <ImageView
-        android:id="@+id/photo"
-        android:layout_width="22px"
-        android:layout_height="22px"
-        android:layout_marginLeft="4px"
-        android:layout_marginRight="10px"
-        android:layout_marginTop="4px" >
-    </ImageView>
+    <ListView android:id="@+id/android:list"
+          android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"/>
 
     <LinearLayout 
         android:layout_width="wrap_content"
@@ -19,18 +14,21 @@
         android:orientation="vertical" >
         
 	    <TextView
-	        android:id="@+id/listlabel1"
+	        android:id="@+id/textViewPhotoLabel"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:textSize="20px" >
+	        android:textSize="20dp" >
 	    </TextView>
 	    
-	    <TextView
-	        android:id="@+id/listlabel2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize="20px" >
-	    </TextView>
+	    <ImageView
+	        android:contentDescription="@drawable/ic_launcher"
+        	android:id="@+id/imageViewPhotoThumbnail"
+        	android:layout_width="22dp"
+        	android:layout_height="22dp"
+        	android:layout_marginLeft="4dp"
+        	android:layout_marginRight="10dp"
+        	android:layout_marginTop="4dp" >
+    	</ImageView>
 	    
 	 </LinearLayout>
 	    

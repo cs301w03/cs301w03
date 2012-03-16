@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 
-public class ContainerArrayAdapter extends ArrayAdapter<Group> {
+public class ContainerArrayAdapter extends ArrayAdapter<Container> {
 		private final Context context;
 		private final Container[] containers;
 

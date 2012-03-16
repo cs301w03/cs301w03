@@ -40,7 +40,9 @@ public class ProjectTwoActivity extends Activity
             public void onClick(View v)
             {
                 // Add code here to start up camera activity */
-               //Intent showphoto = new Intent(this, PhotoListActivity.class);
+                Intent takeAphoto = new Intent(ProjectTwoActivity.this, TakeAPhotoActivity.class);
+                startActivity(takeAphoto);
+                
                 //Make a camera controller
                 //TakeAPhotoActivity myCamera = new TakeAPhotoActivity();
                 //myCamera.getPhoto();

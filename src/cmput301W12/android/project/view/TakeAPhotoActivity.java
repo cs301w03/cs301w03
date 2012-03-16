@@ -16,9 +16,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
+import cmput301W12.android.project.FController;
 import cmput301W12.android.project.Photo;
 import cmput301W12.android.project.SkinObserverApplication;
-import cmput301W12.android.project.*;
 
 /**
  * The TakeAPhotoActivity allows the user to capture images. When an image is captured a time stamp
@@ -91,9 +91,12 @@ public class TakeAPhotoActivity extends Activity
                 Photo newestPhoto = new Photo(photoUri.toString(), time, name, groups, skinConditions);
                 
                 /* send the photo object to Hieu's DB */
-                //FController controller = SkinObserverApplication.getSkinObserverController(this);
+                Log.d("SKINOBSERVER", "One?");
+                FController controller = SkinObserverApplication.getSkinObserverController(this);
+                Log.d("SKINOBSERVER", "We fixed the trail!?");
+                controller.addPhoto(newestPhoto);
                 //FController controller = SkinObserverApplication.getSkinObserverController();          
-                
+                //Log.d("SKINOBSERVER", "Three?");
                 
                 /* Call the methods to create a photo object here? I dono? */
 //                Log.d("SKINOBSERVER", "activty result code is:" + resultCode);

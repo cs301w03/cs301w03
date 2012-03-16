@@ -4,11 +4,13 @@ import java.util.Set;
 import java.util.SortedSet;
 
 import android.content.Context;
+import android.util.Log;
 
 public class SkinObserverController implements FController {
 	DbControllerInterface dbCon = null;
 	
 	public SkinObserverController(Context ctx){
+	    Log.d("SOController", "Trail part 4");
 		this.dbCon = DbController.getDbController(ctx);
 	}
 
@@ -19,6 +21,7 @@ public class SkinObserverController implements FController {
 
 	@Override
 	public Photo addPhoto(Photo photo) {
+	    Log.d("SKINOBSERVER", "Long as trail is making me tired of walking");
 		return dbCon.addPhoto(photo);
 	}
 

@@ -7,6 +7,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 public class DbController extends FModel<FView> implements DbControllerInterface {
 	private DbAdapter mDbAdap;
@@ -15,12 +16,15 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 
 	private DbController(Context ct){
 		super();
+		Log.d("DBController", "Trail part 6");
 		this.mDbAdap = DbAdapter.getDbAdapter(ct);
+	              Log.d("DBController", "Trail part end of 6");
 		this.mDbAdap = this.mDbAdap.open();
 	}
 
 	public static DbControllerInterface getDbController(Context ct){
 		if(dbCon == null){
+		    Log.d("DBController", "Trail part 5");
 			dbCon = new DbController(ct);
 		}
 		return dbCon;
@@ -33,24 +37,35 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 
 	@Override
 	public Photo addPhoto(Photo phoObj) {
+	    Log.d("SKINOBSERVER", "There is more XD");
 		// TODO Auto-generated method stub
 		String location = phoObj.getLocation();
+		Log.d("SKINOBSERVER", "There is more XD!");
 		Timestamp timeStamp  = phoObj.getTimeStamp();
+		Log.d("SKINOBSERVER", "There is more XD!!");
 		String name = phoObj.getName();
+		Log.d("SKINOBSERVER", "There is more XD!!!");
 		int photoId = ( int) this.mDbAdap.addPhoto(location, timeStamp, name);
+		Log.d("SKINOBSERVER", " " + photoId);
+		Log.d("SKINOBSERVER", "There is more XD!!!!");
 		phoObj.setPhotoId(photoId);
-
+		
+		Log.d("SKINOBSERVER", "There is more XD!!!!!!");
 		Set<Integer> listOfGroupId = phoObj.getGroups();
+		Log.d("SKINOBSERVER", "There is more XD!!!!!!!");
 		Set<Integer> listOfSkinId = phoObj.getSkinConditions();
 
 		for(Integer id : listOfGroupId){
 			this.mDbAdap.addPhotoGroup(photoId,id);
 		}
-
-		for(Integer id : listOfSkinId	){
-			this.mDbAdap.addPhotoSkinCondition(photoId, id);
-		}
-
+		Log.d("SKINOBSERVER", "1");
+		
+		
+//		for(Integer id : listOfSkinId	){
+//		    Log.d("SKINOBSERVER", "Nope");
+//			this.mDbAdap.addPhotoSkinCondition(photoId, id);
+//		}
+		Log.d("SKINOBSERVER", "2");
 		return phoObj;
 	}
 

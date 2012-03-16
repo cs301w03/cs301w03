@@ -42,27 +42,27 @@ import android.util.Log;
  */
 public class DbAdapter {
 
-	public static final String PHOTOID = "Photo ID";
+	public static final String PHOTOID = "Photo_ID";
 	public static final String LOCATION = "Location";
-	public static final String TIMESTAMP = "Time Stamp";
+	public static final String TIMESTAMP = "Time_Stamp";
 	public static final String PHOTONAME = "Name";
 
-	public static final String GROUPID = "Group ID";
+	public static final String GROUPID = "Group_ID";
 	public static final String GROUPNAME = "Name";
 
-	public static final String SKINCONDITIONID = "Skin Condition ID";
+	public static final String SKINCONDITIONID = "SkinConditionID";
 	public static final String SKINNAME = "Name";
 
 	private static final String TAG = "DbAdapter";
 	private static final String DATABASE_NAME = "skinObserver";
 
 	private static final String PHOTO_TABLE	 = "Photo";
-	public static final String GROUP_TABLE = "Group";
-	public static final String SKIN_TABLE = "Skin Condition";
-	public static final String PHOTOGROUP_TABLE = "Photo - Group";
-	public static final String PHOTOSKIN_TABLE = "Photo - Skin Condition";
+	public static final String GROUP_TABLE = "Limb";
+	public static final String SKIN_TABLE = "SkinCondition";
+	public static final String PHOTOGROUP_TABLE = "Photo_Group";
+	public static final String PHOTOSKIN_TABLE = "Photo_SkinCondition";
 
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 2;
 
 	private DatabaseHelper mDbHelper;
 	private SQLiteDatabase mDb;
@@ -75,21 +75,24 @@ public class DbAdapter {
 	 * Database creation sql statement
 	 */
 	private static final String CREATE_PHOTO_TABLE = 
-			"create table " + PHOTO_TABLE + " ( " + PHOTOID + " integer primary key autoincrement, " + 
+			"create table " + PHOTO_TABLE + " ( " + 
+			                PHOTOID + " integer primary key, " + 
 					LOCATION + " text not null, " +
 					TIMESTAMP + " text, " +
 					PHOTONAME + " text, " +
-					" unique( " + LOCATION + ")"	+	")";
+					" unique( " + LOCATION + ")" +	")";
 
 	private static final String CREATE_GROUP_TABLE = 
-			"create table " + GROUP_TABLE + " ( " + GROUPID + " integer primary key autoincrement, "
-					+ GROUPNAME + " text not null, " +
+			"create table " + GROUP_TABLE + " ( " + 
+			                GROUPID + " integer primary key, " + 
+			                GROUPNAME + " text not null, " +
 					"unique( " + GROUPNAME + ") " + ")";
 
 	private static final String CREATE_SKIN_TABLE = 
-			"create table " + SKIN_TABLE + " ( " + SKINCONDITIONID + " integer primary key autoincrement, "
-					+ SKINNAME + " text not null, " +
-					"unique( " + SKINNAME + ") " + ")";
+			"create table " + SKIN_TABLE + " ( " +
+			        SKINCONDITIONID + " integer primary key, " + 
+			        SKINNAME + " text not null, " +
+			        "unique( " + SKINNAME + ") " + ")";
 
 
 	private static final String CREATE_PHOTOGROUP_TABLE = 
@@ -170,22 +173,26 @@ public class DbAdapter {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-
+	              Log.d("DBHelper", "Trail part 12");
 			db.execSQL(CREATE_PHOTO_TABLE);
+			Log.d("DBHelper", "Trail part 13");
 			db.execSQL(CREATE_GROUP_TABLE);
+			Log.d("DBHelper", "Trail part 14");
 			db.execSQL(CREATE_SKIN_TABLE);
 			db.execSQL(CREATE_PHOTOGROUP_TABLE);
+			Log.d("DBHelper", "Trail part 15");
 			db.execSQL(CREATE_PHOTOSKIN_TABLE);
-			
-			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_INSERT);
-			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATE);
-			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_DELETECASCADE);
-			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATECASCADE);
-			
-			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_INSERT);
-			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_UPDATE);
-			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_DELETECASCADE);
-			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_UPDATECASCADE);
+			Log.d("DBHelper", "Trail part 16");
+//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_INSERT);
+//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATE);
+//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_DELETECASCADE);
+//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATECASCADE);
+			Log.d("DBHelper", "Trail part 18");
+//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_INSERT);
+//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_UPDATE);
+//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_DELETECASCADE);
+//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_UPDATECASCADE);
+			Log.d("DBHelper", "Trail part Victory!");
 		}
 
 		@Override
@@ -213,6 +220,7 @@ public class DbAdapter {
 
 	public static DbAdapter getDbAdapter(Context ctx){
 		if(dbAdap == null){
+		          Log.d("DBController", "Trail part 7");
 			dbAdap = new DbAdapter(ctx);
 		}
 		return dbAdap;
@@ -228,8 +236,13 @@ public class DbAdapter {
 	 * @throws SQLException if the database could be neither opened or created
 	 */
 	public DbAdapter open() throws SQLException {
+	           Log.d("DBController", "Trail part 8");
 		mDbHelper = new DatabaseHelper(mCtx);
-		mDb = mDbHelper.getWritableDatabase();
+	              Log.d("DBController", "Trail part end of 8");
+		
+	       /* I BREAK HERE FIX ME */
+	              mDb = mDbHelper.getWritableDatabase();
+	              Log.d("DBController", "Trail part 9");
 		return this;
 	}
 
@@ -363,10 +376,10 @@ public class DbAdapter {
 	 */
 	public long addPhotoSkinCondition(int photoId, int skinConditionId) {
 		ContentValues initialValues = new ContentValues();
-
+		Log.d("DBA", "Nope2");
 		initialValues.put(PHOTOID, photoId);
 		initialValues.put(SKINCONDITIONID, skinConditionId);
-
+		Log.d("DBA", "Nope3");
 		return mDb.insert(PHOTOSKIN_TABLE, null, initialValues);
 	}
 

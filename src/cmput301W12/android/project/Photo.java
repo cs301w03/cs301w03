@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import android.util.Log;
+
 public class Photo implements Comparable<Photo>, Serializable {
 	private int photoId = INVALID_ID;
 	private String location;
@@ -47,6 +49,7 @@ public class Photo implements Comparable<Photo>, Serializable {
 		}
 
 		if(skinConditions == null){
+		    Log.d("SKINOBSERVER", "69");
 			this.groups = new HashSet<Integer>();
 		}else{
 			this.skinConditions = skinConditions;

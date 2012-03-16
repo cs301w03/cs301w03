@@ -93,18 +93,74 @@ public class DbAdapter {
 
 
 	private static final String CREATE_PHOTOGROUP_TABLE = 
-			"create table " + PHOTOGROUP_TABLE + " ( " + PHOTOID + " integer not null, " + GROUPID + " integer not null, " +
-					" primary key( " + PHOTOID + ", " + GROUPID + " ), " +
-					" FOREIGN KEY( " + PHOTOID + " ) REFERENCES " + PHOTO_TABLE + " ( " + PHOTOID + " ), " +
-					" FOREIGN KEY( " + GROUPID + " ) REFERENCES " + GROUP_TABLE + " ( " + GROUPID + " ), " + " )" ;
+			"create table " + PHOTOGROUP_TABLE + 
+			" ( " + PHOTOID + " integer not null CONSTRAINT fk_PHOTOID_PHOTOGROUP REFERENCES " + 
+			PHOTO_TABLE + " ( " + PHOTOID + " ) " + " ON DELETE CASCADE, "  + 
+			GROUPID + " integer not null CONSTRAINT fk_GROUPID REFERENCES  " +
+			GROUP_TABLE + " ( " + GROUPID + " ) " + " ON DELETE CASCADE, " + 
+			" primary key( " + PHOTOID + ", " + GROUPID + " ) ) " ;
 
 	private static final String CREATE_PHOTOSKIN_TABLE = 
-			"create table " + PHOTOSKIN_TABLE + " ( " + PHOTOID + " integer not null, " + SKINCONDITIONID + " integer not null, " +
-					" primary key( " + PHOTOID + ", " + SKINCONDITIONID + " ), " +
-					" FOREIGN KEY( " + PHOTOID + " ) REFERENCES " + PHOTO_TABLE + " ( " + PHOTOID + " ), " +
-					" FOREIGN KEY( " + SKINCONDITIONID + " ) REFERENCES " + SKIN_TABLE + " ( " + SKINCONDITIONID + " ), " + " )" ;
+			"create table " + PHOTOSKIN_TABLE + 
+			" ( " + PHOTOID + " integer not null CONSTRAINT fk_PHOTOID_PHOTOSKIN REFERENCES " + 
+			PHOTO_TABLE + " ( " + PHOTOID + " ) " + " ON DELETE CASCADE, "  + 
+			SKINCONDITIONID + " integer not null CONSTRAINT fk_SKINCONDITIONID REFERENCES  " +
+			SKIN_TABLE + " ( " + SKINCONDITIONID + " ) " + " ON DELETE CASCADE, " + 
+			" primary key( " + PHOTOID + ", " + SKINCONDITIONID + " ) ) " ;
 
+	private static final String CREATE_TRIGGER_PHOTOGROUP_INSERT = 
+			"create trigger trig_PHOTOID_PHOTOGROUP_INSERT " +
+					" before insert on " + PHOTOGROUP_TABLE + " for each row begin " + 
+					" select raise(rollback, ' insert on table " + PHOTOGROUP_TABLE + 
+					" violates foreign key constraint fk_PHOTOID_PHOTOGROUP ' ) " + 
+					" where (select  " + PHOTOID + " from " + PHOTO_TABLE + " where " + PHOTOID + " = NEW." +
+					PHOTOID + " ) " + " IS NULL";
 
+	private static final String CREATE_TRIGGER_PHOTOGROUP_UPDATE = 
+			"create trigger trig_PHOTOID_PHOTOGROUP_UPDATE " +
+					" before update on " + PHOTOGROUP_TABLE + " for each row begin " + 
+					" select raise(rollback, ' update on table " + PHOTOGROUP_TABLE + 
+					" violates foreign key constraint fk_PHOTOID_PHOTOGROUP ' ) " + 
+					" where (select  " + PHOTOID + " from " + PHOTO_TABLE + " where " + PHOTOID + " = NEW." +
+					PHOTOID + " ) " + " IS NULL";
+
+	private static final String CREATE_TRIGGER_PHOTOGROUP_DELETECASCADE = 
+			"create trigger trig_PHOTOID_PHOTOGROUP_DELETECASCADE " + 
+					" before delete on " + PHOTO_TABLE + " for each row begin " +
+					"delete from " + PHOTOGROUP_TABLE + " where " + PHOTOID + " = OLD." + PHOTOID;
+
+	private static final String CREATE_TRIGGER_PHOTOGROUP_UPDATECASCADE = 
+			"create trigger trig_PHOTOID_PHOTOGROUP_UPDATECASCADE " +
+	" after update on " + PHOTO_TABLE + " for each row begin " + 
+					" update " + PHOTOGROUP_TABLE + " set " + PHOTOID + "NEW." + PHOTOID + 
+					" where " + PHOTOID + " = " + "OLD." + PHOTOID; 
+	
+	private static final String CREATE_TRIGGER_PHOTOSKIN_INSERT = 
+			"create trigger trig_PHOTOID_PHOTOSKIN_INSERT " +
+					" before insert on " + PHOTOSKIN_TABLE + " for each row begin " + 
+					" select raise(rollback, ' insert on table " + PHOTOSKIN_TABLE + 
+					" violates foreign key constraint fk_PHOTOID_PHOTOSKIN ' ) " + 
+					" where (select  " + PHOTOID + " from " + PHOTO_TABLE + " where " + PHOTOID + " = NEW." +
+					PHOTOID + " ) " + " IS NULL";
+
+	private static final String CREATE_TRIGGER_PHOTOSKIN_UPDATE = 
+			"create trigger trig_PHOTOID_PHOTOSKIN_UPDATE " +
+					" before update on " + PHOTOSKIN_TABLE + " for each row begin " + 
+					" select raise(rollback, ' update on table " + PHOTOSKIN_TABLE + 
+					" violates foreign key constraint fk_PHOTOID_PHOTOSKIN ' ) " + 
+					" where (select  " + PHOTOID + " from " + PHOTO_TABLE + " where " + PHOTOID + " = NEW." +
+					PHOTOID + " ) " + " IS NULL";
+
+	private static final String CREATE_TRIGGER_PHOTOSKIN_DELETECASCADE = 
+			"create trigger trig_PHOTOID_PHOTOSKIN_DELETECASCADE " + 
+					" before delete on " + PHOTO_TABLE + " for each row begin " +
+					"delete from " + PHOTOSKIN_TABLE + " where " + PHOTOID + " = OLD." + PHOTOID;
+
+	private static final String CREATE_TRIGGER_PHOTOSKIN_UPDATECASCADE = 
+			"create trigger trig_PHOTOID_PHOTOSKIN_UPDATECASCADE " +
+	" after update on " + PHOTO_TABLE + " for each row begin " + 
+					" update " + PHOTOSKIN_TABLE + " set " + PHOTOID + "NEW." + PHOTOID + 
+					" where " + PHOTOID + " = " + "OLD." + PHOTOID;
 
 	private static class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -120,6 +176,16 @@ public class DbAdapter {
 			db.execSQL(CREATE_SKIN_TABLE);
 			db.execSQL(CREATE_PHOTOGROUP_TABLE);
 			db.execSQL(CREATE_PHOTOSKIN_TABLE);
+			
+			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_INSERT);
+			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATE);
+			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_DELETECASCADE);
+			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATECASCADE);
+			
+			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_INSERT);
+			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_UPDATE);
+			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_DELETECASCADE);
+			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_UPDATECASCADE);
 		}
 
 		@Override
@@ -354,8 +420,8 @@ public class DbAdapter {
 		String id = DbAdapter.returnIdColumn(option);
 		return mDb.delete(DbAdapter.returnTableName(option), id + " = ?s", new String[]{rowId + ""}) ;
 	}
-	
-		public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, String newName ){
+
+	public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, String newName ){
 
 		ContentValues initialValues = new ContentValues();
 
@@ -474,7 +540,7 @@ public class DbAdapter {
 		}else if(option == OptionType.PHOTOSKIN){
 			itemIdName = SKINCONDITIONID;
 		}
-		
+
 		String preparedStatement = "select ?s, ?s, ?s, ?s,  from ?s , ?s " +
 				" where ?s.?s = ?s.?s and ?s = ?s";
 		String[] args = {PHOTOID, LOCATION, TIMESTAMP, PHOTONAME, 

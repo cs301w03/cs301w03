@@ -58,12 +58,13 @@ public class takeAPhotoTest extends ActivityInstrumentationTestCase2<TakeAPhotoA
     }
 
     
-    public void testPreconditions()
+    public void testPreConditions()
     {
        
         //assertNotNull(testThis);
         assertNull(testPhotoUri);
         assertNull(testTime);
+        fail("There is an error in this test case..");
     }
 
 

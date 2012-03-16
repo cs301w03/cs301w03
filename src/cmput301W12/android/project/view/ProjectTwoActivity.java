@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import cmput301W12.android.project.PhotoListActivity;
 import cmput301W12.android.project.R;
+import cmput301W12.android.project.SkinObserverIntent;
 import cmput301W12.android.project.ViewContainerListActivity;
 
     /**
@@ -31,14 +32,12 @@ public class ProjectTwoActivity extends Activity
     {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        Log.d("adapter","begin");
         setContentView(R.layout.main);
         
         Button takeAPhoto = (Button) this.findViewById(R.id.takeAPhoto);
         
         takeAPhoto.setOnClickListener(new View.OnClickListener()
-        {
-            
+        {   
             @Override
             public void onClick(View v)
             {
@@ -53,8 +52,7 @@ public class ProjectTwoActivity extends Activity
                //startActivity(showphoto);
             	
                 
-                // TODO Auto-generated method stub
-                
+                // TODO Auto-generated method stub   
             }
         });
         
@@ -66,26 +64,35 @@ public class ProjectTwoActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                // Add code here to start up camera activity */
-                click1();
-                Log.d("adapter","end promt");
-                //Make a camera controller
-                //TakeAPhotoActivity myCamera = new TakeAPhotoActivity();
-                //myCamera.getPhoto();
-               //startActivity(showphoto);
-            	
-                
-                // TODO Auto-generated method stub
-                
+            	callViewGroup();
             }
         });
         
+        Button groupByCondition = (Button) this.findViewById(R.id.groupByCondition);
         
-    }
+        groupByCondition.setOnClickListener(new View.OnClickListener()
+    	{
+        	@Override
+        	public void onClick(View v)
+        	{
+        		callViewSkinCondition();
+        	}
+    	});
+	}
+        
     
-    protected void click1()
+    protected void callViewGroup()
     {
-    	Intent viewGroup = new Intent(this, ViewContainerListActivity.class);
-        startActivity(viewGroup);
+    	Intent iViewGroup = new Intent(this, ViewContainerListActivity.class);
+    	iViewGroup.putExtra(SkinObserverIntent.DATA_GROUP, SkinObserverIntent.DATA_GROUP);
+        startActivity(iViewGroup);
     }
+
+	protected void callViewSkinCondition()
+	{
+		Intent iViewGroup = new Intent(this, ViewContainerListActivity.class);
+		iViewGroup.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION, SkinObserverIntent.DATA_SKIN_CONDITION);
+		startActivity(iViewGroup);
+	}
+    
 }

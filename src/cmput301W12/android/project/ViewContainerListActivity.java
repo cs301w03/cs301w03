@@ -25,14 +25,15 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
     
     private void fillData() {
         
-        Group g1 = new Group("abc");
-        Group g2 = new Group("Feet");
-        Group g3 = new Group("Right");
-        
-        Group[] gl = {g1,g2,g3};
-        
-        ContainerArrayAdapter conAdapter = new ContainerArrayAdapter(this, gl);        
-        setListAdapter(conAdapter);
+//        Group g1 = new Group("abc");
+//        Group g2 = new Group("Feet");
+//        Group g3 = new Group("Right");
+//        Group[] gl = {g1,g2,g3};
+//        ContainerArrayAdapter conAdapter = new ContainerArrayAdapter(this, gl);
+//        setListAdapter(conAdapter);
+    	
+    	FController controller = SkinObserverApplication.getSkinObserverController(this);
+    	controller.getAllPhotoOfAContainer(Photo.INVALID_ID, OptionType.GROUP);
     }
     
     @Override
@@ -40,9 +41,11 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
         super.onListItemClick(l, v, position, id);
         ListAdapter adapter = l.getAdapter();
         Container cont  = (Container) adapter.getItem(position);
-        Intent i = new Intent(this, CreateContainerActivity.class);
-        i.putExtra("cid", cont);
-        startActivity(i);
+        Bundle bundle = getIntent().getExtras();
+        
+        Intent newIntent = new Intent(this, CreateContainerActivity.class);
+        newIntent.putExtras(bundle);
+        startActivity(newIntent);
     }    
     
     @Override
@@ -64,11 +67,12 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
     }
     
     /**
-     * Pass an intent to EntryAdd with request code ACTIVITY_CREATE
-     * to create a new log entry and wait for the result.
+     * 
+     * 
      */
     private void createNewGroup() {
         Intent i = new Intent(this, CreateContainerActivity.class);
+        i.putExtras(getIntent().getExtras());
         startActivityForResult(i, ACTIVITY_CREATE);
     }
     

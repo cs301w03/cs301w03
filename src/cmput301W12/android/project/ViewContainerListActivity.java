@@ -19,16 +19,16 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_text_view);
         
-        fillData(new Container[]{new Group(1, "test")});
+        fillData(new Container[]{new Group("Test")});
         
         registerForContextMenu(getListView());
     }
     
     private void fillData(Container[] con) {
         
-        Group g1 = new Group(1,"Head");
-        Group g2 = new Group(2,"Left hand");
-        Group g3 = new Group(3,"Right Feet");
+        Group g1 = new Group("Head");
+        Group g2 = new Group("Left Feet");
+        Group g3 = new Group("Right Feet");
         
         Group[] gl = {g1,g2,g3};
         
@@ -77,7 +77,15 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if ( requestCode == ACTIVITY_CREATE)
-        	fillData(new Container[]{new Group(1, "test")});
+        	fillData(new Container[]{new Group("Test")});
     }
+
+	@Override
+	public void update(DbController model)
+	{
+
+		// TODO Auto-generated method stub
+		
+	}
     
 }

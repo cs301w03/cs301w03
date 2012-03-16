@@ -1,6 +1,7 @@
 package cmput301W12.android.project;
 
 import java.util.Set;
+import java.util.SortedSet;
 
 public interface DbControllerInterface {
 	public void close();
@@ -31,7 +32,7 @@ public interface DbControllerInterface {
 	 */
 	public Container storeNewContainer(String name, OptionType option);
 	
-	public Set<Photo> getAllPhoto();
+	public SortedSet<Photo> getAllPhoto();
 	
 
 	/**
@@ -45,7 +46,7 @@ public interface DbControllerInterface {
 	 * @return 
 	 */
 
-	public Set<Photo> getAllPhotoOfAContainer(int itemId, OptionType option);
+	public SortedSet<Photo> getAllPhotoOfAContainer(int itemId, OptionType option);
 	
 	/**
 	 * Fetch all containers (groups or skins conditions) of the photo with the provided photoId.

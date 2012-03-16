@@ -1,12 +1,13 @@
 package cmput301W12.android.project;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Photo implements Comparable<Photo> {
+public class Photo implements Comparable<Photo>, Serializable {
 	private int photoId = INVALID_ID;
 	private String location;
 	private Timestamp timeStamp;

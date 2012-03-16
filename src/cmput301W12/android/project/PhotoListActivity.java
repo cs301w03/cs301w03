@@ -11,10 +11,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 
-public class PhotoListActivity extends ListActivity
+public class PhotoListActivity extends ListActivity implements FView<DbController>
 {
 	
 	 private final String edit = "Edit";
@@ -36,8 +37,15 @@ public class PhotoListActivity extends ListActivity
 	 
 	 public void fillSelectableList() {
 		 
-		 /*DbController dbc = new DbController();
-		 SortedSet<Photo> photos = dbc.getAllPhoto();*/
+		 FController controller =  SkinObserverApplication.getSkinObserverController(this);
+		 SortedSet<Photo> photos = controller.getAllPhoto();
+		 
+		 Photo[] photosArray1 = (Photo[]) photos.toArray();
+		 
+		 PhotoListArrayAdapter caAdapter = new PhotoListArrayAdapter(this, photosArray1);
+		 
+		 setListAdapter(caAdapter);
+		 
 		 
 		 //need to implement the simplecursor adapter in this structure.
 	 }
@@ -46,17 +54,8 @@ public class PhotoListActivity extends ListActivity
 		 
 	 }
 	 
-	 //Kalen add context menu, remember we are creating a context menu
-	 //of options like "add photo", or whatever is given in the UI,
-	 //we are not creating a context menu of list photo, because 
-	 //the list is being handled by the listactivity here.
-
 	 
-	 
-	 
-	 
-	 
-	 
+		 
 	 
 	    // places the data in ctxmenu into the build the context menu for Petrol manager
 	    @Override
@@ -72,12 +71,15 @@ public class PhotoListActivity extends ListActivity
 	 // if a user picks an item from the context menu, this function is then called.
 	    protected void onListItemClick(ListView l, View v, int position, long id) {
 	                super.onListItemClick(l, v, position, id);
-	                Intent editor = new Intent(this, Photo.class);
 	                
-	                //connect to database
+	                ListAdapter adapter = l.getAdapter();
+	                Photo phto  = (Photo) adapter.getItem(position);
+	                Intent i = new Intent(this, ShowPhoto.class);
+	                i.putExtra(PHOTO, phto);
+	                startActivityForResult(i, VIEW_PHOTO);
 	                
 	                //editor.putExtra(PHOTO, value ); PRODUCE INTENT WITH PHOTO OBJECT to view
-	                startActivityForResult(editor, VIEW_PHOTO);
+	     
 	        }
 	        
 	    //Opens the xontext menu and gives the option edit, or delete, and reacts accordingly.
@@ -105,6 +107,14 @@ public class PhotoListActivity extends ListActivity
 	              
 	                return super.onContextItemSelected(item);
 	        }
+
+		@Override
+		public void update(DbController model)
+		{
+
+			// TODO Auto-generated method stub
+			
+		}
 
 
 

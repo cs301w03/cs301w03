@@ -1,6 +1,8 @@
 package cmput301W12.android.project;
 
 import java.util.Set;
+import java.util.SortedSet;
+
 import android.content.Context;
 
 public class SkinObserverController implements FController {
@@ -31,12 +33,12 @@ public class SkinObserverController implements FController {
 	}
 
 	@Override
-	public Set<Photo> getAllPhoto() {
+	public SortedSet<Photo> getAllPhoto() {
 		return dbCon.getAllPhoto();
 	}
 
 	@Override
-	public Set<Photo> getAllPhotoOfAContainer(int itemId, OptionType option) {
+	public SortedSet<Photo> getAllPhotoOfAContainer(int itemId, OptionType option) {
 		return dbCon.getAllPhotoOfAContainer(itemId, option);
 	}
 

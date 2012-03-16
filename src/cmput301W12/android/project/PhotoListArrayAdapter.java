@@ -1,5 +1,15 @@
 package cmput301W12.android.project;
 
+/* PhotoListArrayAdapter.class is responsible for connecting the information
+ * contained in a list item with the layout designed for the list item. The layout
+ * defines the way the information will be displayed in each row of the list. The
+ * information or data objects that are passed to this object, will be used by this
+ * class to fill the rows of a listview. Here photo objects are passed, and the image
+ * from a photo object is used to fill the imageview in the layout template, and the
+ * textview of the layout template is filled with the name of the photo/photos. These
+ * two information will be shown in each list item of the list view.
+ */
+
 import java.net.URI;
 
 import android.content.Context;

@@ -1,4 +1,41 @@
-release planning 
+Release planning Version Ver 1.0 -- March 15th, 04:00, 2012 -- Written by Stephen Romansky
+--Currently we have implemented a way to store photos on the phone,
+	A method to timestamp the photos, and a method to retake photos.
+	
+--We intend to have a method to view all the photos to monitor the change
+	in the users skin over time, done by tonight. This will also be accomidated by
+	a method that will let the user pick a photo from the list and display that
+	photo full screen.
+	
+--After the above part is done we will be implementing documentation for
+	all of the source files, I mean of course, we will be `verifying` that
+	we have correctly documented everything.
+	
+--OOD should be uploaded tonight
+
+
+
+--Future application developments, we will think about this starting on the weekend
+	--I will finish up the camera, I am thinking if I have time I will code my own
+		Camera picture taking activity. I will add in the tagging methods for the 
+		photos, I.e. tag the photo into a Limb group, and a skin condition group.
+		
+	--I think tri and tanvir will work on the gui implementations more
+		--this will involve the comparing photo methods
+		
+	--Hieu will probably be working on the user stories we developed
+		--such as edit photo, delete photo, etc.
+		
+--That covers it for The second edition of the release plan.
+	--meeting to follow.
+
+
+
+
+
+
+---------Depricated plan----------
+release planning v 0.0
 --we will have two groups working simultaniously 
 --the first group will work on "take a photo" and implementing the android camera 
 --the second group will develop a DBAdapter, and a ListAdapter

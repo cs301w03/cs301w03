@@ -39,17 +39,18 @@ public class ProjectTwoActivity extends Activity
             @Override
             public void onClick(View v)
             {
-                /* Add code here to start up camera activity */
-               // Intent showphoto = new Intent(this,)
+                // Add code here to start up camera activity */
+               //Intent showphoto = new Intent(this, PhotoListActivity.class);
                 //Make a camera controller
                 //TakeAPhotoActivity myCamera = new TakeAPhotoActivity();
                 //myCamera.getPhoto();
-                
+               //startActivity(showphoto);
+            	
                 
                 // TODO Auto-generated method stub
                 
             }
         });
     }
-
+    
 }

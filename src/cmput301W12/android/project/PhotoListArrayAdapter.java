@@ -27,7 +27,7 @@ public class PhotoListArrayAdapter extends ArrayAdapter<Photo> {
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View rowView = inflater.inflate(R.layout.list_photo_view, parent, false);
-			TextView textView = (TextView) rowView.findViewById(R.id.textViewPhotoLabel);
+			TextView textView = (TextView) rowView.findViewById(R.id.textViewPhotoLabel1);
 			ImageView imageView = (ImageView) rowView.findViewById(R.id.imageViewPhotoThumbnail);
 			if ( textView != null && imageView != null)
 				if (photo_array.length > 0)

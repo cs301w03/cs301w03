@@ -18,6 +18,7 @@ import android.util.Log;
 import android.widget.Toast;
 import cmput301W12.android.project.Photo;
 import cmput301W12.android.project.SkinObserverApplication;
+import cmput301W12.android.project.*;
 
 /**
  * The TakeAPhotoActivity allows the user to capture images. When an image is captured a time stamp
@@ -90,7 +91,7 @@ public class TakeAPhotoActivity extends Activity
                 Photo newestPhoto = new Photo(photoUri.toString(), time, name, groups, skinConditions);
                 
                 /* send the photo object to Hieu's DB */
-                FController controller = SkinObserverApplication.getDbController()
+                FController controller = SkinObserverApplication.getSkinObserverController(this);
                 
                 
                 

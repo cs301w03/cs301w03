@@ -23,12 +23,12 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
      private final String add_photo = "Add Photo";
      public static final String PHOTO = "PHOTO";
      public static final int VIEW_PHOTO = 0;
-     public static final int EDIT_PHOTO = 0;
+     public static final int EDIT_PHOTO = 1;
 
 	 @Override
 	 public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
-	        setContentView(R.layout.listphotoview_activity);
+	        setContentView(R.layout.photoviewlist_activity);
 	        
 	        
 	        //set up the listview to enable a context menu for editting logs/deleting
@@ -74,9 +74,9 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	                
 	                ListAdapter adapter = l.getAdapter();
 	                Photo phto  = (Photo) adapter.getItem(position);
-	                Intent i = new Intent(this, ShowPhoto.class);
+	                /*Intent i = new Intent(this, ShowPhoto.class);
 	                i.putExtra(PHOTO, phto);
-	                startActivityForResult(i, VIEW_PHOTO);
+	                startActivityForResult(i, VIEW_PHOTO);*/
 	                
 	                //editor.putExtra(PHOTO, value ); PRODUCE INTENT WITH PHOTO OBJECT to view
 	     
@@ -102,8 +102,12 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	              
 	              else if(add_photo.compareTo(item.getTitle().toString()) == 0) {
 //                      mydb.deleteEntry(xid);
-//                      refreshList();
-              }
+//                      refreshList();	            	  
+	              }
+	              
+	             /* else if(compare.compareTo(item.getTitle().toString() == 0)) {
+	            	  	
+                  }*/
 	              
 	                return super.onContextItemSelected(item);
 	        }
@@ -112,6 +116,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 		public void update(DbController model)
 		{
 
+			//fillSelectableList();
 			// TODO Auto-generated method stub
 			
 		}

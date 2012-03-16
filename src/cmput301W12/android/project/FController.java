@@ -1,9 +1,5 @@
 package cmput301W12.android.project;
 
-/* FController is the interface that connects with both the views and model of our
- * application.
- */
-
 import java.util.Set;
 import java.util.SortedSet;
 

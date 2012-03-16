@@ -1,16 +1,5 @@
 package cmput301W12.android.project;
 
-/* SkinCondition.class is a very important class that extends from the main
-* data class of our application, "Container". This data is basically a 
-* container of information , containing the photoId , the location of the photo,
-* the timestamp of a photo, the name of a photo, and the list of groups and skin
-* conditions associated with the photo. This Photo class is the main data class
-* of our application. And using this class as an object you can get access to 
-* all of information of a photo, and that is all you would need. The location of
-* the photo object will give you access to the location of the serialized photo
-* object in the memory of the phone. 
-*/
-
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Collection;

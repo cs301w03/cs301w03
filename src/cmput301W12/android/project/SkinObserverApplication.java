@@ -1,10 +1,5 @@
 package cmput301W12.android.project;
 
-/* SkinObserverApplication.class is a singleton that is used to return a FController
- * by the use of static function getSkinObserverController. It basically retururns
- * a SkinObserverController that is used by other activities to call database functions
- */
-
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;

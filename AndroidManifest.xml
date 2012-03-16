@@ -10,7 +10,7 @@
 <!--     	This will be where the hardware permissions for the camera go, i.e auto-focus -->
 <!-- 		Get access for storing our database and photos -->
 		<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission />
+    
 
     
     <application
@@ -25,6 +25,8 @@
         </activity>
         <activity android:name=".view.TakeAPhotoActivity"></activity>
         <activity android:name=".PhotoListActivity"></activity>
+        <activity android:name="ViewContainerListActivity"></activity>
+        <activity android:name="CreateContainerActivity"></activity>
     </application>
 
 </manifest>

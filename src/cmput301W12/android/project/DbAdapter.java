@@ -20,13 +20,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* DbAdapter is responsible for creating a database and creating columns inside
- * a database that will be used to store important information about photos
- * that are taken by user. DbAdapter also lets us connect to the database
- * and change the database the way we want to, add information, delete information
- * and update information whenever we need to.
- */
-
 package cmput301W12.android.project;
 
 import java.sql.Timestamp;
@@ -83,7 +76,7 @@ public class DbAdapter {
 	 */
 	private static final String CREATE_PHOTO_TABLE = 
 			"create table " + PHOTO_TABLE + " ( " + 
-			                PHOTOID + " integer primary key, " + 
+					PHOTOID + " integer primary key, " + 
 					LOCATION + " text not null, " +
 					TIMESTAMP + " text, " +
 					PHOTONAME + " text, " +
@@ -91,15 +84,15 @@ public class DbAdapter {
 
 	private static final String CREATE_GROUP_TABLE = 
 			"create table " + GROUP_TABLE + " ( " + 
-			                GROUPID + " integer primary key, " + 
-			                GROUPNAME + " text not null, " +
+					GROUPID + " integer primary key, " + 
+					GROUPNAME + " text not null, " +
 					"unique( " + GROUPNAME + ") " + ")";
 
 	private static final String CREATE_SKIN_TABLE = 
 			"create table " + SKIN_TABLE + " ( " +
-			        SKINCONDITIONID + " integer primary key, " + 
-			        SKINNAME + " text not null, " +
-			        "unique( " + SKINNAME + ") " + ")";
+					SKINCONDITIONID + " integer primary key, " + 
+					SKINNAME + " text not null, " +
+					"unique( " + SKINNAME + ") " + ")";
 
 
 	private static final String CREATE_PHOTOGROUP_TABLE = 
@@ -141,10 +134,10 @@ public class DbAdapter {
 
 	private static final String CREATE_TRIGGER_PHOTOGROUP_UPDATECASCADE = 
 			"create trigger trig_PHOTOID_PHOTOGROUP_UPDATECASCADE " +
-	" after update on " + PHOTO_TABLE + " for each row begin " + 
+					" after update on " + PHOTO_TABLE + " for each row begin " + 
 					" update " + PHOTOGROUP_TABLE + " set " + PHOTOID + "NEW." + PHOTOID + 
 					" where " + PHOTOID + " = " + "OLD." + PHOTOID; 
-	
+
 	private static final String CREATE_TRIGGER_PHOTOSKIN_INSERT = 
 			"create trigger trig_PHOTOID_PHOTOSKIN_INSERT " +
 					" before insert on " + PHOTOSKIN_TABLE + " for each row begin " + 
@@ -168,7 +161,7 @@ public class DbAdapter {
 
 	private static final String CREATE_TRIGGER_PHOTOSKIN_UPDATECASCADE = 
 			"create trigger trig_PHOTOID_PHOTOSKIN_UPDATECASCADE " +
-	" after update on " + PHOTO_TABLE + " for each row begin " + 
+					" after update on " + PHOTO_TABLE + " for each row begin " + 
 					" update " + PHOTOSKIN_TABLE + " set " + PHOTOID + "NEW." + PHOTOID + 
 					" where " + PHOTOID + " = " + "OLD." + PHOTOID;
 
@@ -180,7 +173,7 @@ public class DbAdapter {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-	              Log.d("DBHelper", "Trail part 12");
+			Log.d("DBHelper", "Trail part 12");
 			db.execSQL(CREATE_PHOTO_TABLE);
 			Log.d("DBHelper", "Trail part 13");
 			db.execSQL(CREATE_GROUP_TABLE);
@@ -190,15 +183,15 @@ public class DbAdapter {
 			Log.d("DBHelper", "Trail part 15");
 			db.execSQL(CREATE_PHOTOSKIN_TABLE);
 			Log.d("DBHelper", "Trail part 16");
-//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_INSERT);
-//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATE);
-//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_DELETECASCADE);
-//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATECASCADE);
+			//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_INSERT);
+			//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATE);
+			//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_DELETECASCADE);
+			//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATECASCADE);
 			Log.d("DBHelper", "Trail part 18");
-//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_INSERT);
-//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_UPDATE);
-//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_DELETECASCADE);
-//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_UPDATECASCADE);
+			//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_INSERT);
+			//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_UPDATE);
+			//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_DELETECASCADE);
+			//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_UPDATECASCADE);
 			Log.d("DBHelper", "Trail part Victory!");
 		}
 
@@ -227,7 +220,7 @@ public class DbAdapter {
 
 	public static DbAdapter getDbAdapter(Context ctx){
 		if(dbAdap == null){
-		          Log.d("DBController", "Trail part 7");
+			Log.d("DBController", "Trail part 7");
 			dbAdap = new DbAdapter(ctx);
 		}
 		return dbAdap;
@@ -243,13 +236,13 @@ public class DbAdapter {
 	 * @throws SQLException if the database could be neither opened or created
 	 */
 	public DbAdapter open() throws SQLException {
-	           Log.d("DBController", "Trail part 8");
+		Log.d("DBController", "Trail part 8");
 		mDbHelper = new DatabaseHelper(mCtx);
-	              Log.d("DBController", "Trail part end of 8");
-		
-	       /* I BREAK HERE FIX ME */
-	              mDb = mDbHelper.getWritableDatabase();
-	              Log.d("DBController", "Trail part 9");
+		Log.d("DBController", "Trail part end of 8");
+
+		/* I BREAK HERE FIX ME */
+		mDb = mDbHelper.getWritableDatabase();
+		Log.d("DBController", "Trail part 9");
 		return this;
 	}
 
@@ -521,26 +514,45 @@ public class DbAdapter {
 	 * @return
 	 */
 	public Cursor fetchAllContainersOfAPhoto(int photoId, OptionType option){
-		String itemIdName = "";
-		String itemTable = "";
-		String itemName = "";
-		if(option == OptionType.PHOTOGROUP){
-			itemIdName = GROUPID;
-			itemTable = GROUP_TABLE;
-			itemName = GROUPNAME;
-		}else if(option == OptionType.PHOTOSKIN){
-			itemTable = SKIN_TABLE;
-			itemIdName = SKINCONDITIONID;
-			itemName = SKINNAME;
-		}
-		String lookUpTable = DbAdapter.returnTableName(option);
-		String preparedStatement = "select ?s, ?s from ?s , ?s " +
-				" where ?s.?s = ?s.?s and PHOTOID = ?s";
-		String[] args = {itemIdName, itemName, itemTable, lookUpTable, 
-				itemTable, itemIdName, lookUpTable, itemIdName, photoId + "" };
-		Cursor mCursor = mDb.rawQuery(preparedStatement, args);
-		return mCursor;
+		if(photoId == Photo.INVALID_ID){
+			if(option == OptionType.PHOTOGROUP){
+				String sql = "select * from " + GROUP_TABLE;
+				return mDb.rawQuery(sql, null);
+			} else if (option == OptionType.PHOTOSKIN){
+				String sql = "select * from " + SKIN_TABLE;
+				return mDb.rawQuery(sql, null);
+			} else{
+				return null;
+			}
+		}else {
+			String itemIdName = "";
+			String itemTable = "";
+			String itemName = "";
+			if(option == OptionType.PHOTOGROUP){
+				itemIdName = GROUPID;
+				itemTable = GROUP_TABLE;
+				itemName = GROUPNAME;
+			}else if(option == OptionType.PHOTOSKIN){
+				itemTable = SKIN_TABLE;
+				itemIdName = SKINCONDITIONID;
+				itemName = SKINNAME;
+			}
+			String lookUpTable = DbAdapter.returnTableName(option);
+			String sql = "select " + itemIdName + ", "
+					+ itemName + ", " 
+					+ " from " + itemTable + " , " 
+					+ lookUpTable 
+					+ " where " + itemTable + "." + itemIdName + " = " 
+					+ lookUpTable + "." + itemIdName 
+					+ " and PHOTOID = " + photoId;
 
+			String preparedStatement = "select ?s , ?s from ?s , ?s " +
+					" where ?s" + "." + "?s = ?s" + "." + "?s and PHOTOID = ?s";
+			String[] args = {itemIdName, itemName, itemTable, lookUpTable, 
+					itemTable, itemIdName, lookUpTable, itemIdName, photoId + "" };
+			Cursor mCursor = mDb.rawQuery(preparedStatement, args);
+			return mCursor;
+		}
 	}
 
 	/**
@@ -561,8 +573,8 @@ public class DbAdapter {
 			itemIdName = SKINCONDITIONID;
 		}
 
-		String preparedStatement = "select ?s, ?s, ?s, ?s,  from ?s , ?s " +
-				" where ?s.?s = ?s.?s and ?s = ?s";
+		String preparedStatement = "select ?s , ?s , ?s , ?s ,  from ?s , ?s " +
+				" where ?s" + "." + "?s = ?s" + "." + "?s and ?s = ?s";
 		String[] args = {PHOTOID, LOCATION, TIMESTAMP, PHOTONAME, 
 				PHOTO_TABLE, lookUpTable, PHOTO_TABLE, PHOTOID, lookUpTable, PHOTOID , 
 				containerId + "", itemIdName};

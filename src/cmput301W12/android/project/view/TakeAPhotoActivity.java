@@ -32,11 +32,6 @@ import cmput301W12.android.project.SkinObserverApplication;
  *
  */
 
-/**
- * 
- * @author Stephen Romansky
- * Date: March 15th, 2012
- */
 /*
  * Useful links and tutorials:
  *      For implementing a camera activity

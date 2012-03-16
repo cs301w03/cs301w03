@@ -1,10 +1,5 @@
 package cmput301W12.android.project;
 
-/* SkinObserverController.class implements FController, and uses the DbControllerInterface
- * to access the functions of the database. Some of the functions connect to the database
- * and creates an abstract layer between the database and the other activities.
- */
-
 import java.util.Set;
 import java.util.SortedSet;
 

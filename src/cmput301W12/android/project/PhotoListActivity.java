@@ -1,27 +1,12 @@
 package cmput301W12.android.project;
 
-/* 	Author : Tanvir Sajed
- *  Date : 16 - 03 - 2012
- * 
- * PhotoListActivity.class is the ListActivity that is responsible for viewing 
- * the list of all photos the user has taken by his mobile. The photos are listed
- * in order of timestamp. This activity evokes a menu that can be used to compare, edit
- * and remove photos. However those functions are not yet implemented because they are 
- * outside the scope of the halfway prototype. This activity is called from the main
- * menu, which is ProjectTwoActivity.class using the button View All photos. Upon 
- * clicking an item in the list, the system evokes another activity, called ViewPhoto.class
- * where the user is able to see the image he has selected in near full screen. The list items
- * in this activity, contains a thumbnail view of the photo and they have timestamps beside
- * the thumbnail photo. Seeing the thumbnail and the timestamp, the user should be able to 
- * recognize the image he/she wants to see.
- */
-
 
 import java.util.SortedSet;
 
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,26 +30,41 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	 public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.photoviewlist_activity);
-	        
+	        fillSelectableList();
 	        
 	        //set up the listview to enable a context menu for editting logs/deleting
-	        
 	 }
 	 
 	 public void fillSelectableList() {
-
-		 //FController controller =  SkinObserverApplication.getSkinObserverController();
+		 
 		 FController controller =  SkinObserverApplication.getSkinObserverController(this);
-		 SortedSet<Photo> photos = controller.getAllPhoto();
+		 Bundle bundle = getIntent().getExtras();
+		 Container cont = null;
+		 SortedSet<Photo> photos = null;
+		 if (bundle == null)
+			 photos = controller.getAllPhoto();
+		 else
+		 {
+			 if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+			 {
+				 cont = (Container) bundle.getSerializable(SkinObserverIntent.DATA_GROUP);
+				 photos = controller.getAllPhotoOfAContainer(cont.getItemId(), OptionType.GROUP);
+
+			 }
+			 else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
+			 {
+				 cont = (Container) bundle.getSerializable(SkinObserverIntent.DATA_SKIN_CONDITION);
+				 photos = controller.getAllPhotoOfAContainer(cont.getItemId(), OptionType.SKINCONDITION);
+			 }			 
+		 }
 		 
-		 Photo[] photosArray1 = (Photo[]) photos.toArray();
-		 
-		 PhotoListArrayAdapter caAdapter = new PhotoListArrayAdapter(this, photosArray1);
+		 Photo[] newArray = new Photo[photos.size()];
+		 photos.toArray(newArray);
+		 //Photo[] photosArray1 = (Photo[]) photos.toArray();
+		 PhotoListArrayAdapter caAdapter = new PhotoListArrayAdapter(this, newArray);
 		 
 		 setListAdapter(caAdapter);
 		 
-		 
-		 //need to implement the simplecursor adapter in this structure.
 	 }
 	 
 	 public void fillEditableList() {
@@ -90,7 +90,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	                super.onListItemClick(l, v, position, id);
 	                
 	                ListAdapter adapter = l.getAdapter();
-	                Photo phto  = (Photo) adapter.getItem(position);
+	                Photo photo  = (Photo) adapter.getItem(position);
 	                /*Intent i = new Intent(this, ShowPhoto.class);
 	                i.putExtra(PHOTO, phto);
 	                startActivityForResult(i, VIEW_PHOTO);*/

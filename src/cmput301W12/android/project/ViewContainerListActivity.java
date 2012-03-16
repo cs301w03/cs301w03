@@ -1,8 +1,11 @@
 package cmput301W12.android.project;
 
+import java.util.Set;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +21,6 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_text_view);
-        
         fillData();
         
         registerForContextMenu(getListView());
@@ -26,14 +28,33 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
     
     private void fillData() {
         
-        Group g1 = new Group("Head");
-        Group g2 = new Group("Left Feet");
-        Group g3 = new Group("Right Feet");
-        
-        Group[] gl = {g1,g2,g3};
-        
-        ContainerArrayAdapter conAdapter = new ContainerArrayAdapter(this, gl);        
-        setListAdapter(conAdapter);
+//        Group g1 = new Group("abc");
+//        Group g2 = new Group("Feet");
+//        Group g3 = new Group("Right");
+//        Group[] gl = {g1,g2,g3};
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null)
+		{
+			FController controller = SkinObserverApplication.getSkinObserverController(this);
+			Set<? extends Container> setCon = null;
+			if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+			{
+				setCon = controller.getAllContainersOfAPhoto(Photo.INVALID_ID, OptionType.PHOTOGROUP);
+			}
+			else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
+			{
+				setCon = controller.getAllContainersOfAPhoto(Photo.INVALID_ID, OptionType.PHOTOSKIN);
+			}
+			Container[] array = (Container[]) setCon.toArray();
+	    	
+	    	ContainerArrayAdapter conAdapter = new ContainerArrayAdapter(this, array);
+	    	setListAdapter(conAdapter);
+		}
+		else
+		{
+			//Not legitimate, go back
+		}
+    	
     }
     
     @Override
@@ -41,9 +62,20 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
         super.onListItemClick(l, v, position, id);
         ListAdapter adapter = l.getAdapter();
         Container cont  = (Container) adapter.getItem(position);
-        Intent i = new Intent(this, CreateContainerActivity.class);
-        i.putExtra("cid", cont);
-        startActivity(i);
+        
+        
+        Intent newIntent = new Intent(this, PhotoListActivity.class);
+        Bundle bundle = getIntent().getExtras();
+        newIntent.putExtras(bundle);
+        if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+		{
+        	newIntent.putExtra(SkinObserverIntent.DATA_GROUP,cont);
+		}
+		else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
+		{
+			newIntent.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION,cont);
+		}
+        startActivity(newIntent);
     }    
     
     @Override
@@ -65,11 +97,12 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
     }
     
     /**
-     * Pass an intent to EntryAdd with request code ACTIVITY_CREATE
-     * to create a new log entry and wait for the result.
+     * 
+     * 
      */
     private void createNewGroup() {
         Intent i = new Intent(this, CreateContainerActivity.class);
+        i.putExtras(getIntent().getExtras());
         startActivityForResult(i, ACTIVITY_CREATE);
     }
     

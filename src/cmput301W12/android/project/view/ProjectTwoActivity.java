@@ -3,6 +3,7 @@ package cmput301W12.android.project.view;
 //import android.R;
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import cmput301W12.android.project.R;
 
@@ -30,17 +31,23 @@ public class ProjectTwoActivity extends Activity
         
         Button takeAPhoto = (Button) this.findViewById(R.id.takeAPhoto);
         
-//        takeAPhoto.setOnClickListener(new View.OnClickListener()
-//        {
-//            
-//            @Override
-//            public void onClick(View v)
-//            {
-//                /* Add code here to start up camera activity */
-//                // TODO Auto-generated method stub
-//                
-//            }
-//        });
+        takeAPhoto.setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                /* Add code here to start up camera activity */
+                //Intent getAPhoto = new Intent(this, )
+                //Make a camera controller
+                //TakeAPhotoActivity myCamera = new TakeAPhotoActivity();
+                //myCamera.getPhoto();
+                
+                
+                // TODO Auto-generated method stub
+                
+            }
+        });
     }
 
 }

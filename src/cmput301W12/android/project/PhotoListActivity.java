@@ -36,7 +36,8 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	 }
 	 
 	 public void fillSelectableList() {
-		 
+
+		 //FController controller =  SkinObserverApplication.getSkinObserverController();
 		 FController controller =  SkinObserverApplication.getSkinObserverController(this);
 		 SortedSet<Photo> photos = controller.getAllPhoto();
 		 
@@ -105,7 +106,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 //                      refreshList();	            	  
 	              }
 	              
-	             /* else if(compare.compareTo(item.getTitle().toString() == 0)) {
+	             /*else if(compare.compareTo(item.getTitle().toString() == 0)) {
 	            	  	
                   }*/
 	              

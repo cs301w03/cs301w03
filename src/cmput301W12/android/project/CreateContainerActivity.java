@@ -23,6 +23,8 @@ public class CreateContainerActivity extends Activity {
 		mNameText = (EditText) findViewById(R.id.editTextNames);
 		mAddButton = (Button) findViewById(R.id.buttonAdd);
 		
+		Activity activity = this;
+		
 		mAddButton.setOnClickListener(new View.OnClickListener()
 		{
 			
@@ -30,27 +32,49 @@ public class CreateContainerActivity extends Activity {
 			public void onClick(View v)
 			{
 				if (mNameText.getText().toString().trim().length() > 0)
-					Toast.makeText(this, "Please enter a name!", Toast.LENGTH_SHORT)
+					;//Toast.makeText(PhotoListActivity.this, "Please enter a name!", Toast.LENGTH_SHORT).show();
 				else
 				{
-					Container cont;
-					
-					Bundle bundle = getIntent().getExtras();
-					if (bundle.getString(SkinObserverIntent.DATA_GROUP) == 
-											SkinObserverIntent.DATA_GROUP)
-						cont = new Group(mNameText.getText());
-					else
-						cont = new SkinCondition(mNameText.getText());
-					
-					FController skinObserverController = SkinObserverApplication.getSkinObserverController(this);
-					skinObserverController.addContainObj(cont);
-					
-					setResult(RESULT_OK);
-					finish();
+					storeContainer();
 				}
 			}
-		})
+		});
 		
+	}
+	
+	protected void storeContainer()
+	{
+		Container cont;
+		
+		Bundle bundle = getIntent().getExtras();
+		if (bundle.getString(SkinObserverIntent.DATA_GROUP) == 
+								SkinObserverIntent.DATA_GROUP)
+			cont = new Group(mNameText.getText().toString());
+		else
+			cont = new SkinCondition(mNameText.getText().toString());
+		
+		FController skinObserverController = SkinObserverApplication.getSkinObserverController(this);
+		skinObserverController.addContainObj(cont);
+		
+		setResult(RESULT_OK);
+		finish();
+	}
+	
+	public void start(){
+		Container cont;
+		
+		Bundle bundle = getIntent().getExtras();
+		if (bundle.getString(SkinObserverIntent.DATA_GROUP) == 
+								SkinObserverIntent.DATA_GROUP)
+			cont = new Group(mNameText.getText().toString());
+		else
+			cont = new SkinCondition(mNameText.getText().toString());
+		
+		//FController skinObserverController = SkinObserverApplication.getSkinObserverController(activity);
+		//skinObserverController.addContainObj(cont);
+		
+		setResult(RESULT_OK);
+		finish();
 	}
 	
 }

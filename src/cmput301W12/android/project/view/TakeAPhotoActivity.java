@@ -92,7 +92,7 @@ public class TakeAPhotoActivity extends Activity
                 
                 /* send the photo object to Hieu's DB */
                 FController controller = SkinObserverApplication.getSkinObserverController(this);
-                
+                //FController controller = SkinObserverApplication.getSkinObserverController();          
                 
                 
                 /* Call the methods to create a photo object here? I dono? */

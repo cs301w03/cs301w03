@@ -1,8 +1,14 @@
 package cmput301W12.android.project;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public class SkinCondition extends Container {
+public class SkinCondition extends Container implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/* (non-Javadoc)
 	 * @see cmput301W12.android.project.ContainObj#equals(java.lang.Object)

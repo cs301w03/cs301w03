@@ -1,8 +1,14 @@
 package cmput301W12.android.project;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public class Group extends Container {
+public class Group extends Container implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public Group(String name, Set<Integer> photos) {
 		super(name, photos);

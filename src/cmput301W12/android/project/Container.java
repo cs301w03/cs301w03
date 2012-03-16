@@ -1,9 +1,14 @@
 package cmput301W12.android.project;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class Container {
+public abstract class Container implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int itemId = Photo.INVALID_ID;
 	private String name;
 	protected Set<Integer> photos;

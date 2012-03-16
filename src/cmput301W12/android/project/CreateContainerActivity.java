@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+//This is a test merge.
 public class CreateContainerActivity extends Activity {
 
 	private EditText mNameText;

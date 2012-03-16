@@ -8,17 +8,18 @@ import java.util.TreeSet;
 import android.content.Context;
 import android.database.Cursor;
 
-public class DbController implements DbControllerInterface {
+public class DbController extends FModel<FView> implements DbControllerInterface {
 	private DbAdapter mDbAdap;
 
 	private static DbController dbCon = null;
 
 	private DbController(Context ct){
+		super();
 		this.mDbAdap = DbAdapter.getDbAdapter(ct);
 		this.mDbAdap = this.mDbAdap.open();
 	}
 
-	public static DbController getDbController(Context ct){
+	public static DbControllerInterface getDbController(Context ct){
 		if(dbCon == null){
 			dbCon = new DbController(ct);
 		}
@@ -53,24 +54,48 @@ public class DbController implements DbControllerInterface {
 		return phoObj;
 	}
 
+	public Container storeNewContainer(String name, OptionType option){
+		Container container = null;
+		if(option == OptionType.GROUP){
+			int id = (int) mDbAdap.addGroup(name);
+			Group newGroup = new Group(name);
+			newGroup.setItemId(id);
+			container = newGroup;
+		} else if(option == OptionType.SKINCONDITION){
+			int id = (int) mDbAdap.addSkinCondition(name);
+			SkinCondition newSkinCondition = new SkinCondition(name);
+			newSkinCondition.setItemId(id);
+			container = newSkinCondition;
+		}
+		
+		return container;
+	}
+	
 	public Container addContainObj(Container containObj) {
 		// TODO Auto-generated method stub
 		String name = containObj.getName();
 		Set<Integer> listOfPhotoIds= containObj.getPhotos();
 
-
 		if(containObj instanceof Group){
-			for(Integer id : listOfPhotoIds){
-				int groupId= (int) this.mDbAdap.addGroup(name);
+
+			if(containObj.getItemId() == Photo.INVALID_ID){
+				int groupId = (int) this.mDbAdap.addGroup(name);
 				containObj.setItemId(groupId);
-				this.mDbAdap.addPhotoGroup(id, groupId );
+			}
+			int validGroupId = containObj.getItemId();
+			for(Integer id : listOfPhotoIds){
+				this.mDbAdap.addPhotoGroup(id, validGroupId);
 			}
 		} 
 		else if(containObj instanceof SkinCondition){
-			for(Integer id : listOfPhotoIds){
+			if(containObj.getItemId() == Photo.INVALID_ID){
 				int skinId = (int) this.mDbAdap.addSkinCondition(name);
 				containObj.setItemId(skinId);
-				this.mDbAdap.addPhotoSkinCondition(id, skinId);
+			}
+			
+			int validSkinId = containObj.getItemId();
+			for(Integer id : listOfPhotoIds){
+				this.mDbAdap.addPhotoSkinCondition(id, validSkinId);
 			}
 		}
 
@@ -114,7 +139,7 @@ public class DbController implements DbControllerInterface {
 		return DbController.getPhotoFromCursor(cursor);
 	}
 
-	
+
 	public Set<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option){
 		Cursor cursor = this.fetchAllContainers(photoId, option);
 		boolean repeat = false;
@@ -155,7 +180,7 @@ public class DbController implements DbControllerInterface {
 			}
 
 			Set<SkinCondition> aSet = new HashSet<SkinCondition>();
-			
+
 			while(repeat){
 				itemId = cursor.getInt(cursor.getColumnIndexOrThrow(column));
 				name = cursor.getString(cursor.getColumnIndexOrThrow(name));
@@ -166,10 +191,10 @@ public class DbController implements DbControllerInterface {
 				aSet.add((SkinCondition)container);
 				repeat = cursor.moveToNext();
 			}
-			
+
 			return aSet;
 		}
-		
+
 		return null;
 	}
 

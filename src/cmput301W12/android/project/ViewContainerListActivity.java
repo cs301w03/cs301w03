@@ -12,6 +12,13 @@ import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+/**
+ * 
+ * @author MinhTri
+ * @date Mar 15, 2012
+ * 
+ * An activity to display all groups/skin conditions
+ */
 public class ViewContainerListActivity extends ListActivity implements FView<DbController>{
 	private static final int ACTIVITY_CREATE=0;
 	private static final int CREATE_ID = Menu.FIRST;
@@ -26,12 +33,32 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
         registerForContextMenu(getListView());
     }
     
-    private void fillData() {
-        
-//        Group g1 = new Group("abc");
-//        Group g2 = new Group("Feet");
-//        Group g3 = new Group("Right");
-//        Group[] gl = {g1,g2,g3};
+    // Temporary method to demo
+    public void fillData() {  
+    	Container[] array = new Container[3];
+    	Bundle bundle = getIntent().getExtras();
+    	if (bundle != null)
+		{
+			if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+			{
+				array[0] = new Group("Head");
+				array[1] = new Group("LeafHand");
+				array[2] = new Group("Chest");
+			}
+			else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
+			{
+				array[0] = new SkinCondition("Mole");
+				array[1] = new SkinCondition("Acne");
+				array[2] = new SkinCondition("Unknown");
+			}
+	    	ContainerArrayAdapter conAdapter = new ContainerArrayAdapter(this, array);
+	    	setListAdapter(conAdapter);
+		}
+	    
+    }
+    
+    /* Fill data from database, not complet
+    public void fillData() {        
     	Container[] array = null;
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null)
@@ -60,6 +87,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 		}
     	
     }
+    */
     
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -105,7 +133,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
      * 
      */
     private void createNewGroup() {
-        Intent i = new Intent(this, CreateContainerActivity.class);
+        Intent i = new Intent(this, ViewCreateContainerActivity.class);
         i.putExtras(getIntent().getExtras());
         startActivityForResult(i, ACTIVITY_CREATE);
     }

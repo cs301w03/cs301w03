@@ -36,6 +36,8 @@ import android.util.Log;
 
 
 /**
+ * @author Hieu Ngo
+ * @date Mar 15, 2012
  * Simple database access helper class. Defines the basic CRUD operations
  * for the database, and gives the ability to list all entries as well as
  * retrieve or modify a specific field. 

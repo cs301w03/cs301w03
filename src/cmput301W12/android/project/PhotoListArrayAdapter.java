@@ -16,11 +16,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
+/**
+ * 
+ * @author MinhTri
+ * @date Mar 16, 2012
+ * 
+ * Extends ArrayAdaper to display a list of rows,
+ * each consists a photo thumbnail and name
+ */
 public class PhotoListArrayAdapter extends ArrayAdapter<Photo> {
 		private final Context context;
 		private final Photo[] photo_array;
-		static int i = 0;
+//		static int i = 0;
 
 		public PhotoListArrayAdapter(Context context, Photo[] photos) {
 			super(context, R.layout.list_photo_view, photos);
@@ -31,8 +38,8 @@ public class PhotoListArrayAdapter extends ArrayAdapter<Photo> {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			
-			Log.d("Displaying photo", i + "");
-			i++;
+//			Log.d("Displaying photo", i + "");
+//			i++;
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View rowView = inflater.inflate(R.layout.list_photo_view, parent, false);
@@ -43,12 +50,10 @@ public class PhotoListArrayAdapter extends ArrayAdapter<Photo> {
 					if (position < photo_array.length)
 					{
 						textView.setText(photo_array[position].getName());
-						
 						String location = photo_array[position].getLocation();
 						Uri uri = Uri.parse(location);
-						File newFile = new File(uri.getPath());
 						Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
-						Bitmap scaledBmp = Bitmap.createScaledBitmap(bitmap, 50, 50, false);				
+//						Bitmap scaledBmp = Bitmap.createScaledBitmap(bitmap, 50, 50, false);				
 						imageView.setImageBitmap(bitmap);
 
 					}

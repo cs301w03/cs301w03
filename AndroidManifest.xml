@@ -26,8 +26,8 @@
         <activity android:name=".view.TakeAPhotoActivity"></activity>
         <activity android:name=".PhotoListActivity"></activity>
         <activity android:name=".ViewContainerListActivity"></activity>
-        <activity android:name=".CreateContainerActivity"></activity>
-        <activity android:name=".ViewPhoto"></activity>
+        <activity android:name=".ViewCreateContainerActivity"></activity>
+        <activity android:name=".ViewPhotoActivity"></activity>
     </application>
 
 </manifest>

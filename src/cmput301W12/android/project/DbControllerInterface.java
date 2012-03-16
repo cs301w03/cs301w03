@@ -3,6 +3,13 @@ package cmput301W12.android.project;
 import java.util.Set;
 import java.util.SortedSet;
 
+/**
+ * @author Hieu Ngo
+ * @date Mar 14, 2012
+ * 
+ * Interface to implement Adapter design pattern
+ * Use to provide flexibility in future, decouple database and software
+ */
 public interface DbControllerInterface {
 	public void close();
 

@@ -3,6 +3,13 @@ package cmput301W12.android.project;
 import java.util.Set;
 import java.util.SortedSet;
 
+/**
+ * @author Hieu Ngo
+ * @date Mar 14, 2012
+ * 
+ * Interface for Controller of the system in MVC model.
+ * Every controller should implement this interface
+ */
 public interface FController {
 
 	public void close();

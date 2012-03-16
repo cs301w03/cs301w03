@@ -8,7 +8,14 @@ import java.util.TreeSet;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
-
+/**
+ * @user Hieu Ngo
+ * @date Mar 14, 2012
+ * 
+ * Extends system model
+ * 
+ * Note: This class name is expected to be changed in the next phase
+ */
 public class DbController extends FModel<FView> implements DbControllerInterface {
 	private DbAdapter mDbAdap;
 

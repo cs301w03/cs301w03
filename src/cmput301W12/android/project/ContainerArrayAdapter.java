@@ -1,12 +1,19 @@
+
 package cmput301W12.android.project;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+/**
+ * @author MinhTri
+ * @date Mar 15, 2012
+ * 
+ * Extends android.widget.ArrayAdapter
+ * This class is used for binding a list of Container with a ListActivity
+ */
 public class ContainerArrayAdapter extends ArrayAdapter<Container> {
 		private final Context context;
 		private final Container[] containers;
@@ -17,6 +24,7 @@ public class ContainerArrayAdapter extends ArrayAdapter<Container> {
 			this.containers = containers;
 		}
 
+		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) context

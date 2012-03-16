@@ -9,6 +9,16 @@ import java.util.Set;
 
 import android.util.Log;
 
+/**
+ * 
+ * @author Hieu Ngo
+ * @date Mar 16, 2012
+ * 
+ * Data class, store information of Photo
+ * includes image uri, timestamp and name
+ * 
+ * Note: Expect to implement Proxy design pattern
+ */
 public class Photo implements Comparable<Photo>, Serializable {
 	private int photoId = INVALID_ID;
 	private String location;

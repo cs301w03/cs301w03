@@ -15,7 +15,14 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-
+/**
+ * 
+ * @author MinhTri & Tanvir Sajed
+ * @date Mar 16, 2012
+ * 
+ * This class is an activity use to display a list
+ * of photo thumbnails and names
+ */
 public class PhotoListActivity extends ListActivity implements FView<DbController>
 {
 	
@@ -27,7 +34,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
      public static final int EDIT_PHOTO = 1;
 
 	 @Override
-	 public void onCreate(Bundle savedInstanceState) {
+	 protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.photoviewlist_activity);
 	        fillSelectableList();
@@ -35,7 +42,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	        //set up the listview to enable a context menu for editting logs/deleting
 	 }
 	 
-	 public void fillSelectableList() {
+	 protected void fillSelectableList() {
 		 
 		 FController controller =  SkinObserverApplication.getSkinObserverController(this);
 		 Bundle bundle = getIntent().getExtras();
@@ -67,7 +74,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 		 
 	 }
 	 
-	 public void fillEditableList() {
+	 protected void fillEditableList() {
 		 
 	 }
 	 
@@ -91,7 +98,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	                
 	                ListAdapter adapter = l.getAdapter();
 	                Photo photo  = (Photo) adapter.getItem(position);
-	                Intent i = new Intent(this, ViewPhoto.class);
+	                Intent i = new Intent(this, ViewPhotoActivity.class);
 	                i.putExtra(PHOTO, photo);
 	                startActivityForResult(i, VIEW_PHOTO);
 	                

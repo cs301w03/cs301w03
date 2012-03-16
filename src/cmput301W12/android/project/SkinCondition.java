@@ -3,6 +3,14 @@ package cmput301W12.android.project;
 import java.io.Serializable;
 import java.util.Set;
 
+/**
+ * @author Hieu Ngo
+ * @date Mar 15, 2012
+ * 
+ * Data class, stores information of skin condition
+ * 
+ * Note: Expect to implement Proxy design pattern
+ */
 public class SkinCondition extends Container implements Serializable {
 
 	/**

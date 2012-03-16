@@ -1,5 +1,11 @@
 package cmput301W12.android.project;
 
+/* This is the abstract class Container.class which is used and extended to create
+ * other data classes like Photo, SkinCondition and Group. This is used as a template mainly
+ * This is the parent class that can be used again and again, create other data classes
+ * to store information about photos.
+ */
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;

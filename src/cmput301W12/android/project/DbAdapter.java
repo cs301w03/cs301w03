@@ -20,6 +20,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* DbAdapter is responsible for creating a database and creating columns inside
+ * a database that will be used to store important information about photos
+ * that are taken by user. DbAdapter also lets us connect to the database
+ * and change the database the way we want to, add information, delete information
+ * and update information whenever we need to.
+ */
+
 package cmput301W12.android.project;
 
 import java.sql.Timestamp;

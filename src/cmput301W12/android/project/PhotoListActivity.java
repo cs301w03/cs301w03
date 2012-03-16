@@ -1,5 +1,18 @@
 package cmput301W12.android.project;
 
+/* PhotoListActivity.class is the ListActivity that is responsible for viewing 
+ * the list of all photos the user has taken by his mobile. The photos are listed
+ * in order of timestamp. This activity evokes a menu that can be used to compare, edit
+ * and remove photos. However those functions are not yet implemented because they are 
+ * outside the scope of the halfway prototype. This activity is called from the main
+ * menu, which is ProjectTwoActivity.class using the button View All photos. Upon 
+ * clicking an item in the list, the system evokes another activity, called ViewPhoto.class
+ * where the user is able to see the image he has selected in near full screen. The list items
+ * in this activity, contains a thumbnail view of the photo and they have timestamps beside
+ * the thumbnail photo. Seeing the thumbnail and the timestamp, the user should be able to 
+ * recognize the image he/she wants to see.
+ */
+
 
 import java.util.SortedSet;
 

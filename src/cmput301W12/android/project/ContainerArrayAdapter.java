@@ -1,5 +1,14 @@
 package cmput301W12.android.project;
 
+/* ContainerArrayAdapter.class is an adapter that connects containers
+ * to a row view in a list view. It updates the information in containers
+ * with a layout template and then populates the row with the specific container that
+ * has been passed. It will be used in a listview where list items will be updated
+ * according to the layout presented here. Here the textview in the layout
+ * will receive the name of the container, and that the name will be shown as a
+ * list item of the listview that uses this adapter.
+ */
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

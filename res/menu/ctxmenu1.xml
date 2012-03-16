@@ -4,6 +4,8 @@
         android:title="@string/edit_a_photo">
         
     </item>
+    <item android:id="@+id/item2" android:title="@string/delete_a_photo"></item>
+    <item android:id="@+id/item3" android:title="@string/add_photo"></item>
     
 
 </menu>

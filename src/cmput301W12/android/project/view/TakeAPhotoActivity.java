@@ -90,7 +90,7 @@ public class TakeAPhotoActivity extends Activity
                 Photo newestPhoto = new Photo(photoUri.toString(), time, name, groups, skinConditions);
                 
                 /* send the photo object to Hieu's DB */
-                //FController controller = SkinObserverApplication.getDbController()
+                FController controller = SkinObserverApplication.getDbController()
                 
                 
                 

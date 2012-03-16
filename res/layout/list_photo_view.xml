@@ -6,12 +6,12 @@
         
 		<ImageView
         android:id="@+id/imageViewPhotoThumbnail"
-        android:layout_width="0dip"
-        android:layout_height="0dip"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="4dp"
-        android:layout_weight="1.10"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="1dp"
+        
         android:contentDescription="@drawable/ic_launcher" >
     	</ImageView>
     

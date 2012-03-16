@@ -91,9 +91,9 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	                
 	                ListAdapter adapter = l.getAdapter();
 	                Photo photo  = (Photo) adapter.getItem(position);
-	                /*Intent i = new Intent(this, ShowPhoto.class);
-	                i.putExtra(PHOTO, phto);
-	                startActivityForResult(i, VIEW_PHOTO);*/
+	                Intent i = new Intent(this, ViewPhoto.class);
+	                i.putExtra(PHOTO, photo);
+	                startActivityForResult(i, VIEW_PHOTO);
 	                
 	                //editor.putExtra(PHOTO, value ); PRODUCE INTENT WITH PHOTO OBJECT to view
 	     

@@ -1,8 +1,10 @@
 package cmput301W12.android.project;
 
+import java.io.File;
 import java.net.URI;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore.Images;
@@ -40,16 +42,15 @@ public class PhotoListArrayAdapter extends ArrayAdapter<Photo> {
 				if (photo_array.length > 0)
 					if (position < photo_array.length)
 					{
-						Log.d("Displaying photo.Textview", photo_array[position].getLocation());
 						textView.setText(photo_array[position].getName());
 						
-						/**
-						
-						Bitmap bitmapOrg = BitmapFactory.decodeResource(getResources(),
-					               R.drawable.android);
-						
-						imageView.setImageURI( imgUri );
-						**/
+						String location = photo_array[position].getLocation();
+						Uri uri = Uri.parse(location);
+						File newFile = new File(uri.getPath());
+						Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
+						Bitmap scaledBmp = Bitmap.createScaledBitmap(bitmap, 50, 50, false);				
+						imageView.setImageBitmap(bitmap);
+
 					}
 			return rowView;
 		}

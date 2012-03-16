@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -63,9 +64,10 @@ public class ViewPhoto extends Activity implements FView<DbController>
 			Photo photo = (Photo) getIntent().getSerializableExtra(PhotoListActivity.PHOTO);
 			String location = photo.getLocation();
 			Uri uri = Uri.parse(location);
-			File newFile = new File(uri.getPath());
-			Bitmap bitmap = BogoPicGen.generateBitmap(400, 400);
-			ViewPhoto.saveBMP(newFile, bitmap);
+			Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
+//			File newFile = new File(uri.getPath());
+//			Bitmap bitmap = BogoPicGen.generateBitmap(400, 400);
+//			ViewPhoto.saveBMP(newFile, bitmap);
 			newimage.setImageBitmap(bitmap);
 		}catch(Exception ex){
 			System.out.println("Can't show the photo!");

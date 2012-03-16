@@ -1,5 +1,9 @@
 package cmput301W12.android.project;
 
+/*	Author : Hieu Ngo Cho
+ *  Date - 16 - 03 - 2012
+ * SkinObserverIntent.class is to be used later*/
+
 import android.content.Context;
 import android.content.Intent;
 

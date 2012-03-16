@@ -26,7 +26,7 @@ public class PhotoListActivity extends ListActivity
 	                                                // binding the listview, so the onListItemClick function works
 	 }
 	 
-	 public void fillupList(void) {
+	 public void fillupList() {
 		 
 	 }
 	 

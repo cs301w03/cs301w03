@@ -252,14 +252,12 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 			Set<Group> aSet = new HashSet<Group>();
 
 			if (cursor != null) {
-//				if(cursor.isFirst() == false)
-//					repeat = cursor.moveToFirst();
+					repeat = cursor.moveToFirst();
 			}
-			cursor.moveToNext();
+			
 			while(repeat){
-				//repeat = cursor.moveToNext();
-				itemId = cursor.getInt(1);
-				name = cursor.getString(2);
+				itemId = cursor.getInt(cursor.getColumnIndex(DbAdapter.GROUPID));
+				name = cursor.getString(cursor.getColumnIndex(DbAdapter.GROUPNAME));
 
 				container = new Group(name);
 				container.setItemId(itemId);
@@ -271,15 +269,14 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		}else if (option == OptionType.SKINCONDITION){
 
 			if (cursor != null) {
-//				if(cursor.isFirst()== false)
-//					repeat = cursor.moveToFirst();
+					repeat = cursor.moveToFirst();
 			}
 
 			Set<SkinCondition> aSet = new HashSet<SkinCondition>();
 
 			while(repeat){
-				itemId = cursor.getInt(2);
-				name = cursor.getString(3);
+				itemId = cursor.getInt(cursor.getColumnIndex(DbAdapter.SKINCONDITIONID));
+				name = cursor.getString(cursor.getColumnIndex(DbAdapter.SKINNAME));
 
 				container = new SkinCondition(name);
 				container.setItemId(itemId);

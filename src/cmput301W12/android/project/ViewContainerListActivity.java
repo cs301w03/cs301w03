@@ -33,31 +33,31 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
         registerForContextMenu(getListView());
     }
     
-    // Temporary method to demo
-    public void fillData() {  
-    	Container[] array = new Container[3];
-    	Bundle bundle = getIntent().getExtras();
-    	if (bundle != null)
-		{
-			if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
-			{
-				array[0] = new Group("Head");
-				array[1] = new Group("LeafHand");
-				array[2] = new Group("Chest");
-			}
-			else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
-			{
-				array[0] = new SkinCondition("Mole");
-				array[1] = new SkinCondition("Acne");
-				array[2] = new SkinCondition("Unknown");
-			}
-	    	ContainerArrayAdapter conAdapter = new ContainerArrayAdapter(this, array);
-	    	setListAdapter(conAdapter);
-		}
-	    
-    }
+//    // Temporary method to demo
+//    public void fillData() {  
+//    	Container[] array = new Container[3];
+//    	Bundle bundle = getIntent().getExtras();
+//    	if (bundle != null)
+//		{
+//			if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+//			{
+//				array[0] = new Group("Head");
+//				array[1] = new Group("LeafHand");
+//				array[2] = new Group("Chest");
+//			}
+//			else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
+//			{
+//				array[0] = new SkinCondition("Mole");
+//				array[1] = new SkinCondition("Acne");
+//				array[2] = new SkinCondition("Unknown");
+//			}
+//	    	ContainerArrayAdapter conAdapter = new ContainerArrayAdapter(this, array);
+//	    	setListAdapter(conAdapter);
+//		}
+//	    
+//    }
     
-    /* Fill data from database, not complet
+    
     public void fillData() {        
     	Container[] array = null;
 		Bundle bundle = getIntent().getExtras();
@@ -74,7 +74,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 			else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
 			{
 				setCon = controller.getAllContainers(OptionType.SKINCONDITION);
-				array = new Group[setCon.size()];
+				array = new SkinCondition[setCon.size()];
 				setCon.toArray(array);
 			}
 			
@@ -84,10 +84,11 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 		else
 		{
 			//Not legitimate, go back
+			//not implemented
 		}
     	
     }
-    */
+    
     
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {

@@ -1,7 +1,10 @@
 package cmput301W12.android.project;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import android.content.Context;
 import android.database.Cursor;
 
@@ -28,7 +31,7 @@ public class DbController implements DbControllerInterface {
 
 
 	@Override
-	public PhotoObj addPhotoObj(PhotoObj phoObj) {
+	public Photo addPhoto(Photo phoObj) {
 		// TODO Auto-generated method stub
 		String location = phoObj.getLocation();
 		Timestamp timeStamp  = phoObj.getTimeStamp();
@@ -50,39 +53,20 @@ public class DbController implements DbControllerInterface {
 		return phoObj;
 	}
 
-	@Override
-	public Cursor fetchAllPhotoObj() {
-		// TODO Auto-generated method stub
-		return this.mDbAdap.fetchAllEntries(OptionType.PHOTO);
-	}
-
-	@Override
-	public Cursor fetchAllPhotoObjConnected(int itemId, OptionType option) {
-		// TODO Auto-generated method stub
-		return this.mDbAdap.fetchAllPhotosOfAContainer(itemId, option);
-	}
-
-	@Override
-	public Cursor fetchAllContainers(int photoId, OptionType option) {
-		// TODO Auto-generated method stub
-		return this.mDbAdap.fetchAllContainersOfAPhoto(photoId, option);
-	}
-
-	@Override
-	public ContainObj addContainObj(ContainObj containObj) {
+	public Container addContainObj(Container containObj) {
 		// TODO Auto-generated method stub
 		String name = containObj.getName();
 		Set<Integer> listOfPhotoIds= containObj.getPhotos();
 
 
-		if(containObj instanceof GroupObj){
+		if(containObj instanceof Group){
 			for(Integer id : listOfPhotoIds){
 				int groupId= (int) this.mDbAdap.addGroup(name);
 				containObj.setItemId(groupId);
 				this.mDbAdap.addPhotoGroup(id, groupId );
 			}
 		} 
-		else if(containObj instanceof SkinConditionObj){
+		else if(containObj instanceof SkinCondition){
 			for(Integer id : listOfPhotoIds){
 				int skinId = (int) this.mDbAdap.addSkinCondition(name);
 				containObj.setItemId(skinId);
@@ -92,5 +76,120 @@ public class DbController implements DbControllerInterface {
 
 		return containObj;
 	}
+
+	private static SortedSet<Photo> getPhotoFromCursor(Cursor cursor){
+		boolean repeat = false;
+		int photoId;
+		String location, name;
+		Timestamp timeStamp;
+
+		Photo photo;
+		SortedSet<Photo> aSet = new TreeSet<Photo>();
+
+		if (cursor != null) {
+			repeat = cursor.moveToFirst();
+		}
+
+		while(repeat){
+			photoId = cursor.getInt(cursor.getColumnIndexOrThrow(DbAdapter.PHOTOID));
+			location = cursor.getString(cursor.getColumnIndexOrThrow(DbAdapter.LOCATION));
+			timeStamp = Timestamp.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DbAdapter.TIMESTAMP)));
+			name = cursor.getString(cursor.getColumnIndexOrThrow(DbAdapter.PHOTONAME));
+			photo = new Photo(location, timeStamp, name, null, null);
+			photo.setPhotoId(photoId);
+			aSet.add(photo);
+			repeat = cursor.moveToNext();
+		}
+
+		return aSet;
+	}
+
+	public SortedSet<Photo> getAllPhoto(){
+		Cursor cursor = this.fetchAllPhotoObj();
+		return DbController.getPhotoFromCursor(cursor);
+	}
+
+	public SortedSet<Photo> getAllPhotoOfAContainer(int itemId, OptionType option){
+		Cursor cursor = this.fetchAllPhotoObjConnected(itemId, option);
+		return DbController.getPhotoFromCursor(cursor);
+	}
+
+	
+	public Set<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option){
+		Cursor cursor = this.fetchAllContainers(photoId, option);
+		boolean repeat = false;
+
+		Container container;
+
+		int itemId;
+		String name = "";
+		String column = "";
+
+		if(option == OptionType.PHOTOGROUP){
+			column = DbAdapter.GROUPID;
+			name = DbAdapter.GROUPNAME;
+
+			Set<Group> aSet = new HashSet<Group>();
+
+			if (cursor != null) {
+				repeat = cursor.moveToFirst();
+			}
+
+			while(repeat){
+				itemId = cursor.getInt(cursor.getColumnIndexOrThrow(column));
+				name = cursor.getString(cursor.getColumnIndexOrThrow(name));
+
+				container = new Group(name);
+				container.setItemId(itemId);
+				aSet.add((Group) container);
+				repeat = cursor.moveToNext();
+			}
+
+			return aSet;
+		}else if (option == OptionType.PHOTOSKIN){
+			column = DbAdapter.SKINCONDITIONID;
+			name = DbAdapter.SKINNAME;
+
+			if (cursor != null) {
+				repeat = cursor.moveToFirst();
+			}
+
+			Set<SkinCondition> aSet = new HashSet<SkinCondition>();
+			
+			while(repeat){
+				itemId = cursor.getInt(cursor.getColumnIndexOrThrow(column));
+				name = cursor.getString(cursor.getColumnIndexOrThrow(name));
+
+				container = new SkinCondition(name);
+				container.setItemId(itemId);
+
+				aSet.add((SkinCondition)container);
+				repeat = cursor.moveToNext();
+			}
+			
+			return aSet;
+		}
+		
+		return null;
+	}
+
+	public Cursor fetchAllPhotoObj() {
+		// TODO Auto-generated method stub
+		return this.mDbAdap.fetchAllEntries(OptionType.PHOTO);
+	}
+
+
+	public Cursor fetchAllPhotoObjConnected(int itemId, OptionType option) {
+		// TODO Auto-generated method stub
+		return this.mDbAdap.fetchAllPhotosOfAContainer(itemId, option);
+	}
+
+
+	public Cursor fetchAllContainers(int photoId, OptionType option) {
+		// TODO Auto-generated method stub
+		return this.mDbAdap.fetchAllContainersOfAPhoto(photoId, option);
+	}
+
+
 }
 

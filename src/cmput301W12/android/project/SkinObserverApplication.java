@@ -5,13 +5,13 @@ import android.content.Context;
 
 public class SkinObserverApplication extends Application {
 	// Singleton
-	transient private static DbControllerInterface dbController = null;
+	transient private static FController skinObserverController = null;
 
-	public static DbControllerInterface getDbController(Context ctx) {
-		if (dbController == null) {
-			dbController = DbController.getDbController(ctx);
+	public static FController getSkinObserverController(Context ctx) {
+		if (skinObserverController == null) {
+			skinObserverController = new SkinObserverController(ctx);
 		}
-		return dbController;
+		return skinObserverController;
 	}
 
 }

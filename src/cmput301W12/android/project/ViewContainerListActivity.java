@@ -41,7 +41,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
         super.onListItemClick(l, v, position, id);
         ListAdapter adapter = l.getAdapter();
         Container cont  = (Container) adapter.getItem(position);
-        Intent i = new Intent(this, CreateGroupActivity.class);
+        Intent i = new Intent(this, CreateContainerActivity.class);
         i.putExtra("cid", cont);
         startActivity(i);
     }    
@@ -69,7 +69,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
      * to create a new log entry and wait for the result.
      */
     private void createNewGroup() {
-        Intent i = new Intent(this, CreateGroupActivity.class);
+        Intent i = new Intent(this, CreateContainerActivity.class);
         startActivityForResult(i, ACTIVITY_CREATE);
     }
     

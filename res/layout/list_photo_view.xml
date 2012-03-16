@@ -7,17 +7,18 @@
     <ImageView
         android:id="@+id/imageViewPhotoThumbnail"
         android:layout_width="34dp"
-        android:layout_height="33dp"
+        android:layout_height="99dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="4dp"
-        android:layout_weight="1.10"
+        android:layout_weight="0.48"
         android:contentDescription="@drawable/ic_launcher" >
     </ImageView>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="0.37"
         android:orientation="vertical" >
 
         <TextView

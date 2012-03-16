@@ -1,6 +1,9 @@
 package cmput301W12.android.project;
 
-/*	ViewPhoto.class is the activity which is responsible for showing the photo
+/*	Author : Tanvir Sajed
+ *  Date : 16 - 03 - 2012
+ * 
+	ViewPhoto.class is the activity which is responsible for showing the photo
  * in a very big size for the viewer. The Activity will also show some other information
  * pertaining to the photo, including the photo's name, photo's group, photo's skin 
  * condition. This activity completes the user requirement of viewing a photo the user

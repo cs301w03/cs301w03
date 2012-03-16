@@ -1,6 +1,8 @@
 package cmput301W12.android.project;
 
-/* BogoPicGen.class is taken from project BogoPicGenActivity. This class is used
+/*	Author : University of Alberta team of TAs and Instructors
+ * 
+ *  BogoPicGen.class is taken from project BogoPicGenActivity. This class is used
  * to create Bitmap image from serialized photo object. This class is created by 
  * the designers of BogoPicGenActivity project and has been only used to help
  * with our project.

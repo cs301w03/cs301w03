@@ -35,7 +35,6 @@ public class ProjectTwoActivity extends Activity
         setContentView(R.layout.main);
         
         Button takeAPhoto = (Button) this.findViewById(R.id.takeAPhoto);
-        
         takeAPhoto.setOnClickListener(new View.OnClickListener()
         {   
             @Override
@@ -57,7 +56,6 @@ public class ProjectTwoActivity extends Activity
         });
         
         Button groupByGroup = (Button) this.findViewById(R.id.groupByGroup);
-        
         groupByGroup.setOnClickListener(new View.OnClickListener()
         {
             
@@ -69,13 +67,22 @@ public class ProjectTwoActivity extends Activity
         });
         
         Button groupByCondition = (Button) this.findViewById(R.id.groupByCondition);
-        
         groupByCondition.setOnClickListener(new View.OnClickListener()
     	{
         	@Override
         	public void onClick(View v)
         	{
         		callViewSkinCondition();
+        	}
+    	});
+        
+        Button viewAllPhoto = (Button) this.findViewById(R.id.viewAllPhotos);
+        viewAllPhoto.setOnClickListener(new View.OnClickListener()
+    	{
+        	@Override
+        	public void onClick(View v)
+        	{
+        		callViewAllPhoto();
         	}
     	});
 	}
@@ -92,6 +99,12 @@ public class ProjectTwoActivity extends Activity
 	{
 		Intent iViewGroup = new Intent(this, ViewContainerListActivity.class);
 		iViewGroup.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION, SkinObserverIntent.DATA_SKIN_CONDITION);
+		startActivity(iViewGroup);
+	}
+	
+	protected void callViewAllPhoto()
+	{
+		Intent iViewGroup = new Intent(this, PhotoListActivity.class);
 		startActivity(iViewGroup);
 	}
     

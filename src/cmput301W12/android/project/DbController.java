@@ -18,13 +18,13 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		super();
 		Log.d("DBController", "Trail part 6");
 		this.mDbAdap = DbAdapter.getDbAdapter(ct);
-	              Log.d("DBController", "Trail part end of 6");
+		Log.d("DBController", "Trail part end of 6");
 		this.mDbAdap = this.mDbAdap.open();
 	}
 
 	public static DbControllerInterface getDbController(Context ct){
 		if(dbCon == null){
-		    Log.d("DBController", "Trail part 5");
+			Log.d("DBController", "Trail part 5");
 			dbCon = new DbController(ct);
 		}
 		return dbCon;
@@ -37,7 +37,7 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 
 	@Override
 	public Photo addPhoto(Photo phoObj) {
-	    Log.d("SKINOBSERVER", "There is more XD");
+		Log.d("SKINOBSERVER", "There is more XD");
 		// TODO Auto-generated method stub
 		String location = phoObj.getLocation();
 		Log.d("SKINOBSERVER", "There is more XD!");
@@ -49,7 +49,7 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		Log.d("SKINOBSERVER", " " + photoId);
 		Log.d("SKINOBSERVER", "There is more XD!!!!");
 		phoObj.setPhotoId(photoId);
-		
+
 		Log.d("SKINOBSERVER", "There is more XD!!!!!!");
 		Set<Integer> listOfGroupId = phoObj.getGroups();
 		Log.d("SKINOBSERVER", "There is more XD!!!!!!!");
@@ -59,12 +59,12 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 			this.mDbAdap.addPhotoGroup(photoId,id);
 		}
 		Log.d("SKINOBSERVER", "1");
-		
-		
-//		for(Integer id : listOfSkinId	){
-//		    Log.d("SKINOBSERVER", "Nope");
-//			this.mDbAdap.addPhotoSkinCondition(photoId, id);
-//		}
+
+
+		//		for(Integer id : listOfSkinId	){
+		//		    Log.d("SKINOBSERVER", "Nope");
+		//			this.mDbAdap.addPhotoSkinCondition(photoId, id);
+		//		}
 		Log.d("SKINOBSERVER", "2");
 		return phoObj;
 	}
@@ -82,10 +82,10 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 			newSkinCondition.setItemId(id);
 			container = newSkinCondition;
 		}
-		
+
 		return container;
 	}
-	
+
 	public Container addContainObj(Container containObj) {
 		// TODO Auto-generated method stub
 		String name = containObj.getName();
@@ -107,7 +107,7 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 				int skinId = (int) this.mDbAdap.addSkinCondition(name);
 				containObj.setItemId(skinId);
 			}
-			
+
 			int validSkinId = containObj.getItemId();
 			for(Integer id : listOfPhotoIds){
 				this.mDbAdap.addPhotoSkinCondition(id, validSkinId);
@@ -164,52 +164,52 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		int itemId;
 		String name = "";
 		String column = "";
+		if(photoId == Photo.INVALID_ID){
+			if(option == OptionType.PHOTOGROUP){
+				column = DbAdapter.GROUPID;
+				name = DbAdapter.GROUPNAME;
 
-		if(option == OptionType.PHOTOGROUP){
-			column = DbAdapter.GROUPID;
-			name = DbAdapter.GROUPNAME;
+				Set<Group> aSet = new HashSet<Group>();
 
-			Set<Group> aSet = new HashSet<Group>();
+				if (cursor != null) {
+					repeat = cursor.moveToFirst();
+				}
 
-			if (cursor != null) {
-				repeat = cursor.moveToFirst();
+				while(repeat){
+					itemId = cursor.getInt(1);
+					//name = cursor.getString(2);
+
+					container = new Group(name);
+					container.setItemId(itemId);
+					aSet.add((Group) container);
+					repeat = cursor.moveToNext();
+				}
+
+				return aSet;
+			}else if (option == OptionType.PHOTOSKIN){
+				column = DbAdapter.SKINCONDITIONID;
+				name = DbAdapter.SKINNAME;
+
+				if (cursor != null) {
+					repeat = cursor.moveToFirst();
+				}
+
+				Set<SkinCondition> aSet = new HashSet<SkinCondition>();
+
+				while(repeat){
+					itemId = cursor.getInt(1);
+					//name = cursor.getString(2);
+
+					container = new SkinCondition(name);
+					container.setItemId(itemId);
+
+					aSet.add((SkinCondition)container);
+					repeat = cursor.moveToNext();
+				}
+
+				return aSet;
 			}
-
-			while(repeat){
-				itemId = cursor.getInt(cursor.getColumnIndexOrThrow(column));
-				name = cursor.getString(cursor.getColumnIndexOrThrow(name));
-
-				container = new Group(name);
-				container.setItemId(itemId);
-				aSet.add((Group) container);
-				repeat = cursor.moveToNext();
-			}
-
-			return aSet;
-		}else if (option == OptionType.PHOTOSKIN){
-			column = DbAdapter.SKINCONDITIONID;
-			name = DbAdapter.SKINNAME;
-
-			if (cursor != null) {
-				repeat = cursor.moveToFirst();
-			}
-
-			Set<SkinCondition> aSet = new HashSet<SkinCondition>();
-
-			while(repeat){
-				itemId = cursor.getInt(cursor.getColumnIndexOrThrow(column));
-				name = cursor.getString(cursor.getColumnIndexOrThrow(name));
-
-				container = new SkinCondition(name);
-				container.setItemId(itemId);
-
-				aSet.add((SkinCondition)container);
-				repeat = cursor.moveToNext();
-			}
-
-			return aSet;
 		}
-
 		return null;
 	}
 

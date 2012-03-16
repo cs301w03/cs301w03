@@ -49,16 +49,13 @@ public class CreateContainerActivity extends Activity {
 	
 	protected void storeContainer()
 	{
-		Container cont;
-		Log.d("CreateContainer","creating...");
-		if (getIntent() ==null )
-			Log.d("createcontainer","intent is null");
+		Container cont = null;
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null)
 		{
 			if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
 				cont = new Group(mNameText.getText().toString());
-			else
+			else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
 				cont = new SkinCondition(mNameText.getText().toString());
 			
 			FController skinObserverController = SkinObserverApplication.getSkinObserverController(this);

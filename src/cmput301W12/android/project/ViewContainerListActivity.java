@@ -1,8 +1,11 @@
 package cmput301W12.android.project;
 
+import java.util.Set;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,11 +32,29 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 //        Group g2 = new Group("Feet");
 //        Group g3 = new Group("Right");
 //        Group[] gl = {g1,g2,g3};
-//        ContainerArrayAdapter conAdapter = new ContainerArrayAdapter(this, gl);
-//        setListAdapter(conAdapter);
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null)
+		{
+			FController controller = SkinObserverApplication.getSkinObserverController(this);
+			Set<? extends Container> setCon = null;
+			if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+			{
+				setCon = controller.getAllContainersOfAPhoto(Photo.INVALID_ID, OptionType.PHOTOGROUP);
+			}
+			else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
+			{
+				setCon = controller.getAllContainersOfAPhoto(Photo.INVALID_ID, OptionType.PHOTOSKIN);
+			}
+			Container[] array = (Container[]) setCon.toArray();
+	    	
+	    	ContainerArrayAdapter conAdapter = new ContainerArrayAdapter(this, array);
+	    	setListAdapter(conAdapter);
+		}
+		else
+		{
+			//Not legitimate, go back
+		}
     	
-    	FController controller = SkinObserverApplication.getSkinObserverController(this);
-    	controller.getAllPhotoOfAContainer(Photo.INVALID_ID, OptionType.GROUP);
     }
     
     @Override
@@ -41,10 +62,19 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
         super.onListItemClick(l, v, position, id);
         ListAdapter adapter = l.getAdapter();
         Container cont  = (Container) adapter.getItem(position);
-        Bundle bundle = getIntent().getExtras();
         
-        Intent newIntent = new Intent(this, CreateContainerActivity.class);
+        
+        Intent newIntent = new Intent(this, PhotoListActivity.class);
+        Bundle bundle = getIntent().getExtras();
         newIntent.putExtras(bundle);
+        if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+		{
+        	newIntent.putExtra(SkinObserverIntent.DATA_GROUP,cont);
+		}
+		else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
+		{
+			newIntent.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION,cont);
+		}
         startActivity(newIntent);
     }    
     

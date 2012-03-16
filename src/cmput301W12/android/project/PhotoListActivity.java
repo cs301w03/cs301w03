@@ -26,7 +26,12 @@ public class PhotoListActivity extends ListActivity
 	                                                // binding the listview, so the onListItemClick function works
 	 }
 	 
-	 public void fillupList() {
+	 public void fillSelectableList() {
+		 
+		 
+	 }
+	 
+	 public void fillEditableList() {
 		 
 	 }
 	 
@@ -47,7 +52,7 @@ public class PhotoListActivity extends ListActivity
 	    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 	        super.onCreateContextMenu(menu,  v, menuInfo);
 	        MenuInflater inflater = getMenuInflater();
-	        inflater.inflate(R.menu.ctxmenu, menu);
+	        inflater.inflate(R.menu.ctxmenu1, menu);
 
 	    }	 
 	 
@@ -56,8 +61,7 @@ public class PhotoListActivity extends ListActivity
 	 // if a user picks an item from the context menu, this function is then called.
 	    protected void onListItemClick(ListView l, View v, int position, long id) {
 	                super.onListItemClick(l, v, position, id);
-	                xid = id;
-	                this.openContextMenu(l);                                  // opens up the context menu
+	                //create new intent and move to photo view                                 
 	        }
 	        
 	    //Opens the xontext menu and gives the option edit, or delete, and reacts accordingly.

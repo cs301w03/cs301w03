@@ -8,5 +8,6 @@
     <string name="groupByGroup">View photos by Group</string>
     <string name="groupByCondition">View photos by Skin Condition</string>
     <string name="mainMenu">Menu</string>
+    <string name="edit_a_photo">Edit</string>
 
 </resources>

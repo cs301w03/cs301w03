@@ -3,35 +3,29 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal" >
-    
-    <ListView android:id="@+id/android:list"
-          android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"/>
 
-    <LinearLayout 
+    <ImageView
+        android:id="@+id/imageViewPhotoThumbnail"
+        android:layout_width="34dp"
+        android:layout_height="33dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_weight="1.10"
+        android:contentDescription="@drawable/ic_launcher" >
+    </ImageView>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-        
-	    <TextView
-	        android:id="@+id/textViewPhotoLabel"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize="20dp" >
-	    </TextView>
-	    
-	    <ImageView
-	        android:contentDescription="@drawable/ic_launcher"
-        	android:id="@+id/imageViewPhotoThumbnail"
-        	android:layout_width="22dp"
-        	android:layout_height="22dp"
-        	android:layout_marginLeft="4dp"
-        	android:layout_marginRight="10dp"
-        	android:layout_marginTop="4dp" >
-    	</ImageView>
-	    
-	 </LinearLayout>
-	    
-    
+
+        <TextView
+            android:id="@+id/textViewPhotoLabel1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp" >
+        </TextView>
+    </LinearLayout>
 
 </LinearLayout>

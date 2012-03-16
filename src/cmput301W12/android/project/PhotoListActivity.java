@@ -1,6 +1,9 @@
 package cmput301W12.android.project;
 
-/* PhotoListActivity.class is the ListActivity that is responsible for viewing 
+/* 	Author : Tanvir Sajed
+ *  Date : 16 - 03 - 2012
+ * 
+ * PhotoListActivity.class is the ListActivity that is responsible for viewing 
  * the list of all photos the user has taken by his mobile. The photos are listed
  * in order of timestamp. This activity evokes a menu that can be used to compare, edit
  * and remove photos. However those functions are not yet implemented because they are 

@@ -19,12 +19,12 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_text_view);
         
-        fillData(new Container[]{new Group("Test")});
+        fillData();
         
         registerForContextMenu(getListView());
     }
     
-    private void fillData(Container[] con) {
+    private void fillData() {
         
         Group g1 = new Group("Head");
         Group g2 = new Group("Left Feet");
@@ -77,7 +77,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if ( requestCode == ACTIVITY_CREATE)
-        	fillData(new Container[]{new Group("Test")});
+        	fillData();
     }
 
 	@Override

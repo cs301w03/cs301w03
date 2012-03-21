@@ -107,5 +107,9 @@ public class SkinObserverController implements FController {
 	public Set<? extends Container> getAllContainers(OptionType option){
 		return dbCon.getAllContainers(option);
 	}
+	
+	public int deleteEntry(long rowID, OptionType option) {
+		return dbCon.deleteEntry(rowID, option);
+	}
 
 }

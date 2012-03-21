@@ -129,6 +129,9 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	                
 	                return true;
 	            case R.id.menudelete:
+	            	
+	            	FController skinObserverController = SkinObserverApplication.getSkinObserverController(this);
+	            	int x = skinObserverController.deleteEntry(info.id, OptionType.PHOTO);
 	                
 	                return true;
 	                

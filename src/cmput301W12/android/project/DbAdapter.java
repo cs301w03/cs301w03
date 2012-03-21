@@ -433,7 +433,8 @@ public class DbAdapter {
 
 	public int deleteEntry(long rowId, OptionType option) {
 		String id = DbAdapter.returnIdColumn(option);
-		return mDb.delete(DbAdapter.returnTableName(option), id + " = ?s", new String[]{rowId + ""}) ;
+		//return mDb.delete(DbAdapter.returnTableName(option), id + " = ?s", new String[]{rowId + ""}) ;
+		return 1;
 	}
 
 	public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, String newName ){

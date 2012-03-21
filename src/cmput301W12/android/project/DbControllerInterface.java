@@ -124,4 +124,6 @@ public interface DbControllerInterface {
 	// of KALLEN in case the user would like to attach it with new group or skin condition.
 
 	// LAST BUT NOT LEAST: we postpone "delete" and "edit" for now...
+	
+	public int deleteEntry(long rowID, OptionType option);
 }

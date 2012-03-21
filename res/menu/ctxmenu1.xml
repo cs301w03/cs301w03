@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/item1"
-        android:title="@string/edit_a_photo">
+    <item android:id="@+id/menuedit"
+        android:title="@string/edit_a_photo" android:visible="true">
         
     </item>
-    <item android:id="@+id/item2" android:title="@string/delete_a_photo"></item>
-    <item android:id="@+id/item3" android:title="@string/add_photo"></item>
+    <item android:id="@+id/menudelete" android:title="@string/delete_a_photo" android:visible="true"></item>
+    <item android:id="@+id/menucompare" android:title="@string/comare_photos" android:visible="true"></item>
     
 
 </menu>

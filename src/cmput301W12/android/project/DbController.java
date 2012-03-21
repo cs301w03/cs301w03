@@ -290,6 +290,10 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 
 		return null;
 	}
+	
+	public int deleteEntry(long rowID, OptionType option) {
+		return this.mDbAdap.deleteEntry(rowID, option);
+	}
 
 
 }

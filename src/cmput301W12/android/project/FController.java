@@ -27,6 +27,8 @@ public interface FController {
 	public Set<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option);
 
 	public Set<? extends Container> getAllContainers(OptionType option);
+	
+	public int deleteEntry(long rowID, OptionType option);
 
 
 }

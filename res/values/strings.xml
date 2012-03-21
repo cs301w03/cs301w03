@@ -13,5 +13,7 @@
     <string name="add_photo">Add Photo</string>
     <string name="add_button">Add</string>
     <string name="label_name">Name</string>
+    <string name="Menu">Menu</string>
+    <string name="comare_photos">Compare</string>
 
 </resources>

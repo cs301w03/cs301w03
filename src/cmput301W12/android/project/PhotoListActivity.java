@@ -8,10 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -37,6 +40,12 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	 protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.photoviewlist_activity);
+	        
+	        Button menubutton = (Button) this.findViewById(R.id.menubutton);
+	        
+	        registerForContextMenu(getListView());
+	        registerForContextMenu(menubutton);
+	        
 	        fillSelectableList();
 	        
 	        //set up the listview to enable a context menu for editting logs/deleting
@@ -82,15 +91,20 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 		 
 	 
 	    // places the data in ctxmenu into the build the context menu for Petrol manager
-	    @Override
+	    
 	    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 	        super.onCreateContextMenu(menu,  v, menuInfo);
 	        MenuInflater inflater = getMenuInflater();
 	        inflater.inflate(R.menu.ctxmenu1, menu);
 
-	    }	 
-	 
-	 
+	    }	
+	    @Override
+	    public boolean onCreateOptionsMenu(Menu menu) {
+	        super.onCreateOptionsMenu(menu);
+	        menu.add(0, Menu.FIRST, 0, "Menu");
+	        return true;
+	    }
+	    	 
 	 
 	 // if a user picks an item from the context menu, this function is then called.
 	    protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -108,32 +122,28 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	        
 	    //Opens the xontext menu and gives the option edit, or delete, and reacts accordingly.
 	    public boolean onContextItemSelected(MenuItem item){
-//	              String edit = "Edit";
-//	              String delete = "Delete";
-
-	                //ADD HERE what you would like to do when a list item is selected.
+//	             
+	    	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+	        switch (item.getItemId()) {
+	            case R.id.menuedit:
 	                
-	              if (edit.compareTo(item.getTitle().toString()) == 0){
-//	                      //will have to use a bundle to pass the rowid to Entry_Editor to enable simpler code
-//	                      Intent editor = new Intent(this, Entry_Editor.class);
-//	                      editor.putExtra("_id", Long.toString(xid));
-//	                      startActivityForResult(editor, EDIT_ENTRY);
-	              }
-	              else if(delete.compareTo(item.getTitle().toString()) == 0) {
-//	                      mydb.deleteEntry(xid);
-//	                      refreshList();
-	              }
-	              
-	              else if(add_photo.compareTo(item.getTitle().toString()) == 0) {
-//                      mydb.deleteEntry(xid);
-//                      refreshList();	            	  
-	              }
-	              
-	             /*else if(compare.compareTo(item.getTitle().toString() == 0)) {
-	            	  	
-                  }*/
-	              
+	                return true;
+	            case R.id.menudelete:
+	                
+	                return true;
+	                
+	            case R.id.menucompare:
+	            	
+	            	return true;
+	            			
+	            default:
 	                return super.onContextItemSelected(item);
+	        	}
+	              
+	           
+	              
+	      
+	        
 	        }
 
 		@Override

@@ -4,9 +4,9 @@ package cmput301W12.android.project.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import cmput301W12.android.project.ComparePhotoActivity;
 import cmput301W12.android.project.PhotoListActivity;
 import cmput301W12.android.project.R;
 import cmput301W12.android.project.SkinObserverIntent;
@@ -85,6 +85,16 @@ public class ProjectTwoActivity extends Activity
         		callViewAllPhoto();
         	}
     	});
+        
+        Button menu = (Button) this.findViewById(R.id.mainMenu);
+        menu.setOnClickListener(new View.OnClickListener()
+    	{
+        	@Override
+        	public void onClick(View v)
+        	{
+        		comparePhotos();
+        	}
+    	});
 	}
         
     
@@ -105,6 +115,12 @@ public class ProjectTwoActivity extends Activity
 	protected void callViewAllPhoto()
 	{
 		Intent iViewGroup = new Intent(this, PhotoListActivity.class);
+		startActivity(iViewGroup);
+	}
+	
+	protected void comparePhotos()
+	{
+		Intent iViewGroup = new Intent(this, ComparePhotoActivity.class);
 		startActivity(iViewGroup);
 	}
     

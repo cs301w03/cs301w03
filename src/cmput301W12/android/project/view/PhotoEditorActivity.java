@@ -13,7 +13,7 @@ public class PhotoEditorActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.photo_editor);
+		//setContentView(R.layout.photo_editor);
 		Log.d("2","Hello2");
 	}
 

@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,6 +47,18 @@ public class PhotoListArrayAdapter extends ArrayAdapter<Photo> {
 			View rowView = inflater.inflate(R.layout.list_photo_view, parent, false);
 			TextView textView = (TextView) rowView.findViewById(R.id.textViewPhotoLabel1);
 			ImageView imageView = (ImageView) rowView.findViewById(R.id.imageViewPhotoThumbnail);
+			final CheckBox checkbox = (CheckBox) rowView.findViewById(R.id.checkBox1);
+			
+			checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView,
+						boolean isChecked) {
+					checkbox.setChecked(isChecked);
+
+				}
+			});
+
 			if ( textView != null && imageView != null)
 				if (photo_array.length > 0)
 					if (position < photo_array.length)

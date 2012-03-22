@@ -67,12 +67,11 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		}
 		Log.d("SKINOBSERVER", "1");
 
-
-		//		for(Integer id : listOfSkinId	){
-		//		    Log.d("SKINOBSERVER", "Nope");
-		//			this.mDbAdap.addPhotoSkinCondition(photoId, id);
-		//		}
-		Log.d("SKINOBSERVER", "2");
+		/*
+		for(Integer id : listOfSkinId	){
+			this.mDbAdap.addPhotoSkinCondition(photoId, id);
+		}
+		*/
 		return phoObj;
 	}
 

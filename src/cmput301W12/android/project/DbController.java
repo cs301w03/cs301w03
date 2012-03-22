@@ -124,6 +124,103 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		return containObj;
 	}
 
+
+	public SortedSet<Photo> getAllPhoto(){
+		Cursor cursor = this.fetchAllPhotoObj();
+		return DbController.getPhotoFromCursor(cursor);
+	}
+
+	public SortedSet<Photo> getAllPhotoOfAContainer(int itemId, OptionType option){
+		Cursor cursor = this.fetchAllPhotoObjConnected(itemId, option);
+		return DbController.getPhotoFromCursor(cursor);
+	}
+
+
+	public Set<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option){
+		Cursor cursor = this.fetchAllContainers(photoId, option);
+		return DbController.getContainersFromCursor(cursor, option);
+	}
+
+	public Cursor fetchAllPhotoObj() {
+		// TODO Auto-generated method stub
+		return this.mDbAdap.fetchAllEntries(OptionType.PHOTO);
+	}
+
+
+	public Cursor fetchAllPhotoObjConnected(int itemId, OptionType option) {
+		// TODO Auto-generated method stub
+		return this.mDbAdap.fetchAllPhotosOfAContainer(itemId, option);
+	}
+
+
+	public Cursor fetchAllContainers(int photoId, OptionType option) {
+		// TODO Auto-generated method stub
+		return this.mDbAdap.fetchAllContainersOfAPhoto(photoId, option);
+	}
+
+
+	public Set<? extends Container> getAllContainers(OptionType option)
+	{
+		Cursor cursor = this.mDbAdap.fetchAllContainers(option);
+		return DbController.getContainersFromCursor(cursor, option);
+	}
+
+	public int deleteEntry(long rowID, OptionType option) {
+		return this.mDbAdap.deleteEntry(rowID, option);
+	}
+
+	private static Set<? extends Container> getContainersFromCursor(Cursor cursor, OptionType option){
+		boolean repeat = true;
+
+		Container container;
+
+		int itemId;
+		String name = "";
+		String column = "";
+
+		if(option == OptionType.GROUP){
+			Set<Group> aSet = new HashSet<Group>();
+
+			if (cursor != null) {
+				repeat = cursor.moveToFirst();
+			}
+
+			while(repeat){
+				itemId = cursor.getInt(cursor.getColumnIndex(DbAdapter.GROUPID));
+				name = cursor.getString(cursor.getColumnIndex(DbAdapter.GROUPNAME));
+
+				container = new Group(name);
+				container.setItemId(itemId);
+				aSet.add((Group) container);
+				repeat = cursor.moveToNext();
+			}
+
+			return aSet;
+		}else if (option == OptionType.SKINCONDITION){
+
+			if (cursor != null) {
+				repeat = cursor.moveToFirst();
+			}
+
+			Set<SkinCondition> aSet = new HashSet<SkinCondition>();
+
+			while(repeat){
+				itemId = cursor.getInt(cursor.getColumnIndex(DbAdapter.SKINCONDITIONID));
+				name = cursor.getString(cursor.getColumnIndex(DbAdapter.SKINNAME));
+
+				container = new SkinCondition(name);
+				container.setItemId(itemId);
+
+				aSet.add((SkinCondition)container);
+				repeat = cursor.moveToNext();
+			}
+
+			return aSet;
+		}
+
+		return null;
+	}
+
 	private static SortedSet<Photo> getPhotoFromCursor(Cursor cursor){
 		boolean repeat = false;
 		int photoId;
@@ -149,150 +246,6 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		}
 
 		return aSet;
-	}
-
-	public SortedSet<Photo> getAllPhoto(){
-		Cursor cursor = this.fetchAllPhotoObj();
-		return DbController.getPhotoFromCursor(cursor);
-	}
-
-	public SortedSet<Photo> getAllPhotoOfAContainer(int itemId, OptionType option){
-		Cursor cursor = this.fetchAllPhotoObjConnected(itemId, option);
-		return DbController.getPhotoFromCursor(cursor);
-	}
-
-
-	public Set<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option){
-		Cursor cursor = this.fetchAllContainers(photoId, option);
-		boolean repeat = false;
-
-		Container container;
-
-		int itemId;
-		String name = "";
-		String column = "";
-		if(photoId == Photo.INVALID_ID){
-			if(option == OptionType.PHOTOGROUP){
-				column = DbAdapter.GROUPID;
-				name = DbAdapter.GROUPNAME;
-
-				Set<Group> aSet = new HashSet<Group>();
-
-				if (cursor != null) {
-					repeat = cursor.moveToFirst();
-				}
-
-				while(repeat){
-					itemId = cursor.getInt(1);
-					//name = cursor.getString(2);
-
-					container = new Group(name);
-					container.setItemId(itemId);
-					aSet.add((Group) container);
-					repeat = cursor.moveToNext();
-				}
-
-				return aSet;
-			}else if (option == OptionType.PHOTOSKIN){
-				column = DbAdapter.SKINCONDITIONID;
-				name = DbAdapter.SKINNAME;
-
-				if (cursor != null) {
-					repeat = cursor.moveToFirst();
-				}
-
-				Set<SkinCondition> aSet = new HashSet<SkinCondition>();
-
-				while(repeat){
-					itemId = cursor.getInt(1);
-					//name = cursor.getString(2);
-
-					container = new SkinCondition(name);
-					container.setItemId(itemId);
-
-					aSet.add((SkinCondition)container);
-					repeat = cursor.moveToNext();
-				}
-
-				return aSet;
-			}
-		}
-		return null;
-	}
-
-	public Cursor fetchAllPhotoObj() {
-		// TODO Auto-generated method stub
-		return this.mDbAdap.fetchAllEntries(OptionType.PHOTO);
-	}
-
-
-	public Cursor fetchAllPhotoObjConnected(int itemId, OptionType option) {
-		// TODO Auto-generated method stub
-		return this.mDbAdap.fetchAllPhotosOfAContainer(itemId, option);
-	}
-
-
-	public Cursor fetchAllContainers(int photoId, OptionType option) {
-		// TODO Auto-generated method stub
-		return this.mDbAdap.fetchAllContainersOfAPhoto(photoId, option);
-	}
-
-	public Set<? extends Container> getAllContainers(OptionType option)
-	{
-		Cursor cursor = this.mDbAdap.fetchAllContainers(option);
-		boolean repeat = true;
-
-		Container container;
-
-		int itemId;
-		String name = "";
-		String column = "";
-
-		if(option == OptionType.GROUP){
-			Set<Group> aSet = new HashSet<Group>();
-
-			if (cursor != null) {
-					repeat = cursor.moveToFirst();
-			}
-			
-			while(repeat){
-				itemId = cursor.getInt(cursor.getColumnIndex(DbAdapter.GROUPID));
-				name = cursor.getString(cursor.getColumnIndex(DbAdapter.GROUPNAME));
-
-				container = new Group(name);
-				container.setItemId(itemId);
-				aSet.add((Group) container);
-				repeat = cursor.moveToNext();
-			}
-
-			return aSet;
-		}else if (option == OptionType.SKINCONDITION){
-
-			if (cursor != null) {
-					repeat = cursor.moveToFirst();
-			}
-
-			Set<SkinCondition> aSet = new HashSet<SkinCondition>();
-
-			while(repeat){
-				itemId = cursor.getInt(cursor.getColumnIndex(DbAdapter.SKINCONDITIONID));
-				name = cursor.getString(cursor.getColumnIndex(DbAdapter.SKINNAME));
-
-				container = new SkinCondition(name);
-				container.setItemId(itemId);
-
-				aSet.add((SkinCondition)container);
-				repeat = cursor.moveToNext();
-			}
-
-			return aSet;
-		}
-
-		return null;
-	}
-	
-	public int deleteEntry(long rowID, OptionType option) {
-		return this.mDbAdap.deleteEntry(rowID, option);
 	}
 
 

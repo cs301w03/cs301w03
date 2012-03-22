@@ -548,19 +548,14 @@ public class DbAdapter {
 				itemName = SKINNAME;
 			}
 			String lookUpTable = DbAdapter.returnTableName(option);
-			String sql = "select " + itemIdName + ", "
-			+ itemName + ", " 
-			+ " from " + itemTable + " , " 
-			+ lookUpTable 
-			+ " where " + itemTable + "." + itemIdName + " = " 
+			String sql = "select " + itemTable + "." + itemIdName + 
+			" as " + itemIdName + ", "  + itemName +
+			" from " + itemTable + " , " + lookUpTable  +
+			" where " + itemTable + "." + itemIdName + " = " 
 			+ lookUpTable + "." + itemIdName 
-			+ " and PHOTOID = " + photoId;
+			+ " and " + PHOTOID + " = " + photoId;
 
-			String preparedStatement = "select ?s , ?s from ?s , ?s " +
-			" where ?s" + "." + "?s = ?s" + "." + "?s and PHOTOID = ?s";
-			String[] args = {itemIdName, itemName, itemTable, lookUpTable, 
-					itemTable, itemIdName, lookUpTable, itemIdName, photoId + "" };
-			Cursor mCursor = mDb.rawQuery(preparedStatement, args);
+			Cursor mCursor = mDb.rawQuery(sql, null);
 			return mCursor;
 		}
 	}

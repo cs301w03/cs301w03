@@ -114,8 +114,8 @@ public class DbAdapter {
 		" primary key( " + PHOTOID + ", " + SKINCONDITIONID + " ) ) " ;
 
 	private static final String CREATE_TRIGGER_PHOTOGROUP_INSERT = 
-		"create trigger trig_PHOTOID_PHOTOGROUP_INSERT" +
-		" before insert on " + PHOTOGROUP_TABLE + " for each row begin" + 
+		"create trigger trig_PHOTOID_PHOTOGROUP_INSERT " +
+		" before insert on " + PHOTOGROUP_TABLE + " for each row begin " + 
 		" select raise(rollback, 'insert on table " + PHOTOGROUP_TABLE + 
 		" violates foreign key constraint fk_PHOTOID_PHOTOGROUP' ) " + 
 		" where (select  " + PHOTOID + " from " + PHOTO_TABLE + " where " + PHOTOID + " = NEW. " +
@@ -133,14 +133,14 @@ public class DbAdapter {
 
 	private static final String CREATE_TRIGGER_PHOTOGROUP_DELETECASCADE = 
 		"create trigger trig_PHOTOID_PHOTOGROUP_DELETECASCADE " + 
-		" before delete on " + PHOTO_TABLE + " for each row begin" +
-		"delete from " + PHOTOGROUP_TABLE + " where " + PHOTOID + " = OLD." + PHOTOID + ";" +
+		" before delete on " + PHOTO_TABLE + " for each row begin " +
+		" delete from " + PHOTOGROUP_TABLE + " where " + PHOTOID + " = OLD." + PHOTOID + ";" +
 		" END";
 
 	private static final String CREATE_TRIGGER_PHOTOGROUP_UPDATECASCADE = 
 		"create trigger trig_PHOTOID_PHOTOGROUP_UPDATECASCADE " +
-		" after update on " + PHOTO_TABLE + " for each row begin" + 
-		" update " + PHOTOGROUP_TABLE + " set " + PHOTOID + "NEW." + PHOTOID + 
+		" after update on " + PHOTO_TABLE + " for each row begin " + 
+		" update " + PHOTOGROUP_TABLE + " set " + PHOTOID + " = "+  "NEW." + PHOTOID + 
 		" where " + PHOTOID + " = " + "OLD." + PHOTOID + ";" +
 		" END"; 
 
@@ -165,13 +165,13 @@ public class DbAdapter {
 	private static final String CREATE_TRIGGER_PHOTOSKIN_DELETECASCADE = 
 		"create trigger trig_PHOTOID_PHOTOSKIN_DELETECASCADE " + 
 		" before delete on " + PHOTO_TABLE + " for each row begin " +
-		"delete from " + PHOTOSKIN_TABLE + " where " + PHOTOID + " = OLD." + PHOTOID + ";" + 
+		" delete from " + PHOTOSKIN_TABLE + " where " + PHOTOID + " = OLD." + PHOTOID + ";" + 
 		" END";
 
 	private static final String CREATE_TRIGGER_PHOTOSKIN_UPDATECASCADE = 
 		"create trigger trig_PHOTOID_PHOTOSKIN_UPDATECASCADE " +
 		" after update on " + PHOTO_TABLE + " for each row begin " + 
-		" update " + PHOTOSKIN_TABLE + " set " + PHOTOID + "NEW." + PHOTOID + 
+		" update " + PHOTOSKIN_TABLE + " set " + PHOTOID + " = "+ "NEW." + PHOTOID + 
 		" where " + PHOTOID + " = " + "OLD." + PHOTOID + ";" +
 		" END";
 

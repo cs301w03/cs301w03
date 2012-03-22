@@ -34,7 +34,7 @@ public class ProjectTwoActivityTester extends
     
     public void testPreconditions()
     {
-        ////
+        assertTrue(1 == 1);
     }
     
     /*

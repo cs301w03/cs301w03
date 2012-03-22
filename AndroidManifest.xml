@@ -10,6 +10,7 @@
 <!--     	This will be where the hardware permissions for the camera go, i.e auto-focus -->
 <!-- 		Get access for storing our database and photos -->
 		<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+		<instrumentation android:targetPackage="cmput301W12.android.project" android:name="android.test.InstrumentationTestRunner"></instrumentation>
     
 
     

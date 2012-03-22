@@ -54,10 +54,11 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 			this.mDbAdap.addPhotoGroup(photoId,id);
 		}
 
-
+		/*
 		for(Integer id : listOfSkinId	){
 			this.mDbAdap.addPhotoSkinCondition(photoId, id);
 		}
+		*/
 		return phoObj;
 	}
 

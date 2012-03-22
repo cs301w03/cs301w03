@@ -58,13 +58,13 @@ public class DbAdapter {
 	private static final String TAG = "DbAdapter";
 	private static final String DATABASE_NAME = "skinObserver";
 
-	private static final String PHOTO_TABLE	 = "Photo";
-	public static final String GROUP_TABLE = "Limb";
-	public static final String SKIN_TABLE = "SkinCondition";
-	public static final String PHOTOGROUP_TABLE = "Photo_Group";
-	public static final String PHOTOSKIN_TABLE = "Photo_SkinCondition";
+	private static final String PHOTO_TABLE	 = "PhotoTable";
+	public static final String GROUP_TABLE = "GroupTable";
+	public static final String SKIN_TABLE = "SkinConditionTable";
+	public static final String PHOTOGROUP_TABLE = "Photo_GroupTable";
+	public static final String PHOTOSKIN_TABLE = "Photo_SkinConditionTable";
 
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 
 	private DatabaseHelper mDbHelper;
 	private SQLiteDatabase mDb;
@@ -114,31 +114,35 @@ public class DbAdapter {
 		" primary key( " + PHOTOID + ", " + SKINCONDITIONID + " ) ) " ;
 
 	private static final String CREATE_TRIGGER_PHOTOGROUP_INSERT = 
-		"create trigger trig_PHOTOID_PHOTOGROUP_INSERT " +
-		" before insert on " + PHOTOGROUP_TABLE + " for each row begin " + 
-		" select raise(rollback, ' insert on table " + PHOTOGROUP_TABLE + 
-		" violates foreign key constraint fk_PHOTOID_PHOTOGROUP ' ) " + 
-		" where (select  " + PHOTOID + " from " + PHOTO_TABLE + " where " + PHOTOID + " = NEW." +
-		PHOTOID + " ) " + " IS NULL";
+		"create trigger trig_PHOTOID_PHOTOGROUP_INSERT" +
+		" before insert on " + PHOTOGROUP_TABLE + " for each row begin" + 
+		" select raise(rollback, 'insert on table " + PHOTOGROUP_TABLE + 
+		" violates foreign key constraint fk_PHOTOID_PHOTOGROUP' ) " + 
+		" where (select  " + PHOTOID + " from " + PHOTO_TABLE + " where " + PHOTOID + " = NEW. " +
+		PHOTOID + " ) " + " IS NULL; " +
+		" END";
 
 	private static final String CREATE_TRIGGER_PHOTOGROUP_UPDATE = 
 		"create trigger trig_PHOTOID_PHOTOGROUP_UPDATE " +
-		" before update on " + PHOTOGROUP_TABLE + " for each row begin " + 
+		" before update on " + PHOTOGROUP_TABLE + " for each row begin" + 
 		" select raise(rollback, ' update on table " + PHOTOGROUP_TABLE + 
 		" violates foreign key constraint fk_PHOTOID_PHOTOGROUP ' ) " + 
 		" where (select  " + PHOTOID + " from " + PHOTO_TABLE + " where " + PHOTOID + " = NEW." +
-		PHOTOID + " ) " + " IS NULL";
+		PHOTOID + " ) " + " IS NULL; " +
+		" END";
 
 	private static final String CREATE_TRIGGER_PHOTOGROUP_DELETECASCADE = 
 		"create trigger trig_PHOTOID_PHOTOGROUP_DELETECASCADE " + 
-		" before delete on " + PHOTO_TABLE + " for each row begin " +
-		"delete from " + PHOTOGROUP_TABLE + " where " + PHOTOID + " = OLD." + PHOTOID;
+		" before delete on " + PHOTO_TABLE + " for each row begin" +
+		"delete from " + PHOTOGROUP_TABLE + " where " + PHOTOID + " = OLD." + PHOTOID + ";" +
+		" END";
 
 	private static final String CREATE_TRIGGER_PHOTOGROUP_UPDATECASCADE = 
 		"create trigger trig_PHOTOID_PHOTOGROUP_UPDATECASCADE " +
-		" after update on " + PHOTO_TABLE + " for each row begin " + 
+		" after update on " + PHOTO_TABLE + " for each row begin" + 
 		" update " + PHOTOGROUP_TABLE + " set " + PHOTOID + "NEW." + PHOTOID + 
-		" where " + PHOTOID + " = " + "OLD." + PHOTOID; 
+		" where " + PHOTOID + " = " + "OLD." + PHOTOID + ";" +
+		" END"; 
 
 	private static final String CREATE_TRIGGER_PHOTOSKIN_INSERT = 
 		"create trigger trig_PHOTOID_PHOTOSKIN_INSERT " +
@@ -146,7 +150,8 @@ public class DbAdapter {
 		" select raise(rollback, ' insert on table " + PHOTOSKIN_TABLE + 
 		" violates foreign key constraint fk_PHOTOID_PHOTOSKIN ' ) " + 
 		" where (select  " + PHOTOID + " from " + PHOTO_TABLE + " where " + PHOTOID + " = NEW." +
-		PHOTOID + " ) " + " IS NULL";
+		PHOTOID + " ) " + " IS NULL; " +
+		" END";
 
 	private static final String CREATE_TRIGGER_PHOTOSKIN_UPDATE = 
 		"create trigger trig_PHOTOID_PHOTOSKIN_UPDATE " +
@@ -154,18 +159,21 @@ public class DbAdapter {
 		" select raise(rollback, ' update on table " + PHOTOSKIN_TABLE + 
 		" violates foreign key constraint fk_PHOTOID_PHOTOSKIN ' ) " + 
 		" where (select  " + PHOTOID + " from " + PHOTO_TABLE + " where " + PHOTOID + " = NEW." +
-		PHOTOID + " ) " + " IS NULL";
+		PHOTOID + " ) " + " IS NULL; " +
+		" END";
 
 	private static final String CREATE_TRIGGER_PHOTOSKIN_DELETECASCADE = 
 		"create trigger trig_PHOTOID_PHOTOSKIN_DELETECASCADE " + 
 		" before delete on " + PHOTO_TABLE + " for each row begin " +
-		"delete from " + PHOTOSKIN_TABLE + " where " + PHOTOID + " = OLD." + PHOTOID;
+		"delete from " + PHOTOSKIN_TABLE + " where " + PHOTOID + " = OLD." + PHOTOID + ";" + 
+		" END";
 
 	private static final String CREATE_TRIGGER_PHOTOSKIN_UPDATECASCADE = 
 		"create trigger trig_PHOTOID_PHOTOSKIN_UPDATECASCADE " +
 		" after update on " + PHOTO_TABLE + " for each row begin " + 
 		" update " + PHOTOSKIN_TABLE + " set " + PHOTOID + "NEW." + PHOTOID + 
-		" where " + PHOTOID + " = " + "OLD." + PHOTOID;
+		" where " + PHOTOID + " = " + "OLD." + PHOTOID + ";" +
+		" END";
 
 	private static class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -175,26 +183,20 @@ public class DbAdapter {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			Log.d("DBHelper", "Trail part 12");
 			db.execSQL(CREATE_PHOTO_TABLE);
-			Log.d("DBHelper", "Trail part 13");
 			db.execSQL(CREATE_GROUP_TABLE);
-			Log.d("DBHelper", "Trail part 14");
 			db.execSQL(CREATE_SKIN_TABLE);
 			db.execSQL(CREATE_PHOTOGROUP_TABLE);
-			Log.d("DBHelper", "Trail part 15");
 			db.execSQL(CREATE_PHOTOSKIN_TABLE);
-			Log.d("DBHelper", "Trail part 16");
-			//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_INSERT);
-			//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATE);
-			//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_DELETECASCADE);
-			//			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATECASCADE);
-			Log.d("DBHelper", "Trail part 18");
-			//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_INSERT);
-			//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_UPDATE);
-			//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_DELETECASCADE);
-			//			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_UPDATECASCADE);
-			Log.d("DBHelper", "Trail part Victory!");
+			
+			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_INSERT);
+			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATE);
+			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_DELETECASCADE);
+			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATECASCADE);
+			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_INSERT);
+			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_UPDATE);
+			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_DELETECASCADE);
+			db.execSQL(CREATE_TRIGGER_PHOTOSKIN_UPDATECASCADE);
 		}
 
 		@Override
@@ -238,13 +240,8 @@ public class DbAdapter {
 	 * @throws SQLException if the database could be neither opened or created
 	 */
 	public DbAdapter open() throws SQLException {
-		Log.d("DBController", "Trail part 8");
 		mDbHelper = new DatabaseHelper(mCtx);
-		Log.d("DBController", "Trail part end of 8");
-
-		/* I BREAK HERE FIX ME */
 		mDb = mDbHelper.getWritableDatabase();
-		Log.d("DBController", "Trail part 9");
 		return this;
 	}
 
@@ -256,21 +253,21 @@ public class DbAdapter {
 	public static String returnIdColumn(OptionType option){
 		String id = "";
 		switch(option){
-			case PHOTO:
-				id = PHOTOID;
-				break;
-			case GROUP:
-				id = GROUPID;
-				break;
-			case SKINCONDITION:
-				id = SKINCONDITIONID;
-				break;
-			case PHOTOGROUP:
-				id = "ROWID";
-				break;
-			case PHOTOSKIN:
-				id = "ROWID";
-				break;
+		case PHOTO:
+			id = PHOTOID;
+			break;
+		case GROUP:
+			id = GROUPID;
+			break;
+		case SKINCONDITION:
+			id = SKINCONDITIONID;
+			break;
+		case PHOTOGROUP:
+			id = "ROWID";
+			break;
+		case PHOTOSKIN:
+			id = "ROWID";
+			break;
 		}
 		return id;
 	}
@@ -278,21 +275,21 @@ public class DbAdapter {
 	public static String returnTableName(OptionType option){
 		String tableName = "";
 		switch(option){
-			case PHOTO:
-				tableName = PHOTO_TABLE;
-				break;
-			case GROUP:
-				tableName = GROUP_TABLE;
-				break;
-			case SKINCONDITION:
-				tableName = SKIN_TABLE;
-				break;
-			case PHOTOGROUP:
-				tableName = PHOTOGROUP_TABLE;
-				break;
-			case PHOTOSKIN:
-				tableName = PHOTOSKIN_TABLE;
-				break;
+		case PHOTO:
+			tableName = PHOTO_TABLE;
+			break;
+		case GROUP:
+			tableName = GROUP_TABLE;
+			break;
+		case SKINCONDITION:
+			tableName = SKIN_TABLE;
+			break;
+		case PHOTOGROUP:
+			tableName = PHOTOGROUP_TABLE;
+			break;
+		case PHOTOSKIN:
+			tableName = PHOTOSKIN_TABLE;
+			break;
 		}
 		return tableName;
 	}
@@ -378,10 +375,8 @@ public class DbAdapter {
 	 */
 	public long addPhotoSkinCondition(int photoId, int skinConditionId) {
 		ContentValues initialValues = new ContentValues();
-		Log.d("DBA", "Nope2");
 		initialValues.put(PHOTOID, photoId);
 		initialValues.put(SKINCONDITIONID, skinConditionId);
-		Log.d("DBA", "Nope3");
 		return mDb.insert(PHOTOSKIN_TABLE, null, initialValues);
 	}
 

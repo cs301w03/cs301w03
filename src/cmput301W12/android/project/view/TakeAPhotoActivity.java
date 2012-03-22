@@ -91,9 +91,10 @@ public class TakeAPhotoActivity extends Activity
                 Photo newestPhoto = new Photo(photoUri.toString(), time, name, groups, skinConditions);
                 
                 /* send the photo object to Hieu's DB */
-                Log.d("SKINOBSERVER", "One?");
+                Intent getPhotoTags = new Intent(TakeAPhotoActivity.this, PhotoEditorActivity.class);
+                startActivity(getPhotoTags);
+                
                 FController controller = SkinObserverApplication.getSkinObserverController(this);
-                Log.d("SKINOBSERVER", "We fixed the trail!?");
                 controller.addPhoto(newestPhoto);
                 //FController controller = SkinObserverApplication.getSkinObserverController();          
                 //Log.d("SKINOBSERVER", "Three?");

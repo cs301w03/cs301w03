@@ -41,11 +41,15 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 
 	@Override
 	public Photo addPhoto(Photo phoObj) {
+		int photoId = phoObj.getPhotoId();
 		String location = phoObj.getLocation();
 		Timestamp timeStamp  = phoObj.getTimeStamp();
 		String name = phoObj.getName();
-		int photoId = ( int) this.mDbAdap.addPhoto(location, timeStamp, name);
-		phoObj.setPhotoId(photoId);
+
+		if(photoId == Photo.INVALID_ID){
+			photoId = ( int) this.mDbAdap.addPhoto(location, timeStamp, name);
+			phoObj.setPhotoId(photoId);
+		}
 
 		Set<Integer> listOfGroupId = phoObj.getGroups();
 		Set<Integer> listOfSkinId = phoObj.getSkinConditions();
@@ -61,25 +65,8 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		return phoObj;
 	}
 
-	public Container storeNewContainer(String name, OptionType option){
-		Container container = null;
-		if(option == OptionType.GROUP){
-			int id = (int) mDbAdap.addGroup(name);
-			Group newGroup = new Group(name);
-			newGroup.setItemId(id);
-			container = newGroup;
-		} else if(option == OptionType.SKINCONDITION){
-			int id = (int) mDbAdap.addSkinCondition(name);
-			SkinCondition newSkinCondition = new SkinCondition(name);
-			newSkinCondition.setItemId(id);
-			container = newSkinCondition;
-		}
-
-		return container;
-	}
-
 	public Container addContainObj(Container containObj) {
-		// TODO Auto-generated method stub
+
 		String name = containObj.getName();
 		Set<Integer> listOfPhotoIds= containObj.getPhotos();
 
@@ -90,8 +77,10 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 				containObj.setItemId(groupId);
 			}
 			int validGroupId = containObj.getItemId();
-			for(Integer id : listOfPhotoIds){
-				this.mDbAdap.addPhotoGroup(id, validGroupId);
+			if(validGroupId != Photo.INVALID_ID){
+				for(Integer id : listOfPhotoIds){
+					this.mDbAdap.addPhotoGroup(id, validGroupId);
+				}
 			}
 		} 
 		else if(containObj instanceof SkinCondition){
@@ -99,10 +88,11 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 				int skinId = (int) this.mDbAdap.addSkinCondition(name);
 				containObj.setItemId(skinId);
 			}
-
 			int validSkinId = containObj.getItemId();
-			for(Integer id : listOfPhotoIds){
-				this.mDbAdap.addPhotoSkinCondition(id, validSkinId);
+			if(validSkinId != Photo.INVALID_ID){
+				for(Integer id : listOfPhotoIds){
+					this.mDbAdap.addPhotoSkinCondition(id, validSkinId);
+				}
 			}
 		}
 
@@ -120,48 +110,30 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		return DbController.getPhotoFromCursor(cursor);
 	}
 
-
-	public Set<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option){
-		Cursor cursor = this.fetchAllContainers(photoId, option);
-		return DbController.getContainersFromCursor(cursor, option);
-	}
-
-	public Cursor fetchAllPhotoObj() {
-		// TODO Auto-generated method stub
-		return this.mDbAdap.fetchAllEntries(OptionType.PHOTO);
-	}
-
-
-	public Cursor fetchAllPhotoObjConnected(int itemId, OptionType option) {
-		// TODO Auto-generated method stub
-		return this.mDbAdap.fetchAllPhotosOfAContainer(itemId, option);
-	}
-
-
-	public Cursor fetchAllContainers(int photoId, OptionType option) {
-		// TODO Auto-generated method stub
-		return this.mDbAdap.fetchAllContainersOfAPhoto(photoId, option);
-	}
-
-
 	public Set<? extends Container> getAllContainers(OptionType option)
 	{
-		Cursor cursor = this.mDbAdap.fetchAllContainers(option);
+		Cursor cursor = this.fetchAllContainers(option);
 		return DbController.getContainersFromCursor(cursor, option);
 	}
+
+	public Set<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option){
+		Cursor cursor = this.fetchAllContainersOfAPhoto(photoId, option);
+		return DbController.getContainersFromCursor(cursor, option);
+	}
+
+
 
 	public int deleteEntry(long rowID, OptionType option) {
 		return this.mDbAdap.deleteEntry(rowID, option);
 	}
 
-	private static Set<? extends Container> getContainersFromCursor(Cursor cursor, OptionType option){
+	public static Set<? extends Container> getContainersFromCursor(Cursor cursor, OptionType option){
 		boolean repeat = true;
 
 		Container container;
 
 		int itemId;
 		String name = "";
-		String column = "";
 
 		if(option == OptionType.GROUP || option == OptionType.PHOTOGROUP){
 			Set<Group> aSet = new HashSet<Group>();
@@ -206,7 +178,7 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		return null;
 	}
 
-	private static SortedSet<Photo> getPhotoFromCursor(Cursor cursor){
+	public static SortedSet<Photo> getPhotoFromCursor(Cursor cursor){
 		boolean repeat = false;
 		int photoId;
 		String location, name;
@@ -233,6 +205,27 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		return aSet;
 	}
 
+	public Cursor fetchAllPhotoObj() {
+		// TODO Auto-generated method stub
+		return this.mDbAdap.fetchAllEntries(OptionType.PHOTO);
+	}
+
+
+	public Cursor fetchAllPhotoObjConnected(int itemId, OptionType option) {
+		// TODO Auto-generated method stub
+		return this.mDbAdap.fetchAllPhotosOfAContainer(itemId, option);
+	}
+
+
+	public Cursor fetchAllContainers(OptionType option) {
+		// TODO Auto-generated method stub
+		return this.mDbAdap.fetchAllContainers(option);
+	}
+
+	public Cursor fetchAllContainersOfAPhoto(int photoId, OptionType option){
+		return this.mDbAdap.fetchAllContainersOfAPhoto(photoId, option);
+	}
 
 }
+
 

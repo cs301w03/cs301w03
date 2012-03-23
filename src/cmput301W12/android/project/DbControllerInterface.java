@@ -22,23 +22,13 @@ public interface DbControllerInterface {
 	public Photo addPhoto(Photo photo);
 
 	/**
-	 * NOTE: We don't use this method for project part 3...
-	 * @param container
-	 * @return
+	 * Add the container to the relevant tables.
+	 * @return a container ( group or skin condition ). If the ItemId of the new container is INVALID_ID
+	 * the new container is not added to the database but all IDs of photos connected to this container
+	 * will be added to the appropriate table.
 	 */
 	public Container addContainObj(Container container);
-	
-	/**
-	 * Create a new group in the database. 
-	 * @param name
-	 * @param option OptionType.GROUP for making a new group and OptionType.SKINCONDITION
-	 * for making a new skin condition.
-	 * @return a container ( group or skin condition ). If the ItemId of the new container is INVALID_ID
-	 * the new group is not added to the database. If the new container is null, the argument option is
-	 * not recognized.
-	 */
-	public Container storeNewContainer(String name, OptionType option);
-	
+		
 	public SortedSet<Photo> getAllPhoto();
 	
 	/**

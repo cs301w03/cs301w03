@@ -18,8 +18,6 @@ public interface FController {
 
 	public Container addContainObj(Container container);
 
-	public Container storeNewContainer(String name, OptionType option);
-
 	public SortedSet<Photo> getAllPhoto();
 
 	public SortedSet<Photo> getAllPhotoOfAContainer(int itemId, OptionType option);

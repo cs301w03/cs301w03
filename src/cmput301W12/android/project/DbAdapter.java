@@ -47,13 +47,13 @@ public class DbAdapter {
 	public static final String PHOTOID = "Photo_ID";
 	public static final String LOCATION = "Location";
 	public static final String TIMESTAMP = "Time_Stamp";
-	public static final String PHOTONAME = "Name";
+	public static final String PHOTONAME = "PhotoName";
 
 	public static final String GROUPID = "Group_ID";
-	public static final String GROUPNAME = "Name";
+	public static final String GROUPNAME = "GroupName";
 
 	public static final String SKINCONDITIONID = "SkinConditionID";
-	public static final String SKINNAME = "Name";
+	public static final String SKINNAME = "SkinName";
 
 	private static final String TAG = "DbAdapter";
 	private static final String DATABASE_NAME = "skinObserver";
@@ -188,7 +188,7 @@ public class DbAdapter {
 			db.execSQL(CREATE_SKIN_TABLE);
 			db.execSQL(CREATE_PHOTOGROUP_TABLE);
 			db.execSQL(CREATE_PHOTOSKIN_TABLE);
-			
+
 			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_INSERT);
 			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATE);
 			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_DELETECASCADE);
@@ -387,7 +387,7 @@ public class DbAdapter {
 	 */
 	public Cursor searchForPhoto(String location){
 		Cursor mCursor = mDb.query(true, PHOTO_TABLE, 
-				new String[]{PHOTOID}, LOCATION + "  =  " + location, null, null, null, null, null);
+				null, LOCATION + "  =  " + "'" + location + "'", null, null, null, null, null);
 		if(mCursor != null){
 			mCursor.moveToFirst();
 		}
@@ -402,7 +402,7 @@ public class DbAdapter {
 	 */
 	public Cursor searchForContainer(String name, OptionType option){
 		Cursor mCursor = mDb.query(true, DbAdapter.returnTableName(option), 
-				new String[]{DbAdapter.returnIdColumn(option)}, DbAdapter.returnItemName(option) + "  =  " + name, null, null, null, null, null);
+				null, DbAdapter.returnItemName(option) + "  =  " + "'" + name + "'", null, null, null, null, null);
 		if(mCursor != null){
 			mCursor.moveToFirst();
 		}
@@ -418,8 +418,14 @@ public class DbAdapter {
 	 * @return
 	 */
 	public Cursor searchForPhotoContainer(int photoId, int itemId, OptionType option){
+		String itemIdName = "";
+		if(option == OptionType.PHOTOGROUP){
+			itemIdName = GROUPID;
+		} else if (option == OptionType.PHOTOSKIN){
+			itemIdName = SKINCONDITIONID;
+		}
 		Cursor mCursor = mDb.query(true, DbAdapter.returnTableName(option), 
-				new String[]{"ROWID"}, PHOTOID + "  =  " + photoId + " and " + DbAdapter.returnIdColumn(option) + " = " + itemId, null, null, null, null, null);
+				null, PHOTOID + "  =  " + photoId + " and " + itemIdName + " = " + itemId, null, null, null, null, null);
 		if(mCursor != null){
 			mCursor.moveToFirst();
 		}
@@ -428,8 +434,7 @@ public class DbAdapter {
 
 	public int deleteEntry(long rowId, OptionType option) {
 		String id = DbAdapter.returnIdColumn(option);
-		//return mDb.delete(DbAdapter.returnTableName(option), id + " = ?s", new String[]{rowId + ""}) ;
-		return 1;
+		return mDb.delete(DbAdapter.returnTableName(option), id + " = " + rowId, null) ;
 	}
 
 	public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, String newName ){
@@ -449,7 +454,7 @@ public class DbAdapter {
 		}
 
 		return mDb.update(PHOTO_TABLE, initialValues , 
-				DbAdapter.returnIdColumn(OptionType.PHOTO) + " = ?s", new String[]{photoId + ""});
+				DbAdapter.returnIdColumn(OptionType.PHOTO) + " = " + photoId, null);
 	}
 	/**
 	 * Update group
@@ -465,7 +470,7 @@ public class DbAdapter {
 		}
 
 		return mDb.update(GROUP_TABLE, initialValues , 
-				DbAdapter.returnIdColumn(OptionType.GROUP) + " = ?s", new String[]{groupId + ""});
+				DbAdapter.returnIdColumn(OptionType.GROUP) + " = " + groupId, null);
 	}
 
 	/**
@@ -482,10 +487,18 @@ public class DbAdapter {
 		}
 
 		return mDb.update(SKIN_TABLE, initialValues ,
-				DbAdapter.returnIdColumn(OptionType.SKINCONDITION) + " = ?s", new String[]{skinId + ""});
+				DbAdapter.returnIdColumn(OptionType.SKINCONDITION) + " = " + skinId, null);
 	}
 
-	public int updatePhotoGroup(long rowId, int photoId, int groupId	){
+	/**
+	 * This method is unlikely to be used.
+	 * @param rowId
+	 * @param photoId
+	 * @param groupId
+	 * @return
+	 */
+
+	public int updatePhotoGroup(long rowId, int photoId, int groupId){
 		ContentValues cv = new ContentValues();
 		cv.put(PHOTOID, photoId);
 		cv.put(GROUPID,groupId);
@@ -503,15 +516,17 @@ public class DbAdapter {
 
 
 	public Cursor fetchAllContainers(OptionType option){
-		String table = "";
-		if(option == OptionType.GROUP){
-			table = GROUP_TABLE;
+		if(option != OptionType.GROUP && option != OptionType.SKINCONDITION){
+			option = null;
 		}
-		if(option == OptionType.SKINCONDITION){
-			table = SKIN_TABLE;
+		return this.fetchAllEntries(option);
+	}
+	
+	public Cursor fetchAllPhotos(OptionType option){
+		if(option != OptionType.PHOTO){
+			option = null;
 		}
-		Cursor mCursor = mDb.query(table, null, null, null, null, null, null);
-		return mCursor;
+		return this.fetchAllEntries(option);
 	}
 
 
@@ -578,11 +593,11 @@ public class DbAdapter {
 			itemIdName = SKINCONDITIONID;
 		}
 
-		String preparedStatement = "select ?s , ?s , ?s , ?s ,  from ?s , ?s " +
+		String preparedStatement = "select ?s.?s as ?s, ?s , ?s , ?s from ?s , ?s " +
 		" where ?s" + "." + "?s = ?s" + "." + "?s and ?s = ?s";
-		String[] args = {PHOTOID, LOCATION, TIMESTAMP, PHOTONAME, 
+		String[] args = {PHOTO_TABLE, PHOTOID, PHOTOID, LOCATION, TIMESTAMP, PHOTONAME, 
 				PHOTO_TABLE, lookUpTable, PHOTO_TABLE, PHOTOID, lookUpTable, PHOTOID , 
-				containerId + "", itemIdName};
+				itemIdName, containerId + ""};
 		Cursor mCursor = mDb.rawQuery(preparedStatement, args);
 		return mCursor;
 

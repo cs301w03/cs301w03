@@ -12,6 +12,12 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
+/**
+ * @author: Tri Lai 
+ * @date: Mar 24, 2012
+ * 
+ * This is an activity that will let the users to compare two photos
+ */
 public class ComparePhotoActivity extends Activity {
 	private ImageView imageView;
 	private SeekBar seekBarOpacity;

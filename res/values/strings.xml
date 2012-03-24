@@ -17,5 +17,6 @@
     <string name="comare_photos">Compare</string>
     <string name="groupExpList">Body Group List</string>
     <string name="conditionExpList">Skin Condition List</string>
+    <string name="confirm">Confirm selection</string>
 
 </resources>

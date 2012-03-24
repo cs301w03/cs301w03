@@ -55,9 +55,9 @@ public interface DbControllerInterface {
 	 * SKINNAME. 
 	 */
 
-	public Set<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option);
+	public SortedSet<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option);
 
-	Set<? extends Container> getAllContainers(OptionType option);
+	public SortedSet<? extends Container> getAllContainers(OptionType option);
 
 	// NOTICE: The three methods above are enough for project part 3. Specifically,
 	// TRI: call fetchAllContainers(DbAdapter.INVALID_ID, OptionType.GROUP) to obtain all the groups.
@@ -176,7 +176,6 @@ public interface DbControllerInterface {
 	/**
 	 * connect a container to all photos.
 	 * @param containerId the container ID of the container that is connected to photos.
-	 * @param setOfIDs the set of IDs of the photos to which the container is connected.
 	 * @param option OptionType.PHOTOGROUP if connecting to the groups or OptionType.PHOTOSKIN
 	 * if connecting to the skin conditions. 
 	 * @return number of photos that are connected to the container, excluding photos that are

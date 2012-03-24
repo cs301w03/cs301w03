@@ -114,13 +114,13 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		return DbController.getPhotoFromCursor(cursor);
 	}
 
-	public Set<? extends Container> getAllContainers(OptionType option)
+	public SortedSet<? extends Container> getAllContainers(OptionType option)
 	{
 		Cursor cursor = this.fetchAllContainers(option);
 		return DbController.getContainersFromCursor(cursor, option);
 	}
 
-	public Set<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option){
+	public SortedSet<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option){
 		Cursor cursor = this.fetchAllContainersOfAPhoto(photoId, option);
 		return DbController.getContainersFromCursor(cursor, option);
 	}
@@ -131,7 +131,7 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		return this.mDbAdap.deleteEntry(rowID, option);
 	}
 
-	public static Set<? extends Container> getContainersFromCursor(Cursor cursor, OptionType option){
+	public static SortedSet<? extends Container> getContainersFromCursor(Cursor cursor, OptionType option){
 		boolean repeat = true;
 
 		Container container;
@@ -140,7 +140,7 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		String name = "";
 
 		if(option == OptionType.GROUP || option == OptionType.PHOTOGROUP){
-			Set<Group> aSet = new HashSet<Group>();
+			SortedSet<Group> aSet = new TreeSet<Group>();
 
 			if (cursor != null) {
 				repeat = cursor.moveToFirst();
@@ -163,7 +163,7 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 				repeat = cursor.moveToFirst();
 			}
 
-			Set<SkinCondition> aSet = new HashSet<SkinCondition>();
+			SortedSet<SkinCondition> aSet = new TreeSet<SkinCondition>();
 
 			while(repeat){
 				itemId = cursor.getInt(cursor.getColumnIndex(DbAdapter.SKINCONDITIONID));

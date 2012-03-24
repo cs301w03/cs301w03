@@ -50,11 +50,12 @@ public class PhotoEditorActivity extends  Activity {
 					if (cont.isSelected())
 						System.err.print("Hello, I am " + cont.getName() + "\n");
 				}
+				/*
 				for(Container cont2: conditionArray)
 				{
 					if (cont2.isSelected())
 						System.err.print("Hello, I am " + cont2.getName() + "\n");
-				}
+				}*/
 				
 			}
 		});
@@ -91,9 +92,9 @@ public class PhotoEditorActivity extends  Activity {
 		setCondition.toArray(conditionArray);
 
 			
-    	//CheckBoxArrayAdapter conAdapterGroup = new CheckBoxArrayAdapter(this, groupArray);
+    	CheckBoxArrayAdapter conAdapterGroup = new CheckBoxArrayAdapter(this, groupArray);
     	CheckBoxArrayAdapter conAdapterCondition = new CheckBoxArrayAdapter(this, conditionArray);
-    	//groupList.setAdapter(conAdapterGroup);
+    	groupList.setAdapter(conAdapterGroup);
     	conditionList.setAdapter(conAdapterCondition);
 	}
 

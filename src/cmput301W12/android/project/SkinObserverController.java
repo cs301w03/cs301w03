@@ -15,9 +15,8 @@ import android.util.Log;
  */
 public class SkinObserverController implements FController {
 	DbControllerInterface dbCon = null;
-	
+
 	public SkinObserverController(Context ctx){
-	    Log.d("SOController", "Trail part 4");
 		this.dbCon = DbController.getDbController(ctx);
 	}
 
@@ -36,7 +35,6 @@ public class SkinObserverController implements FController {
 	 * If not, return null
 	 */
 	public Photo addPhoto(Photo photo) {
-	    Log.d("SKINOBSERVER", "Long as trail is making me tired of walking");
 		return dbCon.addPhoto(photo);
 	}
 
@@ -50,18 +48,6 @@ public class SkinObserverController implements FController {
 	 */
 	public Container addContainObj(Container container) {
 		return dbCon.addContainObj(container);
-	}
-
-	@Override
-	/*
-	 * (non-Javadoc)
-	 * @see cmput301W12.android.project.FController#storeNewContainer(java.lang.String, cmput301W12.android.project.OptionType)
-	 * Add a new Container to database
-	 * Return a Container if success
-	 * If not, return null
-	 */
-	public Container storeNewContainer(String name, OptionType option) {
-		return dbCon.storeNewContainer(name, option);
 	}
 
 	@Override
@@ -97,7 +83,7 @@ public class SkinObserverController implements FController {
 			OptionType option) {
 		return dbCon.getAllContainersOfAPhoto(photoId, option);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see cmput301W12.android.project.FController#getAllContainers(cmput301W12.android.project.OptionType)
@@ -107,7 +93,7 @@ public class SkinObserverController implements FController {
 	public Set<? extends Container> getAllContainers(OptionType option){
 		return dbCon.getAllContainers(option);
 	}
-	
+
 	public int deleteEntry(long rowID, OptionType option) {
 		return dbCon.deleteEntry(rowID, option);
 	}

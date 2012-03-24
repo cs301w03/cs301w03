@@ -1,5 +1,6 @@
 package cmput301W12.android.project;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,7 +8,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 /**
  * @user Hieu Ngo
  * @date Mar 14, 2012
@@ -49,19 +49,18 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		if(photoId == Photo.INVALID_ID){
 			photoId = ( int) this.mDbAdap.addPhoto(location, timeStamp, name);
 			phoObj.setPhotoId(photoId);
+
+			Set<Integer> listOfGroupId = phoObj.getGroups();
+			Set<Integer> listOfSkinId = phoObj.getSkinConditions();
+
+			for(Integer id : listOfGroupId){
+				this.mDbAdap.addPhotoGroup(photoId,id);
+			}
+			for(Integer id : listOfSkinId	){
+				this.mDbAdap.addPhotoSkinCondition(photoId, id);
+			}
 		}
 
-		Set<Integer> listOfGroupId = phoObj.getGroups();
-		Set<Integer> listOfSkinId = phoObj.getSkinConditions();
-
-		for(Integer id : listOfGroupId){
-			this.mDbAdap.addPhotoGroup(photoId,id);
-		}
-
-
-		for(Integer id : listOfSkinId	){
-			this.mDbAdap.addPhotoSkinCondition(photoId, id);
-		}
 		return phoObj;
 	}
 
@@ -75,26 +74,31 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 			if(containObj.getItemId() == Photo.INVALID_ID){
 				int groupId = (int) this.mDbAdap.addGroup(name);
 				containObj.setItemId(groupId);
-			}
-			int validGroupId = containObj.getItemId();
-			if(validGroupId != Photo.INVALID_ID){
-				for(Integer id : listOfPhotoIds){
-					this.mDbAdap.addPhotoGroup(id, validGroupId);
+
+				int validGroupId = containObj.getItemId();
+				if(validGroupId != Photo.INVALID_ID){
+					for(Integer id : listOfPhotoIds){
+						this.mDbAdap.addPhotoGroup(id, validGroupId);
+					}
+
 				}
+
 			}
+
 		} 
 		else if(containObj instanceof SkinCondition){
 			if(containObj.getItemId() == Photo.INVALID_ID){
 				int skinId = (int) this.mDbAdap.addSkinCondition(name);
 				containObj.setItemId(skinId);
-			}
-			int validSkinId = containObj.getItemId();
-			if(validSkinId != Photo.INVALID_ID){
-				for(Integer id : listOfPhotoIds){
-					this.mDbAdap.addPhotoSkinCondition(id, validSkinId);
+
+				int validSkinId = containObj.getItemId();
+				if(validSkinId != Photo.INVALID_ID){
+					for(Integer id : listOfPhotoIds){
+						this.mDbAdap.addPhotoSkinCondition(id, validSkinId);
+					}
 				}
 			}
-		}
+		} 
 
 		return containObj;
 	}
@@ -110,13 +114,13 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		return DbController.getPhotoFromCursor(cursor);
 	}
 
-	public Set<? extends Container> getAllContainers(OptionType option)
+	public SortedSet<? extends Container> getAllContainers(OptionType option)
 	{
 		Cursor cursor = this.fetchAllContainers(option);
 		return DbController.getContainersFromCursor(cursor, option);
 	}
 
-	public Set<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option){
+	public SortedSet<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option){
 		Cursor cursor = this.fetchAllContainersOfAPhoto(photoId, option);
 		return DbController.getContainersFromCursor(cursor, option);
 	}
@@ -127,7 +131,7 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		return this.mDbAdap.deleteEntry(rowID, option);
 	}
 
-	public static Set<? extends Container> getContainersFromCursor(Cursor cursor, OptionType option){
+	public static SortedSet<? extends Container> getContainersFromCursor(Cursor cursor, OptionType option){
 		boolean repeat = true;
 
 		Container container;
@@ -136,7 +140,7 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		String name = "";
 
 		if(option == OptionType.GROUP || option == OptionType.PHOTOGROUP){
-			Set<Group> aSet = new HashSet<Group>();
+			SortedSet<Group> aSet = new TreeSet<Group>();
 
 			if (cursor != null) {
 				repeat = cursor.moveToFirst();
@@ -159,7 +163,7 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 				repeat = cursor.moveToFirst();
 			}
 
-			Set<SkinCondition> aSet = new HashSet<SkinCondition>();
+			SortedSet<SkinCondition> aSet = new TreeSet<SkinCondition>();
 
 			while(repeat){
 				itemId = cursor.getInt(cursor.getColumnIndex(DbAdapter.SKINCONDITIONID));
@@ -206,19 +210,16 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 	}
 
 	public Cursor fetchAllPhotoObj() {
-		// TODO Auto-generated method stub
 		return this.mDbAdap.fetchAllEntries(OptionType.PHOTO);
 	}
 
 
 	public Cursor fetchAllPhotoObjConnected(int itemId, OptionType option) {
-		// TODO Auto-generated method stub
 		return this.mDbAdap.fetchAllPhotosOfAContainer(itemId, option);
 	}
 
 
 	public Cursor fetchAllContainers(OptionType option) {
-		// TODO Auto-generated method stub
 		return this.mDbAdap.fetchAllContainers(option);
 	}
 
@@ -227,69 +228,146 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 	}
 
 	@Override
-	public int deleteAPhoto(Photo PhoObj) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteAPhoto(Photo phoObj) {
+		int photoId = phoObj.getPhotoId();
+		String location = phoObj.getLocation();
+		int count = 0;
+
+		new File(location).delete();
+
+		count += this.mDbAdap.deleteEntry(photoId, OptionType.PHOTO	);
+		count += this.mDbAdap.disconnectAPhotoFromManyContainers(photoId, OptionType.PHOTOGROUP);
+		count += this.mDbAdap.disconnectAPhotoFromManyContainers(photoId, OptionType.PHOTOSKIN);
+		return count;
 	}
 
 	@Override
 	public int deleteAContainer(int containerId, OptionType option) {
-		return 0;
+		int count = 0;
+		OptionType opt2 = null;
+		if(option == OptionType.GROUP){
+			opt2 = OptionType.PHOTOGROUP;
+			count += this.mDbAdap.deleteEntry(containerId, option);
+		} else if ( option == OptionType.SKINCONDITION){
+			opt2 = OptionType.PHOTOSKIN;
+			count += this.mDbAdap.deleteEntry(containerId, option);
+		}
+		count += this.mDbAdap.disconnectAContainerFromManyPhotos(containerId, opt2);
+		return count;
 	}
 
 	@Override
 	public int deleteAContainer(Container containerObj, OptionType option) {
-		// TODO Auto-generated method stub
-		return 0;
+		int containerId = containerObj.getItemId();
+		return deleteAContainer(containerId, option);
+	}
+
+	@Override
+	public int disconnectAPhotoFromManyContainers(int photoId, OptionType option) {
+		return this.mDbAdap.disconnectAPhotoFromManyContainers(photoId, option);
 	}
 
 	@Override
 	public int disconnectAPhotoFromManyContainers(int photoId,
 			Set<Integer> setOfIDs, OptionType option) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int disconnectAContainerFromManyPhotos(int containerId,
-			Set<Integer> setOfIDs, OptionType option) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.mDbAdap.disconnectAPhotoFromManyContainers(photoId, setOfIDs, option);
 	}
 
 	@Override
 	public int connectAPhotoToManyContainers(int photoId,
 			Set<Integer> setOfIDs, OptionType option) {
-		// TODO Auto-generated method stub
+		int count = 0;
+		if(option == OptionType.PHOTOGROUP){
+			for(Integer id : setOfIDs){
+				count += this.mDbAdap.addPhotoGroup(photoId, id);
+			}
+		} else if (option == OptionType.PHOTOSKIN){
+			for(Integer id : setOfIDs){
+				count += this.mDbAdap.addPhotoSkinCondition(photoId, id);
+			}
+		}
+		return count;
+	}
+
+	@Override
+	public int connectAPhotoToManyContainers(int photoId, OptionType option) {
+		Set<Integer> setOfIDs = new HashSet<Integer>();
+		OptionType opt2 = null;
+		if(option == OptionType.PHOTOGROUP){
+			opt2 = OptionType.GROUP;
+			Set<? extends Container> setOfContainers = this.getAllContainers(opt2);
+			for(Container c : setOfContainers){
+				setOfIDs.add(c.getItemId());
+			}
+			return this.connectAPhotoToManyContainers(photoId, setOfIDs, option);
+		} else if (option == OptionType.PHOTOSKIN){
+			opt2 = OptionType.SKINCONDITION;
+			Set<? extends Container> setOfContainers = this.getAllContainers(opt2);
+			for(Container c : setOfContainers){
+				setOfIDs.add(c.getItemId());
+			}
+			return this.connectAPhotoToManyContainers(photoId, setOfIDs, option);
+		}
 		return 0;
 	}
+
+
 
 	@Override
 	public int connectAContainerToManyPhotos(int containerId,
 			Set<Integer> setOfIDs, OptionType option) {
-		// TODO Auto-generated method stub
-		return 0;
+		int count = 0;
+		if(option == OptionType.PHOTOGROUP){
+			for(Integer id : setOfIDs){
+				count += this.mDbAdap.addPhotoGroup(id, containerId);
+			}
+		} else if (option == OptionType.PHOTOSKIN){
+			for(Integer id : setOfIDs){
+				count += this.mDbAdap.addPhotoSkinCondition(id, containerId);
+			}
+		}
+		return count;
+
+	}
+
+	@Override
+	public int connectAContainerToManyPhotos(int containerId, OptionType option) {
+		Set<Photo> setOfPhotos = this.getAllPhoto();
+		Set<Integer> setOfIDs = new HashSet<Integer>();
+
+		for(Photo p : setOfPhotos){
+			setOfIDs.add(p.getPhotoId());
+		}
+		return this.connectAContainerToManyPhotos(containerId, setOfIDs, option);
+	}
+
+	@Override
+	public int disconnectAContainerFromManyPhotos(int containerId,
+			Set<Integer> setOfIDs, OptionType option) {
+		return this.mDbAdap.disconnectAContainerFromManyPhotos(containerId, setOfIDs, option);
+	}
+
+	@Override
+	public int disconnectAContainerFromManyPhotos(int containerId,
+			OptionType option) {
+		return this.mDbAdap.disconnectAContainerFromManyPhotos(containerId, option);
 	}
 
 	@Override
 	public int updatePhoto(long photoId, String newLocation,
 			Timestamp newTimeStamp, String newName) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.mDbAdap.updatePhoto(photoId, newLocation, newTimeStamp, newName);
 	}
 
 	@Override
 	public int updateGroup(long groupId, String newName) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.mDbAdap.updateGroup(groupId, newName);
 	}
 
 	@Override
 	public int updateSkin(long skinId, String newName) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.mDbAdap.updateSkin(skinId, newName);
 	}
-
 }
 
 

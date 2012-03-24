@@ -23,7 +23,7 @@ public interface DbControllerInterface {
 	public Photo addPhoto(Photo photo);
 
 	/**
-	 * Add the container to the relevant tables.
+	 * Add the newly created container to the relevant tables.
 	 * @return a container ( group or skin condition ). If the ItemId of the new container is INVALID_ID
 	 * the new container is not added to the database but all IDs of photos connected to this container
 	 * will be added to the appropriate table.
@@ -55,9 +55,9 @@ public interface DbControllerInterface {
 	 * SKINNAME. 
 	 */
 
-	public Set<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option);
+	public SortedSet<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option);
 
-	Set<? extends Container> getAllContainers(OptionType option);
+	public SortedSet<? extends Container> getAllContainers(OptionType option);
 
 	// NOTICE: The three methods above are enough for project part 3. Specifically,
 	// TRI: call fetchAllContainers(DbAdapter.INVALID_ID, OptionType.GROUP) to obtain all the groups.
@@ -116,6 +116,15 @@ public interface DbControllerInterface {
 	public int deleteAContainer(Container containerObj, OptionType option);
 
 	/**
+	 * disconnect a photo from all containers 
+	 * @param photoId
+	 * @param option option OptionType.PHOTOGROUP if disconnecting groups or OptionType.PHOTOSKIN 
+	 * if disconnecting skin conditions.
+	 * @return number of containers that have been dissociated from the photo.
+	 */
+	public int disconnectAPhotoFromManyContainers(int photoId, OptionType option);
+
+	/**
 	 * disconnect a photo from many containers
 	 * @param photoId 
 	 * @param setOfIDs set of Container IDs that are disconnected 
@@ -126,14 +135,32 @@ public interface DbControllerInterface {
 	public int disconnectAPhotoFromManyContainers(int photoId, Set<Integer> setOfIDs, OptionType option);
 
 	/**
+	 * disconnect a container from all photos.
+	 * @param containerId
+	 * @param option option OptionType.PHOTOGROUP if disconnecting group or OptionType.PHOTOSKIN 
+	 * if disconnecting skin condition.
+	 * @return number of photos that have been disconnected from the container.
+	 */
+	public int disconnectAContainerFromManyPhotos(int containerId, OptionType option);
+
+	/**
 	 * disconnect a container from many photos.
 	 * @param containerId 
 	 * @param setOfIDs set of photo IDs that are disconnected 
-	 * @param option OptionType.PHOTOGROUP if disconnecting groups or OptionType.PHOTOSKIN 
-	 * if disconnecting skin conditions.
+	 * @param option OptionType.PHOTOGROUP if disconnecting group or OptionType.PHOTOSKIN 
+	 * if disconnecting skin condition.
 	 * @return number of photos that have been disconnected from the container.
 	 */
 	public int disconnectAContainerFromManyPhotos(int containerId, Set<Integer> setOfIDs, OptionType option);
+
+	/**
+	 * connect a photo to all containers.
+	 * @param photoId the photoId of the photo that is connected to containers.
+	 * @param option OptionType.PHOTOGROUP if connecting to the groups or OptionType.PHOTOSKIN
+	 * if connecting to the skin conditions.
+	 * @return number of groups that are connected to the photo, excluding groups that are connected already.
+	 */
+	public int connectAPhotoToManyContainers(int photoId, OptionType option);
 
 
 	/**
@@ -146,6 +173,16 @@ public interface DbControllerInterface {
 	 */
 	public int connectAPhotoToManyContainers(int photoId, Set<Integer> setOfIDs, OptionType option);
 
+	/**
+	 * connect a container to all photos.
+	 * @param containerId the container ID of the container that is connected to photos.
+	 * @param option OptionType.PHOTOGROUP if connecting to the groups or OptionType.PHOTOSKIN
+	 * if connecting to the skin conditions. 
+	 * @return number of photos that are connected to the container, excluding photos that are
+	 * connected already.
+	 */
+	public int connectAContainerToManyPhotos(int containerId, OptionType option);
+
 
 	/**
 	 * connect a container to many photos
@@ -153,7 +190,7 @@ public interface DbControllerInterface {
 	 * @param setOfIDs the set of IDs of the photos to which the container is connected.
 	 * @param option OptionType.PHOTOGROUP if connecting to the groups or OptionType.PHOTOSKIN
 	 * if connecting to the skin conditions. 
-	 * @return
+	 * @return number of photos that are connected to the container.
 	 */
 	public int connectAContainerToManyPhotos(int containerId, Set<Integer> setOfIDs, OptionType option);
 
@@ -175,7 +212,7 @@ public interface DbControllerInterface {
 	 * NOTICE: throw SQLiteConstraintException if the newName conflicts with the name of some group.
 	 */
 	public int updateGroup(long groupId, String newName );
-	
+
 	/**
 	 * Update the skin condition information.
 	 * @param skinId the skin ID of the skin condition that is updated.

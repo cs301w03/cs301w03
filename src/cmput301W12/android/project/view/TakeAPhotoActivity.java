@@ -46,10 +46,20 @@ public class TakeAPhotoActivity extends Activity
 {
     private static final int MEDIA_TYPE_IMAGE = 1;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private static final int GET_IMAGE_INFO_REQUEST_CODE = 1250;
     
     private static Uri photoUri;
     private static Timestamp time;
     
+    //TAG METHODS
+    Set<Integer> groups = null;
+    Set<Integer> skinConditions = null;
+    /* Make a photo object here */
+    
+    //MAKE PHOTO OBJECT
+    
+    String name = null;
+    Photo newestPhoto = null;
     
     
     /* (non-Javadoc)
@@ -71,46 +81,15 @@ public class TakeAPhotoActivity extends Activity
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) 
+        {
             if (resultCode == RESULT_OK) {
                 // Image captured and saved to fileUri specified in the Intent
                 /*if the program gets here, a picture was succesfully captured, call the method to tag the photo here */
                 
-                //TAG METHODS
-                Set<Integer> groups = null;
-                Set<Integer> skinConditions = null;
-                /* Make a photo object here */
-                
-                //MAKE PHOTO OBJECT
-                
-                String name = null;
-                
- 
-                
                 /* Construct a photo object from data */
-                Photo newestPhoto = new Photo(photoUri.toString(), time, name, groups, skinConditions);
-                
-                /* send the photo object to Hieu's DB */
-                Intent getPhotoTags = new Intent(TakeAPhotoActivity.this, PhotoEditorActivity.class);
-                getPhotoTags.putExtra("cmput301W12.android.project.Photo.Photo", newestPhoto);
-                try{
-                    startActivity(getPhotoTags);
-                	
-                } catch(Exception e){
-                	Log.d("test", "Activity not found!");
-                }
-                
-                FController controller = SkinObserverApplication.getSkinObserverController(this);
-                controller.addPhoto(newestPhoto);
-                //FController controller = SkinObserverApplication.getSkinObserverController();          
-                //Log.d("SKINOBSERVER", "Three?");
-                
-                /* Call the methods to create a photo object here? I dono? */
-//                Log.d("SKINOBSERVER", "activty result code is:" + resultCode);
-//                if (data == null){
-//                    Log.d("SKINOBSERVER", "data is null...");
-//                    Log.d("SKINOBSERVER", "URI is" + photoUri);
-//                }
+                newestPhoto = new Photo(photoUri.toString(), time, name, groups, skinConditions);
+                getTags(); // Ask the user to input data about the photo
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture
                 Toast.makeText(this, "The user canceled capturing a photo\n", Toast.LENGTH_LONG).show();
@@ -120,9 +99,29 @@ public class TakeAPhotoActivity extends Activity
                 Log.d("SKINOBSERVER", "There was an error capturing the photo.");
             }
         }
+        else if (requestCode == GET_IMAGE_INFO_REQUEST_CODE)
+        {
+        	if (resultCode == RESULT_OK)
+        	{
+        		if (data != null ) 
+        		{
+        			Bundle PhotoInfo = data.getExtras();
+        			newestPhoto = (Photo) PhotoInfo.getSerializable("Photo");
+        		}
+        	}
+        	//put into db
+            FController controller = SkinObserverApplication.getSkinObserverController(this);
+            controller.addPhoto(newestPhoto);
+        }
     }
     
-    
+    private void getTags() 
+    {
+        /* send the photo object to Hieu's DB */
+        Intent getPhotoTags = new Intent(TakeAPhotoActivity.this, PhotoEditorActivity.class);
+        getPhotoTags.putExtra("Photo", newestPhoto);
+        startActivityForResult(getPhotoTags, GET_IMAGE_INFO_REQUEST_CODE);
+    }
     
     
     

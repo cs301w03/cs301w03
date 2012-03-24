@@ -18,5 +18,7 @@
     <string name="groupExpList">Body Group List</string>
     <string name="conditionExpList">Skin Condition List</string>
     <string name="confirm">Confirm selection</string>
+    <string name="add_a_group">Add a group</string>
+    <string name="add_a_condition">Add a Skin Condition</string>
 
 </resources>

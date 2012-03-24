@@ -226,6 +226,70 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		return this.mDbAdap.fetchAllContainersOfAPhoto(photoId, option);
 	}
 
+	@Override
+	public int deleteAPhoto(Photo PhoObj) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteAContainer(int containerId, OptionType option) {
+		return 0;
+	}
+
+	@Override
+	public int deleteAContainer(Container containerObj, OptionType option) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int disconnectAPhotoFromManyContainers(int photoId,
+			Set<Integer> setOfIDs, OptionType option) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int disconnectAContainerFromManyPhotos(int containerId,
+			Set<Integer> setOfIDs, OptionType option) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int connectAPhotoToManyContainers(int photoId,
+			Set<Integer> setOfIDs, OptionType option) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int connectAContainerToManyPhotos(int containerId,
+			Set<Integer> setOfIDs, OptionType option) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updatePhoto(long photoId, String newLocation,
+			Timestamp newTimeStamp, String newName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateGroup(long groupId, String newName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateSkin(long skinId, String newName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
 
 

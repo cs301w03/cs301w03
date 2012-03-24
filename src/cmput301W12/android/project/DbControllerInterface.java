@@ -1,5 +1,6 @@
 package cmput301W12.android.project;
 
+import java.sql.Timestamp;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -28,9 +29,9 @@ public interface DbControllerInterface {
 	 * will be added to the appropriate table.
 	 */
 	public Container addContainObj(Container container);
-		
+
 	public SortedSet<Photo> getAllPhoto();
-	
+
 	/**
 	 * Fetch all photos of a group or skin condition with the itemId.
 	 * If itemId = DbAdapter.INVALID_ID then fetch all photos of all containers
@@ -43,7 +44,7 @@ public interface DbControllerInterface {
 	 */
 
 	public SortedSet<Photo> getAllPhotoOfAContainer(int itemId, OptionType option);
-	
+
 	/**
 	 * Fetch all containers (groups or skins conditions) of the photo with the provided photoId.
 	 * If the photoId = DbAdapter.INVALID_ID then fetch all containers(groups or skin conditions)
@@ -53,46 +54,8 @@ public interface DbControllerInterface {
 	 * @return the Cursor has two columns : GROUPID and GROUPNAME or SKINCONDITIONID and
 	 * SKINNAME. 
 	 */
-	
+
 	public Set<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option);
-	//	
-	//	/**
-	//	 * Fetch all photos in the database.
-	//	 * @return
-	//	 */
-	//	public Cursor fetchAllPhotoObj();
-	//	
-	//	
-//	/**
-//		 * Fetch all photos of a group or skin condition with the itemId.
-//		 * If itemId = DbAdapter.INVALID_ID then fetch all photos of all containers
-//		 * of particular type ( GROUP or SKINCONDITION).
-//		 * option = OptionType.GROUP to fetch from the group.
-//		 * option = OptionType.SKINCONDITION to fetch from the skin condition.
-//		 * @param itemId
-//		 * @param option
-//		 * @return The Cursor has all the columns of table PHOTO_TABLE: PHOTOID, LOCATION,
-//		 * TIMESTAMP and NAME.
-//		 */
-	//	public Cursor fetchAllPhotoObjConnected(int itemId, OptionType option);
-	//	
-//		/**
-//		 * Fetch all containers (groups or skins conditions) of the photo with the provided photoId.
-//		 * If the photoId = DbAdapter.INVALID_ID then fetch all containers(groups or skin conditions)
-//		 * option = OptionType.GROUP for fetching all groups
-//		 * option = OptionType.SKINCONDITION for fetching all skin conditions.
-//		 * @param option
-//		 * @return the Cursor has two columns : GROUPID and GROUPNAME or SKINCONDITIONID and
-//		 * SKINNAME. 
-//		 */
-	//	public Cursor fetchAllContainers(int photoId, OptionType option);
-	//	
-	//	/**
-	//	 * 
-	//	 * @param option OptionType.GROUP or OptionType.SKINCONDITION to create new
-	//	 * group or skin condition.
-	//	 * @return the GROUPID or SKINCONDITIONID of the new group or skin
-	//	 */
 
 	Set<? extends Container> getAllContainers(OptionType option);
 
@@ -114,6 +77,113 @@ public interface DbControllerInterface {
 	// of KALLEN in case the user would like to attach it with new group or skin condition.
 
 	// LAST BUT NOT LEAST: we postpone "delete" and "edit" for now...
-	
+
+	/**
+	 * This method is unlikely to be useful.
+	 */
 	public int deleteEntry(long rowID, OptionType option);
+
+
+	/**
+	 * NOTICE: this method will delete the photo with the provided photoId in the photo table
+	 * and all tuples containing this photoId in the PhotoGroup and PhotoSkinCondition tables.
+	 * Also delete the photo in the memory.
+	 * @param PhoObj the photo object corresponding to the target photo.
+	 * @return number of rows that have been deleted.
+	 */
+	public int deleteAPhoto(Photo PhoObj);
+
+	/**
+	 * Delete the container along with all tuples that represent the association between
+	 * the container and photos.
+	 * @param containerId
+	 * @param option either OptionType.GROUP to delete group or OptionType.SKINCONDITION to 
+	 * delete a skin condition.
+	 * @return number of rows that have been deleted.
+	 */
+	public int deleteAContainer(int containerId, OptionType option);
+
+
+
+	/**
+	 * Delete the container along with all tuples that represent the association between
+	 * the container and photos.
+	 * @param containerObj the container object corresponding to the container.
+	 * @param option either OptionType.GROUP to delete group or OptionType.SKINCONDITION to 
+	 * delete a skin condition.
+	 * @return number of rows that have been deleted.
+	 */
+	public int deleteAContainer(Container containerObj, OptionType option);
+
+	/**
+	 * disconnect a photo from many containers
+	 * @param photoId 
+	 * @param setOfIDs set of Container IDs that are disconnected 
+	 * @param option OptionType.PHOTOGROUP if disconnecting groups or OptionType.PHOTOSKIN 
+	 * if disconnecting skin conditions.
+	 * @return number of containers that have been dissociated from the photo
+	 */
+	public int disconnectAPhotoFromManyContainers(int photoId, Set<Integer> setOfIDs, OptionType option);
+
+	/**
+	 * disconnect a container from many photos.
+	 * @param containerId 
+	 * @param setOfIDs set of photo IDs that are disconnected 
+	 * @param option OptionType.PHOTOGROUP if disconnecting groups or OptionType.PHOTOSKIN 
+	 * if disconnecting skin conditions.
+	 * @return number of photos that have been disconnected from the container.
+	 */
+	public int disconnectAContainerFromManyPhotos(int containerId, Set<Integer> setOfIDs, OptionType option);
+
+
+	/**
+	 * connect a photo to many containers.
+	 * @param photoId the photoId of the photo that is connected to containers.
+	 * @param setOfIDs the set of IDs of the containers to which the photo is connected.
+	 * @param option OptionType.PHOTOGROUP if connecting to the groups or OptionType.PHOTOSKIN
+	 * if connecting to the skin conditions.
+	 * @return number of groups that are connected to the photo.
+	 */
+	public int connectAPhotoToManyContainers(int photoId, Set<Integer> setOfIDs, OptionType option);
+
+
+	/**
+	 * connect a container to many photos
+	 * @param containerId the container ID of the container that is connected to photos.
+	 * @param setOfIDs the set of IDs of the photos to which the container is connected.
+	 * @param option OptionType.PHOTOGROUP if connecting to the groups or OptionType.PHOTOSKIN
+	 * if connecting to the skin conditions. 
+	 * @return
+	 */
+	public int connectAContainerToManyPhotos(int containerId, Set<Integer> setOfIDs, OptionType option);
+
+	/**
+	 * Update the photo's information.
+	 * @param photoId 
+	 * @param newLocation if null , not update the location
+	 * @param newTimeStamp if null, not update the timeStamp
+	 * @param newName if null, not update the name
+	 * @return number of photos that have been disconnected from the container.
+	 */
+	public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, String newName );
+
+	/**
+	 * Update the group information.
+	 * @param groupId the group ID of the group that is updated.
+	 * @param newName new name for the group. If null, name unchanged.
+	 * @return number of groups that are updated.
+	 * NOTICE: throw SQLiteConstraintException if the newName conflicts with the name of some group.
+	 */
+	public int updateGroup(long groupId, String newName );
+	
+	/**
+	 * Update the skin condition information.
+	 * @param skinId the skin ID of the skin condition that is updated.
+	 * @param newName new name for the skin condition. If null, name unchanged.
+	 * @return number of skin conditions that are updated.
+	 * NOTICE: throw SQLiteConstraintException if the newName conflicts with the name of some skin condition.
+	 */
+	public int updateSkin(long skinId, String newName );
+
+
 }

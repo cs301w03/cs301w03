@@ -432,10 +432,6 @@ public class DbAdapter {
 		return mCursor;
 	}
 
-	public int deleteEntry(long rowId, OptionType option) {
-		String id = DbAdapter.returnIdColumn(option);
-		return mDb.delete(DbAdapter.returnTableName(option), id + " = " + rowId, null) ;
-	}
 
 	public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, String newName ){
 
@@ -513,7 +509,11 @@ public class DbAdapter {
 		return mDb.update(PHOTOSKIN_TABLE, cv, 
 				DbAdapter.returnIdColumn(OptionType.PHOTOSKIN) + " = " + rowId, null);
 	}
-
+// delete section.
+	public int deleteEntry(long rowId, OptionType option) {
+		String id = DbAdapter.returnIdColumn(option);
+		return mDb.delete(DbAdapter.returnTableName(option), id + " = " + rowId, null) ;
+	}
 
 	public Cursor fetchAllContainers(OptionType option){
 		if(option != OptionType.GROUP && option != OptionType.SKINCONDITION){

@@ -7,6 +7,12 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+/**
+ * @author: Tri Lai 
+ * @date: Mar 24, 2012
+ * 
+ * This is an activity that will let the users to compare two photos
+ */
 public class ComparePhotoActivity extends Activity {
 	private ImageView imageView;
 

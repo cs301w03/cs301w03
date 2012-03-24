@@ -5,9 +5,9 @@ import java.util.Set;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
+import cmput301W12.android.project.CheckBoxArrayAdapter;
 import cmput301W12.android.project.Container;
 import cmput301W12.android.project.ContainerArrayAdapter;
 import cmput301W12.android.project.FController;
@@ -65,8 +65,8 @@ public class PhotoEditorActivity extends  Activity {
 		setCondition.toArray(conditionArray);
 
 			
-    	ContainerArrayAdapter conAdapterGroup = new ContainerArrayAdapter(this, groupArray);
-    	ContainerArrayAdapter conAdapterCondition = new ContainerArrayAdapter(this, conditionArray);
+    	CheckBoxArrayAdapter conAdapterGroup = new CheckBoxArrayAdapter(this, groupArray);
+    	CheckBoxArrayAdapter conAdapterCondition = new CheckBoxArrayAdapter(this, conditionArray);
     	groupList.setAdapter(conAdapterGroup);
     	conditionList.setAdapter(conAdapterCondition);
 	}

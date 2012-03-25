@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cmput301W12.android.project"
+<manifest package="cmput301W12.android.project"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-sdk android:minSdkVersion="7" />
 <!-- 		Get camera permissions -->
@@ -29,6 +28,7 @@
         <activity android:name=".ViewCreateContainerActivity"></activity>
         <activity android:name=".ViewPhotoActivity"></activity>
         <activity android:name="ComparePhotoActivity"></activity>
+        <activity android:name=".view.PhotoEditorActivity"></activity>
     </application>
 
 </manifest>

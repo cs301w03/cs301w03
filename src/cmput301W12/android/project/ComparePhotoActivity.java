@@ -57,6 +57,7 @@ public class ComparePhotoActivity extends Activity {
 				
 				setupTransparentImage(backgroundDrawable,surfaceDrawable);
 				setupSeekBar();
+				//This is the last version
 			}
 			else
 			{

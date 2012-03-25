@@ -28,22 +28,22 @@
                 android:text="Button" />
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/addGroupButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/add_a_group" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/addConditionButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/add_a_condition" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/confirm"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/confirm" />
         </LinearLayout>
     </LinearLayout>
 

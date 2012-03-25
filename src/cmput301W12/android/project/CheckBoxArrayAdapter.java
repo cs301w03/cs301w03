@@ -80,7 +80,7 @@ public class CheckBoxArrayAdapter extends ArrayAdapter<Container> {
 				if (position < containers.length)
 				{
 					rowView = convertView;
-					((ViewHolder) rowView.getTag()).ckBox.setTag(Group.class); //What am i doing?! lol
+					((ViewHolder) rowView.getTag()).ckBox.setTag(containers[position]); //What am i doing?! lol
 				}
 		ViewHolder holder = (ViewHolder) rowView.getTag();
 		holder.name.setText(containers[position].getName());

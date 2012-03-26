@@ -3,7 +3,9 @@ package cmput301W12.android.project;
 
 import java.util.SortedSet;
 
+import android.app.AlarmManager;
 import android.app.ListActivity;
+import android.app.PendingIntent;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.net.Uri;
@@ -41,6 +43,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
      public static final String PHOTO = "PHOTO";
      public static final int VIEW_PHOTO = 0;
      public static final int EDIT_PHOTO = 1;
+	private static final int REQUEST_CODE = 0;
 
 	 @Override
 	 protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +159,13 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	            case R.id.menuedit:
 	                
 	            	
+	            	Intent intent = new Intent(this, OnetimeAlarmReceiver.class);
+	            	PendingIntent pendingIntent = PendingIntent.getBroadcast(this, REQUEST_CODE, intent, 0);
+
+	            	AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+	            	alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (5 * 1000), pendingIntent);
+	            	
+	            	Toast.makeText(this, "Alarm set", Toast.LENGTH_LONG).show();
 	                return true;
 	            case R.id.menudelete:
 	            	

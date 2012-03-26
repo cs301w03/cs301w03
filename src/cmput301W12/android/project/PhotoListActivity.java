@@ -4,8 +4,11 @@ package cmput301W12.android.project;
 import java.util.SortedSet;
 
 import android.app.ListActivity;
+import android.content.ContentUris;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract.CommonDataKinds.Event;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -19,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * 
@@ -151,6 +155,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	        switch (item.getItemId()) {
 	            case R.id.menuedit:
 	                
+	            	
 	                return true;
 	            case R.id.menudelete:
 	            	

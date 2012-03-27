@@ -20,5 +20,6 @@
     <string name="confirm">Confirm selection</string>
     <string name="add_a_group">Add a group</string>
     <string name="add_a_condition">Add a Skin Condition</string>
+    <string name="menu_delete">Delete</string>
 
 </resources>

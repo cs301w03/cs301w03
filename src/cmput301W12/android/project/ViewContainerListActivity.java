@@ -6,11 +6,15 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * 
@@ -21,7 +25,9 @@ import android.widget.ListView;
  */
 public class ViewContainerListActivity extends ListActivity implements FView<DbController>{
 	private static final int ACTIVITY_CREATE=0;
+	private static final int ACTIVITY_DELETE=1;
 	private static final int CREATE_ID = Menu.FIRST;
+	private static final int DELETE_ID = Menu.FIRST +1;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -142,14 +148,46 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if ( requestCode == ACTIVITY_CREATE)
+        if ( requestCode == ACTIVITY_CREATE || requestCode == ACTIVITY_DELETE)
         	fillData();
     }
+    
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+            ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, DELETE_ID, 0, R.string.menu_delete);
+    }
+    
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case DELETE_ID:
+                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();               
+                Container cont = (Container) getListAdapter().getItem(info.position);
+                deleteContainer(cont);
+                fillData();
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
 
+	protected void deleteContainer(Container cont)
+	{
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null)
+		{
+			FController skinObserverController = SkinObserverApplication.getSkinObserverController(this);
+			if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+				skinObserverController.deleteAContainer(cont, OptionType.GROUP);
+			else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
+				skinObserverController.deleteAContainer(cont, OptionType.SKINCONDITION);
+		}
+	}
+    
 	@Override
 	public void update(DbController model)
 	{
-
 		// TODO Auto-generated method stub
 		
 	}

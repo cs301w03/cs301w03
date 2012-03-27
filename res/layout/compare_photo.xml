@@ -11,7 +11,9 @@
         android:layout_weight="1.03"
         android:src="@drawable/ic_launcher" />
 
-    
-        
+    <SeekBar
+        android:id="@+id/seekBarOpacity"
+        android:layout_width="318dp"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

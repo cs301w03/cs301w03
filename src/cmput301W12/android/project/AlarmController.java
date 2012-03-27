@@ -2,6 +2,7 @@ package cmput301W12.android.project;
 
 import java.util.Calendar;
 
+
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -40,7 +41,7 @@ public class AlarmController extends Activity
             // name to have our own receiver (which has been published in
             // AndroidManifest.xml) instantiated and called, and then create an
             // IntentSender to have the intent executed as a broadcast.
-            Intent intent = new Intent(AlarmController.this, OneShotAlarm.class);
+            Intent intent = new Intent(AlarmController.this, AlarmReceiver.class);
             PendingIntent sender = PendingIntent.getBroadcast(AlarmController.this,
                     0, intent, 0);
 
@@ -57,7 +58,7 @@ public class AlarmController extends Activity
             if (mToast != null) {
                 mToast.cancel();
             }
-            mToast = Toast.makeText(AlarmController.this, R.string.one_shot_scheduled,
+            mToast = Toast.makeText(AlarmController.this, "Testing One Shot",
                     Toast.LENGTH_LONG);
             mToast.show();
         }
@@ -89,7 +90,7 @@ public class AlarmController extends Activity
             if (mToast != null) {
                 mToast.cancel();
             }
-            mToast = Toast.makeText(AlarmController.this, R.string.repeating_scheduled,
+            mToast = Toast.makeText(AlarmController.this, "Testing Repeating Shots",
                     Toast.LENGTH_LONG);
             mToast.show();
         }
@@ -111,7 +112,7 @@ public class AlarmController extends Activity
             if (mToast != null) {
                 mToast.cancel();
             }
-            mToast = Toast.makeText(AlarmController.this, R.string.repeating_unscheduled,
+            mToast = Toast.makeText(AlarmController.this, "Stopping Repeating Shots",
                     Toast.LENGTH_LONG);
             mToast.show();
         }

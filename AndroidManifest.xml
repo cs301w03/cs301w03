@@ -29,6 +29,8 @@
         <activity android:name=".ViewCreateContainerActivity"></activity>
         <activity android:name=".ViewPhotoActivity"></activity>
         <activity android:name="ComparePhotoActivity"></activity>
+        <activity android:name=".AlarmController"></activity>
+        <receiver android:name="AlarmReceiver"></receiver>
     </application>
 
 </manifest>

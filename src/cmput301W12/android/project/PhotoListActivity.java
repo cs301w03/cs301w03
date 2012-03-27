@@ -151,6 +151,8 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	        switch (item.getItemId()) {
 	            case R.id.menuedit:
 	                
+	            	Intent intent = new Intent(this, AlarmController.class);
+	            	startActivity(intent);
 	                return true;
 	            case R.id.menudelete:
 	            	

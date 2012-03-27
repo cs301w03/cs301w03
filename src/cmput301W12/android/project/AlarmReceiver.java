@@ -10,11 +10,11 @@ public class AlarmReceiver extends BroadcastReceiver
 {
 
 	@Override
-	public void onReceive(Context arg0, Intent arg1)
+	public void onReceive(Context context, Intent intent)
 	{
 
 		// TODO Auto-generated method stub
-		Toast.makeText(context, R.string.repeating_received, Toast.LENGTH_SHORT).show();
+		Toast.makeText(context, "Alarm Received", Toast.LENGTH_SHORT).show();
 
 		
 	}

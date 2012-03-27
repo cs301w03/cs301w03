@@ -16,6 +16,7 @@ public class Group extends Container implements Serializable {
 	/**
 	 * 
 	 */
+
 	private static final long serialVersionUID = 1L;
 
 	public Group(String name, Set<Integer> photos) {
@@ -42,6 +43,8 @@ public class Group extends Container implements Serializable {
 		}
 
 	}
+	
+
 
 
 }

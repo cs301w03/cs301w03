@@ -15,5 +15,11 @@
     <string name="label_name">Name</string>
     <string name="Menu">Menu</string>
     <string name="comare_photos">Compare</string>
+    <string name="groupExpList">Body Group List</string>
+    <string name="conditionExpList">Skin Condition List</string>
+    <string name="confirm">Confirm selection</string>
+    <string name="add_a_group">Add a group</string>
+    <string name="add_a_condition">Add a Skin Condition</string>
+    <string name="menu_delete">Delete</string>
 
 </resources>

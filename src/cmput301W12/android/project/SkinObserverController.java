@@ -1,10 +1,9 @@
 package cmput301W12.android.project;
 
+import java.sql.Timestamp;
 import java.util.Set;
 import java.util.SortedSet;
-
 import android.content.Context;
-import android.util.Log;
 
 /**
  * 
@@ -15,9 +14,8 @@ import android.util.Log;
  */
 public class SkinObserverController implements FController {
 	DbControllerInterface dbCon = null;
-	
+
 	public SkinObserverController(Context ctx){
-	    Log.d("SOController", "Trail part 4");
 		this.dbCon = DbController.getDbController(ctx);
 	}
 
@@ -36,7 +34,6 @@ public class SkinObserverController implements FController {
 	 * If not, return null
 	 */
 	public Photo addPhoto(Photo photo) {
-	    Log.d("SKINOBSERVER", "Long as trail is making me tired of walking");
 		return dbCon.addPhoto(photo);
 	}
 
@@ -50,18 +47,6 @@ public class SkinObserverController implements FController {
 	 */
 	public Container addContainObj(Container container) {
 		return dbCon.addContainObj(container);
-	}
-
-	@Override
-	/*
-	 * (non-Javadoc)
-	 * @see cmput301W12.android.project.FController#storeNewContainer(java.lang.String, cmput301W12.android.project.OptionType)
-	 * Add a new Container to database
-	 * Return a Container if success
-	 * If not, return null
-	 */
-	public Container storeNewContainer(String name, OptionType option) {
-		return dbCon.storeNewContainer(name, option);
 	}
 
 	@Override
@@ -93,23 +78,95 @@ public class SkinObserverController implements FController {
 	 * Load all containers of a photo
 	 * Return a Set of Container
 	 */
-	public Set<? extends Container> getAllContainersOfAPhoto(int photoId,
+	public SortedSet<? extends Container> getAllContainersOfAPhoto(int photoId,
 			OptionType option) {
 		return dbCon.getAllContainersOfAPhoto(photoId, option);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see cmput301W12.android.project.FController#getAllContainers(cmput301W12.android.project.OptionType)
 	 * Load all containers based on OptionType: Group/SkinCondition
 	 * Return of Set of Container
 	 */
-	public Set<? extends Container> getAllContainers(OptionType option){
+	public SortedSet<? extends Container> getAllContainers(OptionType option){
 		return dbCon.getAllContainers(option);
 	}
-	
-	public int deleteEntry(long rowID, OptionType option) {
-		return dbCon.deleteEntry(rowID, option);
+
+	@Override
+	public int deleteAPhoto(Photo PhoObj) {
+		return dbCon.deleteAPhoto(PhoObj);
+	}
+
+	@Override
+	public int deleteAContainer(int containerId, OptionType option) {
+		return dbCon.deleteAContainer(containerId, option);
+	}
+
+	@Override
+	public int deleteAContainer(Container containerObj, OptionType option) {
+		return dbCon.deleteAContainer(containerObj, option);
+	}
+
+	@Override
+	public int disconnectAPhotoFromManyContainers(int photoId, OptionType option) {
+		return dbCon.disconnectAPhotoFromManyContainers(photoId, option);
+	}
+
+	@Override
+	public int disconnectAPhotoFromManyContainers(int photoId,
+			Set<Integer> setOfIDs, OptionType option) {
+		return dbCon.disconnectAPhotoFromManyContainers(photoId, setOfIDs, option);
+	}
+
+	@Override
+	public int disconnectAContainerFromManyPhotos(int containerId,
+			OptionType option) {
+		return dbCon.disconnectAContainerFromManyPhotos(containerId, option);
+	}
+
+	@Override
+	public int disconnectAContainerFromManyPhotos(int containerId,
+			Set<Integer> setOfIDs, OptionType option) {
+		return dbCon.disconnectAContainerFromManyPhotos(containerId, setOfIDs, option);
+	}
+
+	@Override
+	public int connectAPhotoToManyContainers(int photoId, OptionType option) {
+		return dbCon.connectAPhotoToManyContainers(photoId, option);
+	}
+
+	@Override
+	public int connectAPhotoToManyContainers(int photoId, Set<Integer> setOfIDs,
+			OptionType option) {
+		return dbCon.connectAPhotoToManyContainers(photoId, setOfIDs, option);
+	}
+
+	@Override
+	public int connectAContainerToManyPhotos(int containerId, OptionType option) {
+		return dbCon.connectAContainerToManyPhotos(containerId, option);
+	}
+
+	@Override
+	public int connectAContainerToManyPhotos(int containerId,
+			Set<Integer> setOfIDs, OptionType option) {
+		return dbCon.connectAContainerToManyPhotos(containerId, setOfIDs, option);
+	}
+
+	@Override
+	public int updatePhoto(long photoId, String newLocation,
+			Timestamp newTimeStamp, String newName) {
+		return dbCon.updatePhoto(photoId, newLocation, newTimeStamp, newName);
+	}
+
+	@Override
+	public int updateGroup(long groupId, String newName) {
+		return dbCon.updateGroup(groupId, newName);
+	}
+
+	@Override
+	public int updateSkin(long skinId, String newName) {
+		return dbCon.updateSkin(skinId, newName);
 	}
 
 }

@@ -154,19 +154,40 @@ public class SkinObserverController implements FController {
 	}
 
 	@Override
-	public int updatePhoto(long photoId, String newLocation,
+	public int updatePhoto(int photoId, String newLocation,
 			Timestamp newTimeStamp, String newName, String newAnnotation) {
 		return dbCon.updatePhoto(photoId, newLocation, newTimeStamp, newName, newAnnotation);
 	}
 
 	@Override
-	public int updateGroup(long groupId, String newName) {
+	public int updateGroup(int groupId, String newName) {
 		return dbCon.updateGroup(groupId, newName);
 	}
 
 	@Override
-	public int updateSkin(long skinId, String newName) {
+	public int updateSkin(int skinId, String newName) {
 		return dbCon.updateSkin(skinId, newName);
+	}
+
+	@Override
+	public Alarm addAlarm(Alarm alarm) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SortedSet<Alarm> getAllAlarms() {
+		return this.dbCon.getAllAlarms();
+	}
+
+	@Override
+	public int deleteAnAlarm(int alarmId) {
+		return this.dbCon.deleteAnAlarm(alarmId);
+	}
+
+	@Override
+	public int updateAlarm(int alarmId, Timestamp newTime, String newNote) {
+		return this.dbCon.updateAlarm(alarmId, newTime, newNote);
 	}
 
 }

@@ -10,5 +10,5 @@ package cmput301W12.android.project;
  * Note: In consideration with State design pattern
  */
 public enum OptionType {
-	PHOTO, GROUP, SKINCONDITION, PHOTOGROUP, PHOTOSKIN
+	PHOTO, GROUP, SKINCONDITION, PHOTOGROUP, PHOTOSKIN, ALARM
 }

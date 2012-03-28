@@ -54,20 +54,28 @@ public class DbAdapter {
 	public static final String SKINCONDITIONID = "SkinConditionID";
 	public static final String SKINNAME = "SkinName";
 
+	public static final String ALARMID = "Alarm_ID";
+	public static final String ALARMTIME = "Alarm_TimeStamp";
+	public static final String ALARMNOTE = "Alarm_note";
+
 	private static final String TAG = "DbAdapter";
 	private static final String DATABASE_NAME = "skinObserver";
+
+
 
 	private static final String PHOTO_TABLE	 = "PhotoTable";
 	public static final String GROUP_TABLE = "GroupTable";
 	public static final String SKIN_TABLE = "SkinConditionTable";
 	public static final String PHOTOGROUP_TABLE = "Photo_GroupTable";
 	public static final String PHOTOSKIN_TABLE = "Photo_SkinConditionTable";
+	public static final String ALARM_TABLE = "AlarmTable";
 
 	private static final int DATABASE_VERSION = 3;
 
 	private DatabaseHelper mDbHelper;
 	private SQLiteDatabase mDb;
 	private final Context mCtx;
+	protected static final int INVALID_ID = -1;
 
 	private static DbAdapter dbAdap = null;
 
@@ -112,6 +120,12 @@ public class DbAdapter {
 			SKINCONDITIONID + " integer not null CONSTRAINT fk_SKINCONDITIONID REFERENCES  " +
 			SKIN_TABLE + " ( " + SKINCONDITIONID + " ) " + " ON DELETE CASCADE, " + 
 			" primary key( " + PHOTOID + ", " + SKINCONDITIONID + " ) ) " ;
+
+	private static final String CREATE_ALARM_TABLE = 
+			"create table " + ALARM_TABLE + 
+			" ( " + ALARMID + " integer primary key, " + 
+			ALARMTIME + " text not null, " + 
+			ALARMNOTE + " text " + " )";
 
 	private static final String CREATE_TRIGGER_PHOTOGROUP_INSERT = 
 			"create trigger trig_PHOTOID_PHOTOGROUP_INSERT " +
@@ -188,6 +202,7 @@ public class DbAdapter {
 			db.execSQL(CREATE_SKIN_TABLE);
 			db.execSQL(CREATE_PHOTOGROUP_TABLE);
 			db.execSQL(CREATE_PHOTOSKIN_TABLE);
+			db.execSQL(CREATE_ALARM_TABLE);
 
 			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_INSERT);
 			db.execSQL(CREATE_TRIGGER_PHOTOGROUP_UPDATE);
@@ -208,6 +223,7 @@ public class DbAdapter {
 			db.execSQL("DROP TABLE IF EXISTS " + SKIN_TABLE);
 			db.execSQL("DROP TABLE IF EXISTS " + PHOTOGROUP_TABLE);
 			db.execSQL("DROP TABLE IF EXISTS " + PHOTOSKIN_TABLE);
+			db.execSQL("DROP TABLE IF EXISTS " + ALARM_TABLE );
 			onCreate(db);
 		}
 	}
@@ -224,7 +240,6 @@ public class DbAdapter {
 
 	public static DbAdapter getDbAdapter(Context ctx){
 		if(dbAdap == null){
-			Log.d("DBController", "Trail part 7");
 			dbAdap = new DbAdapter(ctx);
 		}
 		return dbAdap;
@@ -268,6 +283,9 @@ public class DbAdapter {
 		case PHOTOSKIN:
 			id = "ROWID";
 			break;
+		case ALARM:
+			id = ALARMID;
+			break;
 		}
 		return id;
 	}
@@ -289,6 +307,9 @@ public class DbAdapter {
 			break;
 		case PHOTOSKIN:
 			tableName = PHOTOSKIN_TABLE;
+			break;
+		case ALARM:
+			tableName = ALARM_TABLE;
 			break;
 		}
 		return tableName;
@@ -379,6 +400,21 @@ public class DbAdapter {
 		initialValues.put(PHOTOID, photoId);
 		initialValues.put(SKINCONDITIONID, skinConditionId);
 		return mDb.insert(PHOTOSKIN_TABLE, null, initialValues);
+	}
+
+	/**
+	 * Add a new alarm
+	 * If the new alarm is successfully added, return the row id for that alarm, 
+	 * otherwise return -1 to indicate failure.
+	 * @param timeStamp
+	 * @param note
+	 * @return
+	 */
+	public long addAlarm(Timestamp timeStamp, String note){
+		ContentValues cv = new ContentValues();
+		cv.put(ALARMTIME, timeStamp.toString());
+		cv.put(ALARMNOTE, note);
+		return mDb.insert(ALARM_TABLE, null, cv);
 	}
 
 	/**
@@ -515,6 +551,25 @@ public class DbAdapter {
 		return mDb.update(PHOTOSKIN_TABLE, cv, 
 				DbAdapter.returnIdColumn(OptionType.PHOTOSKIN) + " = " + rowId, null);
 	}
+
+	/**
+	 * update the alarm with new timeStamp and new note.
+	 * @param alarmId
+	 * @param timeStamp
+	 * @param note
+	 * @return
+	 */
+	public int updateAlarm(long alarmId, Timestamp timeStamp, String note){
+		ContentValues cv = new ContentValues();
+		if(timeStamp != null){
+			cv.put(ALARMTIME, timeStamp.toString());
+		}
+		if(note != null){
+			cv.put(ALARMNOTE, note);
+		}
+		return mDb.update(ALARM_TABLE, cv, ALARMID + " = " + alarmId, null);
+	}
+
 	// delete section.
 	public int deleteEntry(long rowId, OptionType option) {
 		String id = DbAdapter.returnIdColumn(option);
@@ -592,11 +647,12 @@ public class DbAdapter {
 		return this.fetchAllEntries(option);
 	}
 
-	public Cursor fetchAllPhotos(OptionType option){
-		if(option != OptionType.PHOTO){
-			option = null;
-		}
-		return this.fetchAllEntries(option);
+	public Cursor fetchAllPhotos(){
+		return this.fetchAllEntries(OptionType.PHOTO);
+	}
+
+	public Cursor fetchAllAlarms(){
+		return this.fetchAllEntries(OptionType.ALARM);
 	}
 
 
@@ -609,7 +665,7 @@ public class DbAdapter {
 	 * @return
 	 */
 	public Cursor fetchAllContainersOfAPhoto(int photoId, OptionType option){
-		if(photoId == Photo.INVALID_ID){
+		if(photoId == DbAdapter.INVALID_ID){
 			if(option == OptionType.PHOTOGROUP){
 				String sql = "select * from " + GROUP_TABLE;
 				return mDb.rawQuery(sql, null);

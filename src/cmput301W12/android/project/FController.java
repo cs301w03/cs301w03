@@ -31,6 +31,13 @@ public interface FController {
 	 */
 	public Container addContainObj(Container container);
 
+	/**
+	 * Add the newly creaed alarm to the database.
+	 * @param alarm
+	 * @return the alarm with alarm ID being modified to reflect the ID assigned to this alarm.
+	 */
+	public Alarm addAlarm(Alarm alarm);
+
 	public SortedSet<Photo> getAllPhoto();
 
 	/**
@@ -58,7 +65,20 @@ public interface FController {
 
 	public SortedSet<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option);
 
+	/**
+	 * Get all containers.
+	 * @param option OptionType.GROUP for getting all groups or OptionType.SKINCONDITION 
+	 * for getting all skin conditions.
+	 * @return
+	 */
 	public SortedSet<? extends Container> getAllContainers(OptionType option);
+
+	/**
+	 * Fetch all alarms.
+	 * @return
+	 */
+	public SortedSet<Alarm> getAllAlarms();
+
 
 	// NOTICE: The three methods above are enough for project part 3. Specifically,
 	// TRI: call fetchAllContainers(DbAdapter.INVALID_ID, OptionType.GROUP) to obtain all the groups.
@@ -79,10 +99,10 @@ public interface FController {
 
 	// LAST BUT NOT LEAST: we postpone "delete" and "edit" for now...
 
-//	/**
-//	 * This method is unlikely to be useful.
-//	 */
-//	public int deleteEntry(long rowID, OptionType option);
+	//	/**
+	//	 * This method is unlikely to be useful.
+	//	 */
+	//	public int deleteEntry(long rowID, OptionType option);
 
 
 	/**
@@ -115,6 +135,14 @@ public interface FController {
 	 * @return number of rows that have been deleted.
 	 */
 	public int deleteAContainer(Container containerObj, OptionType option);
+
+	/**
+	 * Delete the alarm given the alarmId;
+	 * @param alarmId the id of the alarm to be deleted.
+	 * @return number of alarms that have been deleted. 
+	 */
+	public int deleteAnAlarm(int alarmId);
+
 
 	/**
 	 * disconnect a photo from all containers 
@@ -204,7 +232,7 @@ public interface FController {
 	 * @param newName if null, not update the name
 	 * @return number of photos that have been disconnected from the container.
 	 */
-	public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, String newName, String newAnnotation );
+	public int updatePhoto(int photoId, String newLocation, Timestamp newTimeStamp, String newName, String newAnnotation );
 
 	/**
 	 * Update the group information.
@@ -213,7 +241,7 @@ public interface FController {
 	 * @return number of groups that are updated.
 	 * NOTICE: throw SQLiteConstraintException if the newName conflicts with the name of some group.
 	 */
-	public int updateGroup(long groupId, String newName );
+	public int updateGroup(int groupId, String newName );
 
 	/**
 	 * Update the skin condition information.
@@ -222,8 +250,16 @@ public interface FController {
 	 * @return number of skin conditions that are updated.
 	 * NOTICE: throw SQLiteConstraintException if the newName conflicts with the name of some skin condition.
 	 */
-	public int updateSkin(long skinId, String newName );
+	public int updateSkin(int skinId, String newName );
 
-	
+	/**
+	 * Update the alarm given the alarmId with the newTime and newNote.
+	 * @param alarmId the id of the alarm to be updated.
+	 * @param newTime the new timestamp for the alarm, passing null retains old value
+	 * @param newNote the new note for the alarm, passing null retains old value
+	 * @return number of alarms that are updated.
+	 */
+	public int updateAlarm(int alarmId, Timestamp newTime, String newNote);
+
 
 }

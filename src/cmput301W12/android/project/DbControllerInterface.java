@@ -29,6 +29,12 @@ public interface DbControllerInterface {
 	 * will be added to the appropriate table.
 	 */
 	public Container addContainObj(Container container);
+	
+	/**
+	 * Add the newly created alarm to the database.
+	 * @return the alarm passed to the method with alarm id being changed to the id assigned to this alarm.
+	 */
+	public Alarm addAlarm(Alarm alarm);
 
 	public SortedSet<Photo> getAllPhoto();
 
@@ -57,7 +63,19 @@ public interface DbControllerInterface {
 
 	public SortedSet<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option);
 
+	/**
+	 * Fetch all containers.
+	 * @param option
+	 * @return
+	 */
 	public SortedSet<? extends Container> getAllContainers(OptionType option);
+	
+	/**
+	 * Fetch all alarms.
+	 * @return
+	 */
+	public SortedSet<Alarm> getAllAlarms();
+	
 
 	// NOTICE: The three methods above are enough for project part 3. Specifically,
 	// TRI: call fetchAllContainers(DbAdapter.INVALID_ID, OptionType.GROUP) to obtain all the groups.
@@ -115,6 +133,13 @@ public interface DbControllerInterface {
 	 */
 	public int deleteAContainer(Container containerObj, OptionType option);
 
+	/**
+	 * Delete the alarm given the alarmId;
+	 * @param alarmId the id of the alarm to be deleted.
+	 * @return number of alarms that have been deleted. 
+	 */
+	public int deleteAnAlarm(int alarmId);
+	
 	/**
 	 * disconnect a photo from all containers 
 	 * @param photoId
@@ -202,7 +227,7 @@ public interface DbControllerInterface {
 	 * @param newName if null, not update the name
 	 * @return number of photos that have been disconnected from the container.
 	 */
-	public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, String newName, String newAnnotation);
+	public int updatePhoto(int photoId, String newLocation, Timestamp newTimeStamp, String newName, String newAnnotation);
 
 	/**
 	 * Update the group information.
@@ -211,7 +236,7 @@ public interface DbControllerInterface {
 	 * @return number of groups that are updated.
 	 * NOTICE: throw SQLiteConstraintException if the newName conflicts with the name of some group.
 	 */
-	public int updateGroup(long groupId, String newName );
+	public int updateGroup(int groupId, String newName );
 
 	/**
 	 * Update the skin condition information.
@@ -220,7 +245,15 @@ public interface DbControllerInterface {
 	 * @return number of skin conditions that are updated.
 	 * NOTICE: throw SQLiteConstraintException if the newName conflicts with the name of some skin condition.
 	 */
-	public int updateSkin(long skinId, String newName );
+	public int updateSkin(int skinId, String newName );
 
+	/**
+	 * Update the alarm given the alarmId with the newTime and newNote.
+	 * @param alarmId the id of the alarm to be updated.
+	 * @param newTime the new timestamp for the alarm, passing null retains old value
+	 * @param newNote the new note for the alarm, passing null retains old value
+	 * @return number of alarms that are updated.
+	 */
+	public int updateAlarm(int alarmId, Timestamp newTime, String newNote);
 
 }

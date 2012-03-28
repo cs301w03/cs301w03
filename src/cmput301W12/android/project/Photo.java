@@ -20,16 +20,13 @@ import android.util.Log;
  * Note: Expect to implement Proxy design pattern
  */
 public class Photo implements Comparable<Photo>, Serializable {
-	private int photoId = INVALID_ID;
+	private int photoId = DbAdapter.INVALID_ID;
 	private String location;
 	private Timestamp timeStamp;
 	private String name;
 	private String annotation;
 	protected Set<Integer> groups;
 	protected Set<Integer> skinConditions;
-
-	protected static final int INVALID_ID = -1;
-
 
 	/**
 	 * Constructors for the PhotoObj object. NOTICE: the default photoId is INVALID_ID. The photoId 
@@ -160,61 +157,9 @@ public class Photo implements Comparable<Photo>, Serializable {
 		this.annotation = newAnnotation;
 	}
 
-	/**
-	 * Methods
-	 */
-
-	/*
-	public boolean attachToContainer(int itemId, OptionType option){
-		boolean result1 = false, result2 = false;
-		if(option == OptionType.GROUP){
-			result1 = ( this.groups.add(itemId) && containObj.photos.add(this.photoId) ) ;
-		}
-		if(containObj instanceof SkinConditionObj){
-			result2 = ( this.skinConditions.add(containObj.getItemId()) && containObj.photos.add(this.photoId) );
-		}
-		return result1 && result2;
-	}
-
-	public boolean attachToManyContainers(Collection<? extends ContainObj> containers){
-		boolean result = true;
-
-		for(ContainObj co : containers){
-			if(this.attachToContainer(co) == false){
-				result = false;
-			}
-		}
-
-		return result;
-	}
-
-	public boolean detachFromContainer(ContainObj containObj){
-		boolean result1 = false, result2 = false;
-		if(containObj instanceof GroupObj){
-			result1 = ( this.groups.remove(containObj.getItemId()) && containObj.photos.remove(this.photoId) ) ;
-		}
-		if(containObj instanceof SkinConditionObj){
-			result2 = ( this.skinConditions.remove(containObj.getItemId()) && containObj.photos.remove(this.photoId) );
-		}
-		return result1 && result2;
-	}
-
-	public boolean detachFromManyContainers(Collection<? extends ContainObj> containers){
-		boolean result = true;
-
-		for(ContainObj co : containers){
-			if(this.detachFromContainer(co) == false){
-				result = false;
-			}
-		}
-
-		return result;
-	}
-	 */
-
+	
 	@Override
 	public boolean equals(Object o) {
-		// TODO Auto-generated method stub
 		if(o instanceof Photo == false){
 			return false;
 		}else{

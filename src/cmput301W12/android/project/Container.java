@@ -19,7 +19,7 @@ Serializable {
 	 */
 	private boolean selected;
 	private static final long serialVersionUID = 1L;
-	private int itemId = Photo.INVALID_ID;
+	private int itemId = DbAdapter.INVALID_ID;
 	private String name;
 	protected Set<Integer> photos;
 

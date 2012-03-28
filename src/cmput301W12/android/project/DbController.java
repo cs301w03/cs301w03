@@ -47,7 +47,7 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		String name = phoObj.getName();
 		String annotation = phoObj.getAnnotation();
 
-		if(photoId == Photo.INVALID_ID){
+		if(photoId == DbAdapter.INVALID_ID){
 			photoId = ( int) this.mDbAdap.addPhoto(location, timeStamp, name, annotation);
 			phoObj.setPhotoId(photoId);
 
@@ -72,12 +72,12 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 
 		if(containObj instanceof Group){
 
-			if(containObj.getItemId() == Photo.INVALID_ID){
+			if(containObj.getItemId() == DbAdapter.INVALID_ID){
 				int groupId = (int) this.mDbAdap.addGroup(name);
 				containObj.setItemId(groupId);
 
 				int validGroupId = containObj.getItemId();
-				if(validGroupId != Photo.INVALID_ID){
+				if(validGroupId != DbAdapter.INVALID_ID){
 					for(Integer id : listOfPhotoIds){
 						this.mDbAdap.addPhotoGroup(id, validGroupId);
 					}
@@ -88,12 +88,12 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 
 		} 
 		else if(containObj instanceof SkinCondition){
-			if(containObj.getItemId() == Photo.INVALID_ID){
+			if(containObj.getItemId() == DbAdapter.INVALID_ID){
 				int skinId = (int) this.mDbAdap.addSkinCondition(name);
 				containObj.setItemId(skinId);
 
 				int validSkinId = containObj.getItemId();
-				if(validSkinId != Photo.INVALID_ID){
+				if(validSkinId != DbAdapter.INVALID_ID){
 					for(Integer id : listOfPhotoIds){
 						this.mDbAdap.addPhotoSkinCondition(id, validSkinId);
 					}
@@ -102,6 +102,16 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		} 
 
 		return containObj;
+	}
+
+
+	@Override
+	public Alarm addAlarm(Alarm alarm) {
+		if(alarm.getAlarmId() == DbAdapter.INVALID_ID){
+			int alarmId =(int) this.mDbAdap.addAlarm(alarm.getAlarmTime(), alarm.getAlarmNote());
+			alarm.setAlarmId(alarmId);
+		}
+		return alarm;
 	}
 
 
@@ -127,6 +137,11 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 	}
 
 
+	@Override
+	public SortedSet<Alarm> getAllAlarms() {
+		Cursor cursor = this.fetchAllAlarms();
+		return DbController.getAlarmFromCursor(cursor);
+	}
 
 	public int deleteEntry(long rowID, OptionType option) {
 		return this.mDbAdap.deleteEntry(rowID, option);
@@ -210,8 +225,35 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		return aSet;
 	}
 
+	public static SortedSet<Alarm> getAlarmFromCursor(Cursor cursor){
+		boolean repeat = false;
+		int alarmId;
+		Timestamp timeStamp;
+		String alarmNote;
+
+		Alarm alarm;
+		SortedSet<Alarm> aSet = new TreeSet<Alarm>();
+
+		if (cursor != null) {
+			repeat = cursor.moveToFirst();
+		}
+
+		while(repeat){
+			alarmId = cursor.getInt(cursor.getColumnIndexOrThrow(DbAdapter.ALARMID));
+			timeStamp = Timestamp.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DbAdapter.ALARMTIME)));
+			alarmNote = cursor.getString(cursor.getColumnIndexOrThrow(DbAdapter.ALARMNOTE));
+			alarm = new Alarm(timeStamp, alarmNote);
+			alarm.setAlarmId(alarmId);
+			aSet.add(alarm);
+			repeat = cursor.moveToNext();
+		}
+
+		return aSet;
+
+	}
+
 	public Cursor fetchAllPhotoObj() {
-		return this.mDbAdap.fetchAllEntries(OptionType.PHOTO);
+		return this.mDbAdap.fetchAllPhotos();
 	}
 
 
@@ -226,6 +268,10 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 
 	public Cursor fetchAllContainersOfAPhoto(int photoId, OptionType option){
 		return this.mDbAdap.fetchAllContainersOfAPhoto(photoId, option);
+	}
+
+	public Cursor fetchAllAlarms(){
+		return this.mDbAdap.fetchAllAlarms();
 	}
 
 	@Override
@@ -261,6 +307,12 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 	public int deleteAContainer(Container containerObj, OptionType option) {
 		int containerId = containerObj.getItemId();
 		return deleteAContainer(containerId, option);
+	}
+
+
+	@Override
+	public int deleteAnAlarm(int alarmId) {
+		return this.mDbAdap.deleteEntry(alarmId, OptionType.ALARM);
 	}
 
 	@Override
@@ -355,20 +407,28 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 	}
 
 	@Override
-	public int updatePhoto(long photoId, String newLocation,
+	public int updatePhoto(int photoId, String newLocation,
 			Timestamp newTimeStamp, String newName, String newAnnotation) {
 		return this.mDbAdap.updatePhoto(photoId, newLocation, newTimeStamp, newName, newAnnotation);
 	}
 
 	@Override
-	public int updateGroup(long groupId, String newName) {
+	public int updateGroup(int groupId, String newName) {
 		return this.mDbAdap.updateGroup(groupId, newName);
 	}
 
 	@Override
-	public int updateSkin(long skinId, String newName) {
+	public int updateSkin(int skinId, String newName) {
 		return this.mDbAdap.updateSkin(skinId, newName);
 	}
+
+
+	@Override
+	public int updateAlarm(int alarmId, Timestamp newTime, String newNote) {
+		return this.mDbAdap.updateAlarm(alarmId, newTime, newNote);
+	}
+
+
 }
 
 

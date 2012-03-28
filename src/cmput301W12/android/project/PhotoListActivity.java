@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -43,10 +45,29 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	        
 	        Button menubutton = (Button) this.findViewById(R.id.menubutton);
 	        
+	        CheckBox checkbox = (CheckBox) this.findViewById(R.id.checkBox1);
+	        
+	        /*checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+			{
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+				{
+			
+					// TODO Auto-generated method stub
+					
+				}
+			});*/
+	       	        
 	        registerForContextMenu(getListView());
 	        registerForContextMenu(menubutton);
 	        
 	        fillSelectableList();
+	        
+	        /*final ListView listView = getListView();
+	    	listView.setItemsCanFocus(false);
+	    	listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE); */ 
+
 	        
 	        //set up the listview to enable a context menu for editting logs/deleting
 	 }
@@ -108,6 +129,9 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	 
 	 // if a user picks an item from the context menu, this function is then called.
 	    protected void onListItemClick(ListView l, View v, int position, long id) {
+	    	
+	    	
+	    	
 	                super.onListItemClick(l, v, position, id);
 	                
 	                ListAdapter adapter = l.getAdapter();
@@ -127,6 +151,8 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	        switch (item.getItemId()) {
 	            case R.id.menuedit:
 	                
+	            	Intent intent = new Intent(this, AlarmController.class);
+	            	startActivity(intent);
 	                return true;
 	            case R.id.menudelete:
 	            	

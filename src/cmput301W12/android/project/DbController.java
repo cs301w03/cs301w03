@@ -143,8 +143,8 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		return DbController.getAlarmFromCursor(cursor);
 	}
 
-	public int deleteEntry(long rowID, OptionType option) {
-		return this.mDbAdap.deleteEntry(rowID, option);
+	public int deleteEntry(int rowID, OptionType option) {
+		return (int) this.mDbAdap.deleteEntry(rowID, option);
 	}
 
 	public static SortedSet<? extends Container> getContainersFromCursor(Cursor cursor, OptionType option){
@@ -171,7 +171,6 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 				aSet.add((Group) container);
 				repeat = cursor.moveToNext();
 			}
-
 			return aSet;
 		}else if (option == OptionType.SKINCONDITION || option == OptionType.PHOTOSKIN){
 

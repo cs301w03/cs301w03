@@ -17,7 +17,7 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    aint with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package cmput301W12.android.project;
@@ -75,7 +75,7 @@ public class DbAdapter {
 	private DatabaseHelper mDbHelper;
 	private SQLiteDatabase mDb;
 	private final Context mCtx;
-	protected static final int INVALID_ID = -1;
+	public static final int INVALID_ID = -1;
 
 	private static DbAdapter dbAdap = null;
 
@@ -335,7 +335,7 @@ public class DbAdapter {
 	 * -1 to indicate failure.
 	 * @return PHOTOID or -1 if failed
 	 */
-	public long addPhoto(String location, Timestamp timeStamp, String name, String annotation) {
+	public int addPhoto(String location, Timestamp timeStamp, String name, String annotation) {
 		ContentValues initialValues = new ContentValues();
 
 		initialValues.put(LOCATION, location);
@@ -343,7 +343,7 @@ public class DbAdapter {
 		initialValues.put(PHOTONAME, name);
 		initialValues.put(PHOTOANNOTATION, annotation);
 
-		return mDb.insert(PHOTO_TABLE, null, initialValues);
+		return (int) mDb.insert(PHOTO_TABLE, null, initialValues);
 	}
 
 	/**
@@ -352,12 +352,12 @@ public class DbAdapter {
 	 * -1 to indicate failure.
 	 * @return GROUPID or -1 if failed
 	 */
-	public long addGroup(String name) {
+	public int addGroup(String name) {
 		ContentValues initialValues = new ContentValues();
 
 		initialValues.put(GROUPNAME, name);
 
-		return mDb.insert(GROUP_TABLE, null, initialValues);
+		return (int) mDb.insert(GROUP_TABLE, null, initialValues);
 	}
 
 	/**
@@ -366,12 +366,12 @@ public class DbAdapter {
 	 * -1 to indicate failure.
 	 * @return SKINCONDITIONID or -1 if failed
 	 */
-	public long addSkinCondition(String name) {
+	public int addSkinCondition(String name) {
 		ContentValues initialValues = new ContentValues();
 
 		initialValues.put(SKINNAME, name);
 
-		return mDb.insert(SKIN_TABLE, null, initialValues);
+		return (int) mDb.insert(SKIN_TABLE, null, initialValues);
 	}
 
 	/**
@@ -380,13 +380,13 @@ public class DbAdapter {
 	 * -1 to indicate failure.
 	 * @return row id or -1 if failed
 	 */
-	public long addPhotoGroup(int photoId, int groupId) {
+	public int addPhotoGroup(int photoId, int groupId) {
 		ContentValues initialValues = new ContentValues();
 
 		initialValues.put(PHOTOID, photoId);
 		initialValues.put(GROUPID, groupId);
 
-		return mDb.insert(PHOTOGROUP_TABLE, null, initialValues);
+		return (int) mDb.insert(PHOTOGROUP_TABLE, null, initialValues);
 	}
 
 	/**
@@ -395,11 +395,11 @@ public class DbAdapter {
 	 * -1 to indicate failure.
 	 * @return row id or -1 if failed
 	 */
-	public long addPhotoSkinCondition(int photoId, int skinConditionId) {
+	public int addPhotoSkinCondition(int photoId, int skinConditionId) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(PHOTOID, photoId);
 		initialValues.put(SKINCONDITIONID, skinConditionId);
-		return mDb.insert(PHOTOSKIN_TABLE, null, initialValues);
+		return (int) mDb.insert(PHOTOSKIN_TABLE, null, initialValues);
 	}
 
 	/**
@@ -410,11 +410,11 @@ public class DbAdapter {
 	 * @param note
 	 * @return
 	 */
-	public long addAlarm(Timestamp timeStamp, String note){
+	public int addAlarm(Timestamp timeStamp, String note){
 		ContentValues cv = new ContentValues();
 		cv.put(ALARMTIME, timeStamp.toString());
 		cv.put(ALARMNOTE, note);
-		return mDb.insert(ALARM_TABLE, null, cv);
+		return (int) mDb.insert(ALARM_TABLE, null, cv);
 	}
 
 	/**
@@ -470,7 +470,7 @@ public class DbAdapter {
 	}
 
 
-	public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, 
+	public int updatePhoto(int photoId, String newLocation, Timestamp newTimeStamp, 
 			String newName, String newAnnotation ){
 
 		ContentValues initialValues = new ContentValues();
@@ -500,7 +500,7 @@ public class DbAdapter {
 	 * @param newName
 	 * @return
 	 */
-	public int updateGroup(long groupId, String newName ){
+	public int updateGroup(int groupId, String newName ){
 		ContentValues initialValues = new ContentValues();
 
 		if(newName != null){
@@ -517,7 +517,7 @@ public class DbAdapter {
 	 * @param newName
 	 * @return
 	 */
-	public int updateSkin(long skinId, String newName ){
+	public int updateSkin(int skinId, String newName ){
 		ContentValues initialValues = new ContentValues();
 
 		if(newName != null){
@@ -536,7 +536,7 @@ public class DbAdapter {
 	 * @return
 	 */
 
-	public int updatePhotoGroup(long rowId, int photoId, int groupId){
+	public int updatePhotoGroup(int rowId, int photoId, int groupId){
 		ContentValues cv = new ContentValues();
 		cv.put(PHOTOID, photoId);
 		cv.put(GROUPID,groupId);
@@ -544,7 +544,7 @@ public class DbAdapter {
 				DbAdapter.returnIdColumn(OptionType.PHOTOGROUP) + " = " + rowId, null);
 	}
 
-	public int updatePhotoSkin(long rowId, int photoId, int skinId	){
+	public int updatePhotoSkin(int rowId, int photoId, int skinId	){
 		ContentValues cv = new ContentValues();
 		cv.put(PHOTOID, photoId);
 		cv.put(SKINCONDITIONID,skinId);
@@ -559,7 +559,7 @@ public class DbAdapter {
 	 * @param note
 	 * @return
 	 */
-	public int updateAlarm(long alarmId, Timestamp timeStamp, String note){
+	public int updateAlarm(int alarmId, Timestamp timeStamp, String note){
 		ContentValues cv = new ContentValues();
 		if(timeStamp != null){
 			cv.put(ALARMTIME, timeStamp.toString());
@@ -571,7 +571,7 @@ public class DbAdapter {
 	}
 
 	// delete section.
-	public int deleteEntry(long rowId, OptionType option) {
+	public int deleteEntry(int rowId, OptionType option) {
 		String id = DbAdapter.returnIdColumn(option);
 		return mDb.delete(DbAdapter.returnTableName(option), id + " = " + rowId, null) ;
 	}
@@ -719,12 +719,19 @@ public class DbAdapter {
 			itemIdName = SKINCONDITIONID;
 		}
 
-		String preparedStatement = "select ?s.?s as ?s, ?s , ?s , ?s, ?s from ?s , ?s " +
-				" where ?s" + "." + "?s = ?s" + "." + "?s and ?s = ?s";
-		String[] args = {PHOTO_TABLE, PHOTOID, PHOTOID, LOCATION, TIMESTAMP, PHOTONAME, 
-				PHOTOANNOTATION, PHOTO_TABLE, lookUpTable, PHOTO_TABLE, PHOTOID, lookUpTable, PHOTOID , 
-				itemIdName, containerId + ""};
-		Cursor mCursor = mDb.rawQuery(preparedStatement, args);
+		String sql = " select " + PHOTO_TABLE + "." + PHOTOID + " as " + PHOTOID + " , " + LOCATION + " , " + 
+				TIMESTAMP + " , " + PHOTONAME + " , " + PHOTOANNOTATION  + 
+				" from " + PHOTO_TABLE + " , " + lookUpTable + 
+				" where " + PHOTO_TABLE + "." + PHOTOID + " = " + lookUpTable + "." + PHOTOID +
+				" and " + itemIdName + " = " + containerId;
+
+
+		//		String preparedStatement = "select ?s.?s as ?s, ?s , ?s , ?s, ?s from ?s , ?s " +
+		//				" where ?s" + "." + "?s = ?s" + "." + "?s and ?s = ?s";
+		//		String[] args = {PHOTO_TABLE, PHOTOID, PHOTOID, LOCATION, TIMESTAMP, PHOTONAME, 
+		//				PHOTOANNOTATION, PHOTO_TABLE, lookUpTable, PHOTO_TABLE, PHOTOID, lookUpTable, PHOTOID , 
+		//				itemIdName, containerId + ""};
+		Cursor mCursor = mDb.rawQuery(sql, null);
 		return mCursor;
 
 	}
@@ -740,7 +747,7 @@ public class DbAdapter {
 				null, null, null, null, null);
 	}
 
-	public Cursor fetchAnEntry(long rowId, OptionType option) throws SQLException {
+	public Cursor fetchAnEntry(int rowId, OptionType option) throws SQLException {
 
 		Cursor mCursor =
 

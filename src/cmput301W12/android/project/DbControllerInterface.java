@@ -85,7 +85,7 @@ public interface DbControllerInterface {
 	/// call fetchAllPhotoObjConnected(ID of the group or skin condition, OptionType.GROUP or OptionType.SKIN CONDITION)
 	// to obtain all photos associated with some group or skin condition.
 
-	// KALLEN: call addPhotoObj(phoObj) to add the newly created photo along with its association 
+	// KALLEN: call addPhotoObj(phoObj) to add the newly created photo aint with its association 
 	// with any group and skin conditions to the database. 
 
 	// NOTICE you GUYS: we need to have activity to add new group or skin condition. This activity
@@ -99,7 +99,7 @@ public interface DbControllerInterface {
 	/**
 	 * This method is unlikely to be useful.
 	 */
-	public int deleteEntry(long rowID, OptionType option);
+	public int deleteEntry(int rowID, OptionType option);
 
 
 	/**
@@ -112,7 +112,7 @@ public interface DbControllerInterface {
 	public int deleteAPhoto(Photo PhoObj);
 
 	/**
-	 * Delete the container along with all tuples that represent the association between
+	 * Delete the container aint with all tuples that represent the association between
 	 * the container and photos.
 	 * @param containerId
 	 * @param option either OptionType.GROUP to delete group or OptionType.SKINCONDITION to 
@@ -124,7 +124,7 @@ public interface DbControllerInterface {
 
 
 	/**
-	 * Delete the container along with all tuples that represent the association between
+	 * Delete the container aint with all tuples that represent the association between
 	 * the container and photos.
 	 * @param containerObj the container object corresponding to the container.
 	 * @param option either OptionType.GROUP to delete group or OptionType.SKINCONDITION to 

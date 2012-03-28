@@ -45,9 +45,10 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		String location = phoObj.getLocation();
 		Timestamp timeStamp  = phoObj.getTimeStamp();
 		String name = phoObj.getName();
+		String annotation = phoObj.getAnnotation();
 
 		if(photoId == Photo.INVALID_ID){
-			photoId = ( int) this.mDbAdap.addPhoto(location, timeStamp, name);
+			photoId = ( int) this.mDbAdap.addPhoto(location, timeStamp, name, annotation);
 			phoObj.setPhotoId(photoId);
 
 			Set<Integer> listOfGroupId = phoObj.getGroups();
@@ -355,8 +356,8 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 
 	@Override
 	public int updatePhoto(long photoId, String newLocation,
-			Timestamp newTimeStamp, String newName) {
-		return this.mDbAdap.updatePhoto(photoId, newLocation, newTimeStamp, newName);
+			Timestamp newTimeStamp, String newName, String newAnnotation) {
+		return this.mDbAdap.updatePhoto(photoId, newLocation, newTimeStamp, newName, newAnnotation);
 	}
 
 	@Override

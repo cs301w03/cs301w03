@@ -204,7 +204,7 @@ public interface FController {
 	 * @param newName if null, not update the name
 	 * @return number of photos that have been disconnected from the container.
 	 */
-	public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, String newName );
+	public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, String newName, String newAnnotation );
 
 	/**
 	 * Update the group information.

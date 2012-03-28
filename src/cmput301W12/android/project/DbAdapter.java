@@ -46,6 +46,7 @@ public class DbAdapter {
 	public static final String LOCATION = "Location";
 	public static final String TIMESTAMP = "Time_Stamp";
 	public static final String PHOTONAME = "PhotoName";
+	public static final String PHOTOANNOTATION = "PhotoAnnotation";
 
 	public static final String GROUPID = "Group_ID";
 	public static final String GROUPNAME = "GroupName";
@@ -80,6 +81,7 @@ public class DbAdapter {
 					LOCATION + " text not null, " +
 					TIMESTAMP + " text, " +
 					PHOTONAME + " text, " +
+					PHOTOANNOTATION + " text, " + 
 					" unique( " + LOCATION + ")" +	")";
 
 	private static final String CREATE_GROUP_TABLE = 
@@ -312,12 +314,13 @@ public class DbAdapter {
 	 * -1 to indicate failure.
 	 * @return PHOTOID or -1 if failed
 	 */
-	public long addPhoto(String location, Timestamp timeStamp, String name) {
+	public long addPhoto(String location, Timestamp timeStamp, String name, String annotation) {
 		ContentValues initialValues = new ContentValues();
 
 		initialValues.put(LOCATION, location);
 		initialValues.put(TIMESTAMP, timeStamp.toString());
 		initialValues.put(PHOTONAME, name);
+		initialValues.put(PHOTOANNOTATION, annotation);
 
 		return mDb.insert(PHOTO_TABLE, null, initialValues);
 	}
@@ -431,7 +434,8 @@ public class DbAdapter {
 	}
 
 
-	public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, String newName ){
+	public int updatePhoto(long photoId, String newLocation, Timestamp newTimeStamp, 
+			String newName, String newAnnotation ){
 
 		ContentValues initialValues = new ContentValues();
 
@@ -445,6 +449,10 @@ public class DbAdapter {
 
 		if(newName != null){
 			initialValues.put(PHOTONAME, newName);
+		}
+
+		if(newAnnotation != null){
+			initialValues.put(PHOTOANNOTATION, newAnnotation);
 		}
 
 		return mDb.update(PHOTO_TABLE, initialValues , 
@@ -655,10 +663,10 @@ public class DbAdapter {
 			itemIdName = SKINCONDITIONID;
 		}
 
-		String preparedStatement = "select ?s.?s as ?s, ?s , ?s , ?s from ?s , ?s " +
+		String preparedStatement = "select ?s.?s as ?s, ?s , ?s , ?s, ?s from ?s , ?s " +
 				" where ?s" + "." + "?s = ?s" + "." + "?s and ?s = ?s";
 		String[] args = {PHOTO_TABLE, PHOTOID, PHOTOID, LOCATION, TIMESTAMP, PHOTONAME, 
-				PHOTO_TABLE, lookUpTable, PHOTO_TABLE, PHOTOID, lookUpTable, PHOTOID , 
+				PHOTOANNOTATION, PHOTO_TABLE, lookUpTable, PHOTO_TABLE, PHOTOID, lookUpTable, PHOTOID , 
 				itemIdName, containerId + ""};
 		Cursor mCursor = mDb.rawQuery(preparedStatement, args);
 		return mCursor;

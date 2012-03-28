@@ -24,6 +24,7 @@ public class Photo implements Comparable<Photo>, Serializable {
 	private String location;
 	private Timestamp timeStamp;
 	private String name;
+	private String annotation;
 	protected Set<Integer> groups;
 	protected Set<Integer> skinConditions;
 
@@ -59,7 +60,7 @@ public class Photo implements Comparable<Photo>, Serializable {
 		}
 
 		if(skinConditions == null){
-		    Log.d("SKINOBSERVER", "69");
+			Log.d("SKINOBSERVER", "69");
 			this.skinConditions = new HashSet<Integer>();
 		}else{
 			this.skinConditions = skinConditions;
@@ -151,10 +152,18 @@ public class Photo implements Comparable<Photo>, Serializable {
 		this.skinConditions = skinConditions;
 	}
 
+	public String getAnnotation(){
+		return this.annotation;
+	}
+
+	public void setAnnotation(String newAnnotation){
+		this.annotation = newAnnotation;
+	}
+
 	/**
 	 * Methods
 	 */
-	
+
 	/*
 	public boolean attachToContainer(int itemId, OptionType option){
 		boolean result1 = false, result2 = false;
@@ -201,7 +210,7 @@ public class Photo implements Comparable<Photo>, Serializable {
 
 		return result;
 	}
-*/
+	 */
 
 	@Override
 	public boolean equals(Object o) {

@@ -155,8 +155,8 @@ public class SkinObserverController implements FController {
 
 	@Override
 	public int updatePhoto(long photoId, String newLocation,
-			Timestamp newTimeStamp, String newName) {
-		return dbCon.updatePhoto(photoId, newLocation, newTimeStamp, newName);
+			Timestamp newTimeStamp, String newName, String newAnnotation) {
+		return dbCon.updatePhoto(photoId, newLocation, newTimeStamp, newName, newAnnotation);
 	}
 
 	@Override

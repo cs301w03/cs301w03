@@ -44,9 +44,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	        setContentView(R.layout.photoviewlist_activity);
 	        
 	        Button menubutton = (Button) this.findViewById(R.id.menubutton);
-	        
-	        CheckBox checkbox = (CheckBox) this.findViewById(R.id.checkBox1);
-	        
+	        	        
 	        /*checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
 			{
 				

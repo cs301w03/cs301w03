@@ -8,6 +8,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
+import android.util.Log;
 /**
  * @user Hieu Ngo
  * @date Mar 14, 2012
@@ -279,11 +281,13 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 		String location = phoObj.getLocation();
 		int count = 0;
 
-		new File(location).delete();
+		Uri uri = Uri.parse(location);
+		new File(uri.getPath()).delete();
 
 		count += this.mDbAdap.deleteEntry(photoId, OptionType.PHOTO	);
 		count += this.mDbAdap.disconnectAPhotoFromManyContainers(photoId, OptionType.PHOTOGROUP);
 		count += this.mDbAdap.disconnectAPhotoFromManyContainers(photoId, OptionType.PHOTOSKIN);
+		Log.d("", " number of entries deleted : " + count);
 		return count;
 	}
 
@@ -328,6 +332,10 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 	@Override
 	public int connectAPhotoToManyContainers(int photoId,
 			Set<Integer> setOfIDs, OptionType option) {
+		if(photoId == DbAdapter.INVALID_ID){
+			return 0;
+		}
+
 		int count = 0;
 		if(option == OptionType.PHOTOGROUP){
 			for(Integer id : setOfIDs){
@@ -343,6 +351,9 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 
 	@Override
 	public int connectAPhotoToManyContainers(int photoId, OptionType option) {
+		if(photoId == DbAdapter.INVALID_ID){
+			return 0;
+		}
 		Set<Integer> setOfIDs = new HashSet<Integer>();
 		OptionType opt2 = null;
 		if(option == OptionType.PHOTOGROUP){

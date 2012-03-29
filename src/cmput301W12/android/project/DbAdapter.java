@@ -581,7 +581,9 @@ public class DbAdapter {
 			return 0;
 		} else {
 			String table = DbAdapter.returnTableName(option);
-			return this.mDb.delete(table, PHOTOID + " = " + photoId, null);
+			int numDel =  this.mDb.delete(table, PHOTOID + " = " + photoId, null);
+			Log.d("", "number of entries deleted: " + numDel);
+			return numDel;
 		}
 	}
 

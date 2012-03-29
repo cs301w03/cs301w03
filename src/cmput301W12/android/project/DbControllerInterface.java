@@ -107,7 +107,9 @@ public interface DbControllerInterface {
 	 * and all tuples containing this photoId in the PhotoGroup and PhotoSkinCondition tables.
 	 * Also delete the photo in the memory.
 	 * @param PhoObj the photo object corresponding to the target photo.
-	 * @return number of rows that have been deleted.
+	 * @return number of rows that have been deleted. 
+	 * NOTICE: In case on delete cascade activated, the rows deleted in foreign tables because of
+	 * deleting the primary key value are not taken into account.
 	 */
 	public int deleteAPhoto(Photo PhoObj);
 

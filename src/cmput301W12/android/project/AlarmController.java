@@ -110,7 +110,7 @@ public class AlarmController extends Activity implements FView<DbController>
 			// TODO Auto-generated method stub
 			
 			theYear = year;
-			theMonth = monthOfYear;
+			theMonth = monthOfYear + 1;
 			theDay = dayOfMonth;
 			Calendar cal = Calendar.getInstance();
 			
@@ -165,14 +165,14 @@ public class AlarmController extends Activity implements FView<DbController>
                 mToast.show();
         	}
         	
-        	else if(alarmtext.toString() == "") {
+        	else if(alarmtext.getText().toString() == "") {
         		mToast = Toast.makeText(AlarmController.this, "Stopping Repeating Shots",
                         Toast.LENGTH_LONG);
                 mToast.show();
         	}
         	
         	else {
-        		Alarm alarm = new Alarm(timestamp, alarmtext.toString());
+        		Alarm alarm = new Alarm(timestamp, alarmtext.getText().toString());
         		
         		FController controller =  SkinObserverApplication.getSkinObserverController(AlarmController.this);
         		controller.addAlarm(alarm);

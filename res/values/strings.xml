@@ -31,5 +31,10 @@
         <item >One Time Alarm</item>
         <item >Repeating Alarm</item>
     </string-array>
+    <string name="alarmtype">Alarm Type :    </string>
+    <string name="alarm_text">Alarm Text   :   </string>
+    <string name="create_alarm">Create</string>
+    <string name="set_time">Set Time</string>
+    <string name="set_date">Set Date</string>
 
 </resources>

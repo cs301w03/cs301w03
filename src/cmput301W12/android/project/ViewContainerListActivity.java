@@ -95,13 +95,11 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
     	
     }
     
-    
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         ListAdapter adapter = l.getAdapter();
         Container cont  = (Container) adapter.getItem(position);
-        
         
         Intent newIntent = new Intent(this, PhotoListActivity.class);
         Bundle bundle = getIntent().getExtras();

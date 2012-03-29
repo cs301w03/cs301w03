@@ -28,7 +28,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/add_button" />
+            android:text="@string/Confirm_button" />
     </LinearLayout>
 
 </LinearLayout>

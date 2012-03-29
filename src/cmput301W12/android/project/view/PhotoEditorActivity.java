@@ -33,6 +33,8 @@ import cmput301W12.android.project.ViewCreateContainerActivity;
  *
  */
 
+/* Add annotation button */
+
 public class PhotoEditorActivity extends  Activity {
 	private ListView groupList;// = (ExpandableListView) findViewById(R.id.groupsExpandableList);
 	private ListView conditionList;// = (ExpandableListView) findViewById(R.id.conditionExpList);
@@ -47,6 +49,7 @@ public class PhotoEditorActivity extends  Activity {
 	
 	public static final int ID_CREATE_GROUP = Menu.FIRST;
 	public static final int ID_CREATE_SKINCONDITION = Menu.FIRST +1;
+ 	public static final int ID_CREATE_ANNOTATION = Menu.FIRST + 2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +129,9 @@ public class PhotoEditorActivity extends  Activity {
                 case ID_CREATE_SKINCONDITION:
                     createNewSkinCondition();
                     return true;
+                case ID_CREATE_ANNOTATION:
+                    getAnnotation();
+                    return true;
             }
 
             return super.onMenuItemSelected(featureId, item);
@@ -156,6 +162,7 @@ public class PhotoEditorActivity extends  Activity {
 	@Override
 	    public boolean onCreateOptionsMenu(Menu menu) {
 	        super.onCreateOptionsMenu(menu);
+	        menu.add(0, ID_CREATE_ANNOTATION, 0, "Add Photo Annotation");
 	        menu.add(0, ID_CREATE_GROUP, 0, "Add Group");
 	        menu.add(0, ID_CREATE_SKINCONDITION, 0, "Add Skin Condition");
 	        return true;
@@ -175,6 +182,11 @@ public class PhotoEditorActivity extends  Activity {
             startActivityForResult(iCreateSC, ACTIVITY_CREATE_SKINCONDITION);
         }
 	
+	protected void getAnnotation()
+	{
+	    //OH HELLO!
+	}
+	
 	@Override
         protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 	    super.onActivityResult(requestCode, resultCode, intent);
@@ -184,5 +196,6 @@ public class PhotoEditorActivity extends  Activity {
 	    if ( requestCode == ID_CREATE_SKINCONDITION)
 	        //do other things here Kalen
 	        fillLists();
+	    
 	}
 }

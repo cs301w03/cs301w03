@@ -11,8 +11,8 @@
 
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_width="190dp"
-            android:layout_height="171dp"
+            android:layout_width="320dp"
+            android:layout_height="142dp"
             android:src="@drawable/ic_launcher" />
 
         <LinearLayout
@@ -20,30 +20,6 @@
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/addGroupButton"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/add_a_group" />
-
-            <Button
-                android:id="@+id/addConditionButton"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/add_a_condition" />
-
-            <Button
-                android:id="@+id/confirm"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/confirm" />
         </LinearLayout>
     </LinearLayout>
 
@@ -70,7 +46,14 @@
     <ListView
         android:id="@+id/listCondition"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="92dp"
+        android:layout_weight="1" >
     </ListView>
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm" />
 
 </LinearLayout>

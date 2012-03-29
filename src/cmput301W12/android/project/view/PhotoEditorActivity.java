@@ -7,6 +7,7 @@ import java.util.Set;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,9 @@ import cmput301W12.android.project.Photo;
 import cmput301W12.android.project.R;
 import cmput301W12.android.project.SkinCondition;
 import cmput301W12.android.project.SkinObserverApplication;
+import cmput301W12.android.project.SkinObserverIntent;
+import cmput301W12.android.project.ViewContainerListActivity;
+import cmput301W12.android.project.ViewCreateContainerActivity;
 
 /**
  * This class currently allows you to tag a new photo with Skin conditions and Groups. 
@@ -37,6 +41,12 @@ public class PhotoEditorActivity extends  Activity {
 	private Container[] conditionArray = null;
 
 	private Photo newestPhoto = null;
+	
+	public static final int ACTIVITY_CREATE_GROUP = 0;
+	public static final int ACTIVITY_CREATE_SKINCONDITION = 1;
+	
+	public static final int ID_CREATE_GROUP = Menu.FIRST;
+	public static final int ID_CREATE_SKINCONDITION = Menu.FIRST +1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -109,11 +119,19 @@ public class PhotoEditorActivity extends  Activity {
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		// TODO Auto-generated method stub
-		return super.onMenuItemSelected(featureId, item);
+	    switch(item.getItemId()) {
+                case ID_CREATE_GROUP:
+                    createNewGroup();
+                    return true;
+                case ID_CREATE_SKINCONDITION:
+                    createNewSkinCondition();
+                    return true;
+            }
+
+            return super.onMenuItemSelected(featureId, item);
 	}
 	
-	public void fillLists() {
+	protected void fillLists() {
 		FController controller = SkinObserverApplication.getSkinObserverController(this);
 		Set<? extends Container> setGroup = null;
 		Set<? extends Container> setCondition = null;
@@ -134,5 +152,37 @@ public class PhotoEditorActivity extends  Activity {
     	groupList.setAdapter(conAdapterGroup);
     	conditionList.setAdapter(conAdapterCondition);
 	}
+	
+	@Override
+	    public boolean onCreateOptionsMenu(Menu menu) {
+	        super.onCreateOptionsMenu(menu);
+	        menu.add(0, ID_CREATE_GROUP, 0, "Add Group");
+	        menu.add(0, ID_CREATE_SKINCONDITION, 0, "Add Skin Condition");
+	        return true;
+	    }
 
+	protected void createNewGroup()
+	{
+	    Intent iCreateGroup = new Intent(this, ViewContainerListActivity.class);
+	    iCreateGroup.putExtra(SkinObserverIntent.DATA_GROUP, SkinObserverIntent.DATA_GROUP);
+	    startActivityForResult(iCreateGroup, ACTIVITY_CREATE_GROUP);
+	}
+	
+	protected void createNewSkinCondition()
+        {
+            Intent iCreateSC = new Intent(this, ViewContainerListActivity.class);
+            iCreateSC.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION, SkinObserverIntent.DATA_SKIN_CONDITION);
+            startActivityForResult(iCreateSC, ACTIVITY_CREATE_SKINCONDITION);
+        }
+	
+	@Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+	    super.onActivityResult(requestCode, resultCode, intent);
+	    if ( requestCode == ID_CREATE_GROUP)
+	        fillLists();
+	        //do something here KAlen
+	    if ( requestCode == ID_CREATE_SKINCONDITION)
+	        //do other things here Kalen
+	        fillLists();
+	}
 }

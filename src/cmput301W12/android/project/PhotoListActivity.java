@@ -64,30 +64,33 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 		 FController controller =  SkinObserverApplication.getSkinObserverController(this);
 		 Bundle bundle = getIntent().getExtras();
 		 Container cont = null;
-		 SortedSet<Photo> photos = null;
-		 if (bundle == null)
-			 photos = controller.getAllPhoto();
-		 else
+		 SortedSet<Photo> photoSet = null;
+		 if (bundle != null)
 		 {
-			 if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+			 if (bundle.containsKey(SkinObserverIntent.DATA_GROUP) )
 			 {
 				 cont = (Container) bundle.getSerializable(SkinObserverIntent.DATA_GROUP);
-				 photos = controller.getAllPhotoOfAContainer(cont.getItemId(), OptionType.GROUP);
-
+				 photoSet = controller.getAllPhotoOfAContainer(cont.getItemId(), OptionType.PHOTOGROUP);	 
 			 }
-			 else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
+			 else if (bundle.containsKey(SkinObserverIntent.DATA_SKIN_CONDITION))
 			 {
 				 cont = (Container) bundle.getSerializable(SkinObserverIntent.DATA_SKIN_CONDITION);
-				 photos = controller.getAllPhotoOfAContainer(cont.getItemId(), OptionType.SKINCONDITION);
-			 }			 
+				 photoSet = controller.getAllPhotoOfAContainer(cont.getItemId(), OptionType.PHOTOSKIN);
+			 }
+				 
 		 }
+		 else
+			 photoSet = controller.getAllPhoto();
 		 
-		 Photo[] newArray = new Photo[photos.size()];
-		 photos.toArray(newArray);
-		 //Photo[] photosArray1 = (Photo[]) photos.toArray();
-		 PhotoListArrayAdapter caAdapter = new PhotoListArrayAdapter(this, newArray);
-		 
-		 setListAdapter(caAdapter);
+		 if (photoSet != null)
+		 {
+			 Photo[] photoArray = new Photo[photoSet.size()];
+			 photoSet.toArray(photoArray);
+			 //Photo[] photosArray1 = (Photo[]) photos.toArray();
+			 PhotoListArrayAdapter caAdapter = new PhotoListArrayAdapter(this, photoArray);
+			 
+			 setListAdapter(caAdapter);
+		 }
 		 
 	 }
 	 

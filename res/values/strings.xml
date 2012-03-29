@@ -36,5 +36,6 @@
     <string name="create_alarm">Create</string>
     <string name="set_time">Set Time</string>
     <string name="set_date">Set Date</string>
+    <string name="reminders">Reminders</string>
 
 </resources>

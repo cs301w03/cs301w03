@@ -9,6 +9,7 @@ import android.widget.Button;
 import cmput301W12.android.project.ComparePhotoActivity;
 import cmput301W12.android.project.PhotoListActivity;
 import cmput301W12.android.project.R;
+import cmput301W12.android.project.RemindersListActivity;
 import cmput301W12.android.project.SkinObserverIntent;
 import cmput301W12.android.project.ViewContainerListActivity;
 
@@ -95,6 +96,17 @@ public class ProjectTwoActivity extends Activity
         		comparePhotos();
         	}
     	});
+        
+        Button reminders = (Button) this.findViewById(R.id.reminders);
+        reminders.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+			
+				callReminderLists();
+			}
+		});
 	}
         
     
@@ -121,6 +133,12 @@ public class ProjectTwoActivity extends Activity
 	protected void comparePhotos()
 	{
 		Intent iViewGroup = new Intent(this, ComparePhotoActivity.class);
+		startActivity(iViewGroup);
+	}
+	
+	protected void callReminderLists()
+	{
+		Intent iViewGroup = new Intent(this, RemindersListActivity.class);
 		startActivity(iViewGroup);
 	}
     

@@ -172,7 +172,7 @@ public class SkinObserverController implements FController {
 	@Override
 	public Alarm addAlarm(Alarm alarm) {
 		// TODO Auto-generated method stub
-		return null;
+		return dbCon.addAlarm(alarm);
 	}
 
 	@Override

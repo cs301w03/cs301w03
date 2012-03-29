@@ -33,7 +33,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
-public class AlarmController extends Activity
+public class AlarmController extends Activity implements FView<DbController>
 {
 	private static final String MEDIA_PLAYER = null;
 	Toast mToast;
@@ -122,8 +122,6 @@ public class AlarmController extends Activity
 				cal.get(Calendar.MINUTE);
 			}
 			
-			alarmtext.setText(theYear + " " + theMonth + " " + theDay + " " + theHour + " " + theMinute);
-			
 			timestamp = new Timestamp(theYear, theMonth, theDay, theHour, theMinute, 0, 0);
 		}
     };
@@ -151,8 +149,6 @@ public class AlarmController extends Activity
 				cal.get(Calendar.DAY_OF_MONTH);
 			}
 			
-			alarmtext.setText(theYear + " " + theMonth + " " + theDay + " " + theHour + " " + theMinute);
-			
 			timestamp = new Timestamp(theYear, theMonth, theDay, theHour, theMinute, 0, 0);
 		}
 
@@ -163,8 +159,24 @@ public class AlarmController extends Activity
     private OnClickListener createalarmListener = new OnClickListener() {
         public void onClick(View v) {
             
-        	//alarmtime.set
-        	//Alarm alarm = new Alarm();
+        	if(theYear == -1 || theMonth == -1 || theDay == -1 || theHour == -1 || theMinute == -1) {
+        		mToast = Toast.makeText(AlarmController.this, "Stopping Repeating Shots",
+                        Toast.LENGTH_LONG);
+                mToast.show();
+        	}
+        	
+        	else if(alarmtext.toString() == "") {
+        		mToast = Toast.makeText(AlarmController.this, "Stopping Repeating Shots",
+                        Toast.LENGTH_LONG);
+                mToast.show();
+        	}
+        	
+        	else {
+        		Alarm alarm = new Alarm(timestamp, alarmtext.toString());
+        		
+        		FController controller =  SkinObserverApplication.getSkinObserverController(AlarmController.this);
+        		controller.addAlarm(alarm);
+        	}
         }
     };
 
@@ -282,6 +294,12 @@ public class AlarmController extends Activity
         mToast = Toast.makeText(this, "Testing Repeating Shots",
                 Toast.LENGTH_LONG);
         mToast.show();
+		
+	}
+
+	@Override
+	public void update(DbController model) {
+		// TODO Auto-generated method stub
 		
 	}
     

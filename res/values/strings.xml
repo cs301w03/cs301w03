@@ -27,5 +27,15 @@
     <string name="stop_repeating_alarm">Stop Alarm</string>
     <string name="start_repeating_alarm">Repeat Alarm</string>
     <string name="alarm_controller">Alarm Controller</string>
+    <string-array name="alarm_type">
+        <item >One Time Alarm</item>
+        <item >Repeating Alarm</item>
+    </string-array>
+    <string name="alarmtype">Alarm Type :    </string>
+    <string name="alarm_text">Alarm Text   :   </string>
+    <string name="create_alarm">Create</string>
+    <string name="set_time">Set Time</string>
+    <string name="set_date">Set Date</string>
+    <string name="reminders">Reminders</string>
 
 </resources>

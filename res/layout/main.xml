@@ -32,6 +32,12 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/groupByCondition" />
+    
+    <Button
+        android:id="@+id/reminders"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reminders" />
 
     <Button
         android:id="@+id/mainMenu"

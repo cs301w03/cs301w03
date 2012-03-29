@@ -1,26 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:padding="4dip"
-    android:gravity="center_horizontal"
-    android:layout_width="fill_parent" android:layout_height="fill_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
     <TextView
-        android:layout_width="fill_parent" android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:paddingBottom="4dip"
-        android:text="@string/alarm_controller"/>
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.02"
+        android:text="@string/alarm_controller" />
 
-    <Button android:id="@+id/one_shot"
-        android:layout_width="wrap_content" android:layout_height="wrap_content" 
-        android:text="@string/one_shot_alarm">
-        <requestFocus />
-    </Button>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.02"
+        android:orientation="horizontal" >
 
-    <Button android:id="@+id/start_repeating"
-        android:layout_width="wrap_content" android:layout_height="wrap_content" 
-        android:text="@string/start_repeating_alarm" />
+        <TextView
+            android:layout_width="118dp"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_text" />
 
-    <Button android:id="@+id/stop_repeating"
-        android:layout_width="wrap_content" android:layout_height="wrap_content" 
-        android:text="@string/stop_repeating_alarm" />
+        <EditText
+            android:id="@+id/alarm_text_editview"
+            android:layout_width="194dp"
+            android:layout_height="wrap_content"
+            android:inputType="text" >
+            <requestFocus />
+        </EditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.02"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="118dp"
+            android:layout_height="wrap_content"
+            android:text="@string/alarmtype" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="198dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    
+    <Button
+        android:id="@+id/datepicker"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/set_date" />
+
+    <Button
+        android:id="@+id/timePicker"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text = "@string/set_time" />
+    
+    <Button
+        android:id="@+id/create_alarm_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_alarm" />
 
 </LinearLayout>

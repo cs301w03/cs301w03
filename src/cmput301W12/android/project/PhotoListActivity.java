@@ -45,17 +45,6 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	        
 	        Button menubutton = (Button) this.findViewById(R.id.menubutton);
 	        	        
-	        /*checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-			{
-				
-				@Override
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-				{
-			
-					// TODO Auto-generated method stub
-					
-				}
-			});*/
 	       	        
 	        registerForContextMenu(getListView());
 	        registerForContextMenu(menubutton);

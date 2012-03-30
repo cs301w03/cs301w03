@@ -6,6 +6,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,20 +14,22 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class RemindersListActivity extends ListActivity implements FView<DbController> {
+
+	public static final String ALARM = "alarm";
+	public static final String ALARM_ID = "alarm_id";
+	private static final int CREATE_ALARM = 0;
+	Toast mToast;
 
 	@Override
 	 protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.photoviewlist_activity);
-	        
-	        Button menubutton = (Button) this.findViewById(R.id.menubutton);
-	        	        
-	       	        
+	       	        	             	        
 	        registerForContextMenu(getListView());
-	        registerForContextMenu(menubutton);
 	        
 	        fillRemindersList();
 	}
@@ -37,6 +40,12 @@ public class RemindersListActivity extends ListActivity implements FView<DbContr
         inflater.inflate(R.menu.ctxmenu2, menu);
 	}
 	
+	public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        menu.add(0, CREATE_ALARM, 0, "Create");
+        return true;
+    }
+	
 	protected void onListItemClick(ListView l, View v, int position, long id) {
     	
     	    	
@@ -44,11 +53,16 @@ public class RemindersListActivity extends ListActivity implements FView<DbContr
         
         ListAdapter adapter = l.getAdapter();
         Alarm alarm  = (Alarm) adapter.getItem(position);
-        Intent i = new Intent(this, AlarmController.class);
-        /*i.putExtra(PHOTO, photo);
-        startActivityForResult(i, VIEW_PHOTO);*/
+        Intent i = new Intent(this, AlarmChangeActivity.class);
         
-        //editor.putExtra(PHOTO, value ); PRODUCE INTENT WITH PHOTO OBJECT to view
+        i.putExtra(ALARM, alarm);
+        
+        String s = Long.toString(id);
+        int id_int = Integer.valueOf(s);
+        i.putExtra(ALARM_ID, id_int);
+        
+        this.startActivityForResult(i, 0);
+        
 
 	}
 	
@@ -58,13 +72,16 @@ public class RemindersListActivity extends ListActivity implements FView<DbContr
 		switch (item.getItemId()) {
 	       case R.id.menuedit:
 	           
-	       	Intent intent = new Intent(this, AlarmController.class);
+	       	Intent intent = new Intent(this, AlarmChangeActivity.class);
 	       	startActivity(intent);
 	           return true;
 	       case R.id.menudelete:
 	       	
 	       	FController skinObserverController = SkinObserverApplication.getSkinObserverController(this);
 	       	//int x = skinObserverController.deleteEntry(info.id, OptionType.PHOTO);
+	       	skinObserverController.deleteAnAlarm(info.position);
+	       	
+	       	fillRemindersList();
 	           
 	           return true;
 	       			
@@ -72,6 +89,19 @@ public class RemindersListActivity extends ListActivity implements FView<DbContr
 	           return super.onContextItemSelected(item);
 		}
 	}
+	
+	@Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        switch(item.getItemId()) {
+            case CREATE_ALARM:
+            	Intent i = new Intent(this, AlarmController.class);
+            	this.startActivityForResult(i, 0);
+            	
+                return true;
+        }
+
+        return super.onMenuItemSelected(featureId, item);
+    }
 	
 	private void fillRemindersList() {
 		
@@ -86,6 +116,8 @@ public class RemindersListActivity extends ListActivity implements FView<DbContr
 			setListAdapter(rAdapter);
 		}
 	}
+	
+	
 	
 	@Override
 	public void update(DbController model) {

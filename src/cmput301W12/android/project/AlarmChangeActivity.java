@@ -57,10 +57,7 @@ public class AlarmChangeActivity extends Activity
         Alarm alarm = (Alarm) getIntent().getSerializableExtra(RemindersListActivity.ALARM);
         alarmId = (int) getIntent().getIntExtra(RemindersListActivity.ALARM_ID, 0);
         
-        mToast = Toast.makeText(AlarmChangeActivity.this, "ID : " + alarmId,
-                Toast.LENGTH_LONG);
-        mToast.show();
-        
+               
         alarmtime = (Button)findViewById(R.id.timePicker);
         alarmdate = (Button)findViewById(R.id.datepicker);
         alarmdelete = (Button)findViewById(R.id.delete_alarm_button);

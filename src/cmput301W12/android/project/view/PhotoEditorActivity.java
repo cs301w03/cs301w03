@@ -5,13 +5,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import cmput301W12.android.project.CheckBoxArrayAdapter;
 import cmput301W12.android.project.Container;
 import cmput301W12.android.project.FController;
@@ -23,7 +27,6 @@ import cmput301W12.android.project.SkinCondition;
 import cmput301W12.android.project.SkinObserverApplication;
 import cmput301W12.android.project.SkinObserverIntent;
 import cmput301W12.android.project.ViewContainerListActivity;
-import cmput301W12.android.project.ViewCreateContainerActivity;
 
 /**
  * This class currently allows you to tag a new photo with Skin conditions and Groups. 
@@ -33,7 +36,9 @@ import cmput301W12.android.project.ViewCreateContainerActivity;
  *
  */
 
-/* Add annotation button */
+/* Add annotation button 
+ * http://i.thiyagaraaj.com/articles/android-articles/customdialogboxpopupusinglayoutinandroid
+ */
 
 public class PhotoEditorActivity extends  Activity {
 	private ListView groupList;// = (ExpandableListView) findViewById(R.id.groupsExpandableList);
@@ -61,6 +66,19 @@ public class PhotoEditorActivity extends  Activity {
 		newestPhoto = (Photo) getIntent().getSerializableExtra("Photo");
 		
 		Button confirm = (Button) this.findViewById(R.id.confirm);
+
+		//Button confirm_Annotation = (Button) this.findViewById(R.id.annotation_button);
+		
+//		confirm_Annotation.setOnClickListener(new View.OnClickListener()
+//                {
+//                    
+//                    @Override
+//                    public void onClick(View m)
+//                    {
+////                        // TODO Auto-generated method stub
+//                        finish();
+//                    }
+//                });
 		
 		confirm.setOnClickListener(new View.OnClickListener() 
 		{
@@ -184,6 +202,20 @@ public class PhotoEditorActivity extends  Activity {
 	
 	protected void getAnnotation()
 	{
+
+	    LayoutInflater inflater = (LayoutInflater) PhotoEditorActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    final PopupWindow annotationWin = new PopupWindow(inflater.inflate(R.layout.annotation, null, false),
+	            300, 300, true);
+	    annotationWin.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
+	    Button annotationButt = (Button) this.findViewById(R.id.annotation_button);
+	    annotationButt.setOnClickListener(new View.OnClickListener() 
+            {
+                @Override
+                public void onClick(View v) {
+	            annotationWin.dismiss();
+	        }
+	    });
+	    
 	    //OH HELLO!
 	}
 	

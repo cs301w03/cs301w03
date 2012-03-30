@@ -43,11 +43,8 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.photoviewlist_activity);
 	        
-	        Button menubutton = (Button) this.findViewById(R.id.menubutton);
-	        	        
-	       	        
+	        	     	       	        
 	        registerForContextMenu(getListView());
-	        registerForContextMenu(menubutton);
 	        
 	        fillSelectableList();
 	        
@@ -141,9 +138,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	        switch (item.getItemId()) {
 	            case R.id.menuedit:
 	                
-	            	Intent intent = new Intent(this, AlarmController.class);
-	            	startActivity(intent);
-	                return true;
+	         
 	            case R.id.menudelete:
 	            	
 	            	FController skinObserverController = SkinObserverApplication.getSkinObserverController(this);

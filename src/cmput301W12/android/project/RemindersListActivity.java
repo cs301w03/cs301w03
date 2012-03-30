@@ -13,9 +13,14 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class RemindersListActivity extends ListActivity implements FView<DbController> {
+
+	public static final String ALARM = "alarm";
+	public static final String ALARM_ID = "alarm_id";
+	Toast mToast;
 
 	@Override
 	 protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +49,16 @@ public class RemindersListActivity extends ListActivity implements FView<DbContr
         
         ListAdapter adapter = l.getAdapter();
         Alarm alarm  = (Alarm) adapter.getItem(position);
-        Intent i = new Intent(this, AlarmController.class);
-        /*i.putExtra(PHOTO, photo);
-        startActivityForResult(i, VIEW_PHOTO);*/
+        Intent i = new Intent(this, AlarmChangeActivity.class);
         
-        //editor.putExtra(PHOTO, value ); PRODUCE INTENT WITH PHOTO OBJECT to view
+        i.putExtra(ALARM, alarm);
+        
+        String s = Long.toString(id);
+        int id_int = Integer.valueOf(s);
+        i.putExtra(ALARM_ID, id_int);
+        
+        startActivity(i);
+        
 
 	}
 	

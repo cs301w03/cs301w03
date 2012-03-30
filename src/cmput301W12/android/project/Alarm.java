@@ -1,8 +1,13 @@
 package cmput301W12.android.project;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Alarm implements Comparable<Alarm>{
+public class Alarm implements Comparable<Alarm>, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int alarmId = DbAdapter.INVALID_ID;
 	private Timestamp alarmTime;
 	private String alarmNote;

@@ -5,17 +5,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import cmput301W12.android.project.CheckBoxArrayAdapter;
 import cmput301W12.android.project.Container;
 import cmput301W12.android.project.FController;
@@ -202,19 +201,37 @@ public class PhotoEditorActivity extends  Activity {
 	
 	protected void getAnnotation()
 	{
-
-	    LayoutInflater inflater = (LayoutInflater) PhotoEditorActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	    final PopupWindow annotationWin = new PopupWindow(inflater.inflate(R.layout.annotation, null, false),
-	            300, 300, true);
-	    annotationWin.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
-	    Button annotationButt = (Button) this.findViewById(R.id.annotation_button);
-	    annotationButt.setOnClickListener(new View.OnClickListener() 
-            {
-                @Override
-                public void onClick(View v) {
-	            annotationWin.dismiss();
-	        }
-	    });
+		AlertDialog.Builder popupBuilder = new AlertDialog.Builder(this);
+		popupBuilder.setTitle("Annotation");
+		final EditText annotation = new EditText(this);
+		annotation.setSingleLine();
+		annotation.setText("");
+		popupBuilder.setView(annotation);
+		popupBuilder.setNeutralButton("Confirm", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				//When click confirm save the annotation into the photo?
+				newestPhoto.setAnnotation(annotation.getText().toString());
+				
+			}
+		});
+		popupBuilder.create();
+		popupBuilder.show();
+		
+		
+//	    LayoutInflater inflater = (LayoutInflater) PhotoEditorActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//	    annotationWin = new PopupWindow(inflater.inflate(R.layout.annotation, null, false),
+//	            300, 300, true);
+//	    annotationWin.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
+//	    Button annotationButt = (Button) this.findViewById(R.id.annotation_button);
+//	    annotationButt.setOnClickListener(new OnClickListener() 
+//            {
+//                @Override
+//                public void onClick(View v) {
+//	            annotationWin.dismiss();
+//	        }
+//	    });
 	    
 	    //OH HELLO!
 	}

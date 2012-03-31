@@ -75,7 +75,7 @@ Serializable {
 	public void setPhotos(Set<Integer> photos) {
 		this.photos = photos;
 	}
-	
+
 	public boolean isSelected() {
 		return selected;
 	}
@@ -89,38 +89,4 @@ Serializable {
 		return this.getName().compareTo(another.getName());
 	}
 
-/*
-	public boolean attachPhoto(PhotoObj phoObj){
-		return phoObj.attachToContainer(this);
-	}
-
-	public boolean addManyPhotos(Collection<PhotoObj> photos){
-		boolean result = true;
-
-		for(PhotoObj po : photos){
-			if(po.attachToContainer(this) == false){
-				result = false;
-			}
-		}
-
-		return result;
-	}
-
-	public boolean detachPhoto(Integer phoObj){
-		return phoObj.detachFromContainer(this);
-	}
-
-	public boolean removeManyPhotos(Collection<Integer> photos){
-		boolean result = true;
-
-		for(Integer po : photos){
-			if(po.detachFromContainer(this) == false){
-				result = false;
-			}
-		}
-
-		return result;
-
-	}
-	*/
 }

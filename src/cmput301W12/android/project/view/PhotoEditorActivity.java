@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import cmput301W12.android.project.CheckBoxArrayAdapter;
 import cmput301W12.android.project.Container;
+import cmput301W12.android.project.DbAdapter;
 import cmput301W12.android.project.FController;
 import cmput301W12.android.project.Group;
 import cmput301W12.android.project.OptionType;
@@ -46,7 +47,7 @@ public class PhotoEditorActivity extends  Activity {
 	private Container[] groupArray = null;
 	private Container[] conditionArray = null;
 
-	private Photo newestPhoto = null;
+	private Photo editingPhoto = null;
 	
 	public static final int ACTIVITY_CREATE_GROUP = 0;
 	public static final int ACTIVITY_CREATE_SKINCONDITION = 1;
@@ -62,7 +63,7 @@ public class PhotoEditorActivity extends  Activity {
 		setContentView(R.layout.photo_editor);
 		//newestPhoto = (Photo) savedInstanceState.getSerializable("Photo");
 
-		newestPhoto = (Photo) getIntent().getSerializableExtra("Photo");
+		editingPhoto = (Photo) getIntent().getSerializableExtra("Photo");
 		
 		Button confirm = (Button) this.findViewById(R.id.confirm);
 
@@ -107,11 +108,11 @@ public class PhotoEditorActivity extends  Activity {
 						skinConditions.add(cont2.getItemId());
 					}
 				}
-				newestPhoto.setGroups(groups);
-				newestPhoto.setSkinConditions(skinConditions);
+				editingPhoto.setGroups(groups);
+				editingPhoto.setSkinConditions(skinConditions);
 				
 				Bundle returnTags = new Bundle();
-				returnTags.putSerializable("Photo", newestPhoto);
+				returnTags.putSerializable("Photo", editingPhoto);
 				Intent i = new Intent();
 				i.putExtras(returnTags);
 				setResult(RESULT_OK, i);
@@ -155,19 +156,34 @@ public class PhotoEditorActivity extends  Activity {
 	}
 	
 	protected void fillLists() {
-		FController controller = SkinObserverApplication.getSkinObserverController(this);
+		
 		Set<? extends Container> setGroup = null;
 		Set<? extends Container> setCondition = null;
 		
 		/* Set up setGroup with group names */
-		setGroup = controller.getAllContainers(OptionType.GROUP);
-		groupArray = new Group[setGroup.size()];
-		setGroup.toArray(groupArray);
-
-		/* Set up setCondition with skin condition names */
-		setCondition = controller.getAllContainers(OptionType.SKINCONDITION);
-		conditionArray = new SkinCondition[setCondition.size()];
-		setCondition.toArray(conditionArray);
+		if (editingPhoto.isNew())
+		{
+			FController controller = SkinObserverApplication.getSkinObserverController(this);
+			setGroup = controller.getAllContainers(OptionType.GROUP);
+			groupArray = new Group[setGroup.size()];
+			setGroup.toArray(groupArray);
+	
+			/* Set up setCondition with skin condition names */
+			setCondition = controller.getAllContainers(OptionType.SKINCONDITION);
+			conditionArray = new SkinCondition[setCondition.size()];
+			setCondition.toArray(conditionArray);
+		}
+		else
+		{
+			setGroup = editingPhoto.getGroups(this);
+			groupArray = new Group[setGroup.size()];
+			setGroup.toArray(groupArray);
+			
+			setCondition = editingPhoto.getSkinConditions(this);
+			conditionArray = new SkinCondition[setCondition.size()];
+			setCondition.toArray(conditionArray);
+			
+		}
 
 			
     	CheckBoxArrayAdapter conAdapterGroup = new CheckBoxArrayAdapter(this, groupArray);
@@ -193,11 +209,11 @@ public class PhotoEditorActivity extends  Activity {
 	}
 	
 	protected void createNewSkinCondition()
-        {
-            Intent iCreateSC = new Intent(this, ViewContainerListActivity.class);
-            iCreateSC.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION, SkinObserverIntent.DATA_SKIN_CONDITION);
-            startActivityForResult(iCreateSC, ACTIVITY_CREATE_SKINCONDITION);
-        }
+    {
+        Intent iCreateSC = new Intent(this, ViewContainerListActivity.class);
+        iCreateSC.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION, SkinObserverIntent.DATA_SKIN_CONDITION);
+        startActivityForResult(iCreateSC, ACTIVITY_CREATE_SKINCONDITION);
+    }
 	
 	protected void getAnnotation()
 	{
@@ -212,7 +228,7 @@ public class PhotoEditorActivity extends  Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				//When click confirm save the annotation into the photo?
-				newestPhoto.setAnnotation(annotation.getText().toString());
+				editingPhoto.setAnnotation(annotation.getText().toString());
 				
 			}
 		});

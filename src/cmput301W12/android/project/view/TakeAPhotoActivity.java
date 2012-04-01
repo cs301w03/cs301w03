@@ -17,7 +17,9 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 import cmput301W12.android.project.FController;
+import cmput301W12.android.project.Group;
 import cmput301W12.android.project.Photo;
+import cmput301W12.android.project.SkinCondition;
 import cmput301W12.android.project.SkinObserverApplication;
 
 /**

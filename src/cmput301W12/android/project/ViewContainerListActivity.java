@@ -4,17 +4,17 @@ import java.util.Set;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 /**
  * 
@@ -26,8 +26,11 @@ import android.widget.Toast;
 public class ViewContainerListActivity extends ListActivity implements FView<DbController>{
 	private static final int ACTIVITY_CREATE=0;
 	private static final int ACTIVITY_DELETE=1;
+	private static final int ACTIVITY_EDIT=1;
 	private static final int CREATE_ID = Menu.FIRST;
-	private static final int DELETE_ID = Menu.FIRST +1;
+	private static final int DELETE_ID = Menu.FIRST + 1;
+	private static final int CONNECT_ID = Menu.FIRST + 2;
+	private static final int DISCONNECT_ID = Menu.FIRST + 3;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -97,7 +100,8 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
     
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
+        super.onListItemClick(l, v, position, id);     
+        
         ListAdapter adapter = l.getAdapter();
         Container cont  = (Container) adapter.getItem(position);
         
@@ -146,7 +150,8 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if ( requestCode == ACTIVITY_CREATE || requestCode == ACTIVITY_DELETE)
+        if ( requestCode == ACTIVITY_CREATE || requestCode == ACTIVITY_DELETE 
+        		|| requestCode == ACTIVITY_EDIT)
         	fillData();
     }
     
@@ -155,17 +160,27 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
             ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(0, DELETE_ID, 0, R.string.menu_delete);
+        menu.add(0, CONNECT_ID, 0, "Connect photos");
+        menu.add(0, DISCONNECT_ID, 0, "Disconnect photos");
     }
     
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+    	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();               
+        Container cont = (Container) getListAdapter().getItem(info.position);
         switch(item.getItemId()) {
             case DELETE_ID:
-                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();               
-                Container cont = (Container) getListAdapter().getItem(info.position);
                 deleteContainer(cont);
                 fillData();
                 return true;
+            case CONNECT_ID:
+                connectContainer(cont);
+                fillData();
+                return true;
+            case DISCONNECT_ID:
+            	disconnectContainer(cont);
+            	fillData();
+            	return true;
         }
         return super.onContextItemSelected(item);
     }
@@ -181,6 +196,42 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 			else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
 				skinObserverController.deleteAContainer(cont, OptionType.SKINCONDITION);
 		}
+	}
+	
+	protected void connectContainer(Container cont)
+	{
+		Intent newIntent = new Intent(this, PhotoListActivity.class);
+        Bundle bundle = getIntent().getExtras();
+        newIntent.putExtras(bundle);
+        newIntent.putExtra(PhotoListActivity.CONNECT, PhotoListActivity.CONNECT);
+        
+        if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+		{
+        	newIntent.putExtra(SkinObserverIntent.DATA_GROUP,cont);
+		}
+		else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
+		{
+			newIntent.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION,cont);
+		}
+        startActivityForResult(newIntent, ACTIVITY_EDIT);
+	}
+	
+	protected void disconnectContainer(Container cont)
+	{
+		Intent newIntent = new Intent(this, PhotoListActivity.class);
+        Bundle bundle = getIntent().getExtras();
+        newIntent.putExtras(bundle);
+        newIntent.putExtra(PhotoListActivity.DISCONNECT, PhotoListActivity.DISCONNECT);
+        
+        if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+		{
+        	newIntent.putExtra(SkinObserverIntent.DATA_GROUP,cont);
+		}
+		else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
+		{
+			newIntent.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION,cont);
+		}
+        startActivityForResult(newIntent, ACTIVITY_EDIT);
 	}
     
 	@Override

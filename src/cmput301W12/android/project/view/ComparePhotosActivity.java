@@ -17,7 +17,7 @@ public class ComparePhotosActivity extends Activity
 
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.compare_photos);
+        //setContentView(R.layout.compare_photos);
         
         /* setup list adapter to use the photo list */
         

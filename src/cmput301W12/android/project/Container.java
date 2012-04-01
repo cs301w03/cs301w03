@@ -4,6 +4,9 @@ package cmput301W12.android.project;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+
+import android.content.Context;
 
 /**
  * @author: Hieu Ngo
@@ -68,6 +71,11 @@ Serializable {
 	public Set<Integer> getPhotos() {
 		return photos;
 	}
+	
+	/**
+	 * @return the photos
+	 */
+	public abstract SortedSet<Photo> getPhotos(Context context);
 
 	/**
 	 * @param photos the photos to set

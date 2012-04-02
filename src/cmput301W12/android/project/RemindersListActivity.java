@@ -56,12 +56,8 @@ public class RemindersListActivity extends ListActivity implements FView<DbContr
         Intent i = new Intent(this, AlarmChangeActivity.class);
         
         i.putExtra(ALARM, alarm);
-        
-        String s = Long.toString(id);
-        int id_int = Integer.valueOf(s);
-        i.putExtra(ALARM_ID, id_int);
-        
-        mToast = Toast.makeText(RemindersListActivity.this, "ID : " + id_int + " position : " +position,
+                
+        mToast = Toast.makeText(RemindersListActivity.this, "ID : " + alarm.getAlarmId() + " position : " +position,
                 Toast.LENGTH_LONG);
         mToast.show();
         

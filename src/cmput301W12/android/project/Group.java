@@ -3,7 +3,7 @@ package cmput301W12.android.project;
 import java.io.Serializable;
 import java.util.Set;
 import java.util.SortedSet;
-
+import java.util.TreeSet;
 import android.content.Context;
 
 /**
@@ -42,7 +42,7 @@ public class Group extends Container implements Serializable {
 			return false;
 		}else{
 			return this.getItemId() == ((Group) o).getItemId() ||
-									this.getName() == ((Group) o).getName();
+					this.getName() == ((Group) o).getName();
 		}
 
 	}
@@ -55,10 +55,11 @@ public class Group extends Container implements Serializable {
 			SortedSet<Photo> photoList = (SortedSet<Photo>) controller.getAllPhotoOfAContainer(getItemId(), OptionType.PHOTOGROUP);
 			return photoList;
 		}
-		else
-			return null;
+		else{
+			return new TreeSet<Photo>();
+		}
 	}
-	
+
 
 
 

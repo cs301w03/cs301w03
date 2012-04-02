@@ -1,12 +1,16 @@
 package cmput301W12.android.project;
 
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -14,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -29,8 +34,8 @@ import cmput301W12.android.project.view.PhotoEditorActivity;
  */
 public class PhotoListActivity extends ListActivity implements FView<DbController>
 {
-	private SortedSet<Photo> currentPhotoSet = null;
-	private Container cont = null;
+	private static SortedSet<Photo> currentPhotoSet = new TreeSet<Photo>();
+	private static SortedSet<Photo> selectedPhotoSet = new TreeSet<Photo>();
 
 	public static final String CONNECT = "CONNECT";
 	public static final String DISCONNECT = "DISCONNECT";
@@ -43,17 +48,63 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	public static final int CONNECT_ID = Menu.FIRST;
 	public static final int DISCONNECT_ID = Menu.FIRST +1;
 
-	private static Photo photoCompare;
-	private static boolean compareActivated = false;
+	private static Photo PHOTO_COMPARE;
+	private static boolean COMPARE_ACTIVATED = false;
+	private static Container CONT = null;
+	private static FController FCON;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.photoviewlist_activity);
-
+		FCON = SkinObserverApplication.getSkinObserverController(this);
 		registerForContextMenu(getListView());                
 		fillList();
+		Bundle bundle = getIntent().getExtras(); 
+		if(bundle != null && (bundle.containsKey(CONNECT) || bundle.containsKey(DISCONNECT))){
+			Button confirm = (Button) this.findViewById(R.id.menubutton);
+			confirm.setOnClickListener(new View.OnClickListener()
+			{   
+				@Override
+				public void onClick(View v)
+				{
+					Log.d("", "click!");
+					updateContainer();
+					finish();
+				}
+			});
+		}
 
+	}
+
+	private void updateContainer(){
+		OptionType op = null;
+		Bundle bundle = this.getIntent().getExtras();
+
+		if(CONT instanceof Group){
+			op = OptionType.PHOTOGROUP;
+		} else if (CONT instanceof SkinCondition){
+			op = OptionType.PHOTOSKIN;
+		}
+		for(Photo p : selectedPhotoSet){
+			Log.d("", p.getTimeStamp().toString());
+		}
+		if (bundle.containsKey(CONNECT))
+		{
+			Set<Integer> setInt = new HashSet<Integer>();
+			for(Photo p : selectedPhotoSet){
+				setInt.add(p.getPhotoId());
+			}
+			FCON.connectAContainerToManyPhotos(CONT.getItemId(), setInt, op);
+		}  else if (bundle.containsKey(DISCONNECT)){
+			Set<Integer> setInt = new HashSet<Integer>();
+			for(Photo p : selectedPhotoSet){
+				setInt.add(p.getPhotoId());
+			}
+			FCON.disconnectAContainerFromManyPhotos(CONT.getItemId(), setInt, op);
+		}
+
+		
 	}
 
 	protected void fillList()
@@ -65,10 +116,10 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 			if (bundle.containsKey(CONNECT))
 				fillUnseletedList(bundle);
 			else
-				currentPhotoSet =  getAllCurrentPhoto(bundle);
+				currentPhotoSet =  getAllCurrentPhoto();
 		}
 		else
-			currentPhotoSet =  getAllCurrentPhoto(null);
+			currentPhotoSet =  getAllCurrentPhoto();
 		displayList();
 	}
 
@@ -78,24 +129,23 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 		{
 			if (bundle.containsKey(SkinObserverIntent.DATA_GROUP) )
 			{
-				cont = (Container) bundle.getSerializable(SkinObserverIntent.DATA_GROUP);	 
+				CONT = (Container) bundle.getSerializable(SkinObserverIntent.DATA_GROUP);	 
 			}
 			else if (bundle.containsKey(SkinObserverIntent.DATA_SKIN_CONDITION))
 			{
-				cont = (Container) bundle.getSerializable(SkinObserverIntent.DATA_SKIN_CONDITION);
+				CONT = (Container) bundle.getSerializable(SkinObserverIntent.DATA_SKIN_CONDITION);
 			}	 
 		}
 	}
 
 
-	protected SortedSet<Photo> getAllCurrentPhoto(Bundle bundle) {
-		FController controller =  SkinObserverApplication.getSkinObserverController(this);
-		if (cont != null)
+	protected SortedSet<Photo> getAllCurrentPhoto() {
+		if (CONT != null)
 		{
-			return cont.getPhotos(this);
+			return CONT.getPhotos(this);
 		}
 		else
-			return controller.getAllPhoto();
+			return FCON.getAllPhoto();
 	}
 
 
@@ -115,10 +165,9 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 
 
 	protected void fillUnseletedList(Bundle bundle){
-		currentPhotoSet = getAllCurrentPhoto(bundle);
-//:(
+		currentPhotoSet = getAllCurrentPhoto();
 		//Pass null to get all photos from database
-		SortedSet<Photo> allPhotoSet = getAllCurrentPhoto(null);
+		SortedSet<Photo> allPhotoSet = FCON.getAllPhoto();
 
 		//Get the complement of currentPhotoSet in allPhotoSet
 
@@ -155,29 +204,29 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		Bundle bundle = getIntent().getExtras();
+		ListAdapter la = l.getAdapter();
+		Photo photo  = (Photo) la.getItem(position);
+
 		if(bundle != null){
 			if (bundle.containsKey(CONNECT) || bundle.containsKey(DISCONNECT))
 			{
 				View row = l.getChildAt(position);
-				changeSelection(row);
-			}
-		}
-		else
-		{
-			ListAdapter la = l.getAdapter();
-			Photo photo  = (Photo) la.getItem(position);
-			if(compareActivated == false){
-				viewPhoto(photo);
-			} else {
-				Intent i = new Intent(this, ComparePhotoActivity.class);
-				i.putExtra(ComparePhotoActivity.BACKGROUND, photoCompare);
-				i.putExtra(ComparePhotoActivity.SURFACE, photo);
-				compareActivated = false;
-				startActivityForResult(i, 0);
+				changeSelection(row, photo);
+				return;
 			}
 		}
 
+		if(COMPARE_ACTIVATED == false){
+			viewPhoto(photo);
+		} else {
+			Intent i = new Intent(this, ComparePhotoActivity.class);
+			i.putExtra(ComparePhotoActivity.BACKGROUND, PHOTO_COMPARE);
+			i.putExtra(ComparePhotoActivity.SURFACE, photo);
+			COMPARE_ACTIVATED = false;
+			startActivityForResult(i, 0);
+		}
 	}
+
 
 	protected void viewPhoto(Photo photo)
 	{
@@ -186,19 +235,21 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 		startActivityForResult(i, ACTIVITY_VIEW_PHOTO);
 	}
 
-	protected void changeSelection(View row)
+	protected void changeSelection(View row, Photo photo)
 	{
 		Drawable drawable = row.getBackground();
-		if (drawable != null)
-		{
+		if (drawable != null){
 			PaintDrawable paintDrawable = (PaintDrawable) drawable;
-			if (paintDrawable != SelectiveColor.getSelectedDrawable())
+			if (paintDrawable != SelectiveColor.getSelectedDrawable()){
 				row.setBackgroundDrawable(SelectiveColor.getSelectedDrawable());
-			else
+				selectedPhotoSet.add(photo);
+			}
+			else{
 				row.setBackgroundDrawable(SelectiveColor.getUnselectedDrawable());
+				selectedPhotoSet.remove(photo);
+			}
 		}
-		else
-		{
+		else {
 			row.setBackgroundDrawable(SelectiveColor.getSelectedDrawable());
 		}
 	}
@@ -216,13 +267,13 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 			startActivityForResult(editPhoto, ACTIVITY_EDIT_PHOTO);
 			return true;
 		case R.id.menudelete:
-			deletePhoto(photo);
+			FCON.deleteAPhoto(photo);
 			fillList();              
 			return true;
 
 		case R.id.menucompare:
-			photoCompare = photo;
-			compareActivated = true;
+			PHOTO_COMPARE = photo;
+			COMPARE_ACTIVATED = true;
 			CharSequence text = "Click at another photo to compare with this chosen photo!";
 			int duration = Toast.LENGTH_SHORT;
 			Toast toast = Toast.makeText(this, text, duration);
@@ -233,16 +284,6 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 			return super.onContextItemSelected(item);
 		}
 
-	}
-
-	protected void deletePhoto(Photo photo)
-	{
-		Bundle bundle = getIntent().getExtras();
-		if (bundle != null)
-		{
-			FController skinObserverController = SkinObserverApplication.getSkinObserverController(this);
-			skinObserverController.deleteAPhoto(photo);
-		}
 	}
 
 	@Override

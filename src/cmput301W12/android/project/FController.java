@@ -223,7 +223,7 @@ public interface FController {
 	 * @return number of photos that are connected to the container.
 	 */
 	public int connectAContainerToManyPhotos(int containerId, Set<Integer> setOfIDs, OptionType option);
-
+	
 	/**
 	 * Update the photo's information.
 	 * @param photoId 

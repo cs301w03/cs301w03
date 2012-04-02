@@ -121,6 +121,14 @@ public class RemindersListActivity extends ListActivity implements FView<DbContr
 		}
 	}
 	
+	@Override 
+	protected void onActivityResult(int requestCode, int resultCode,
+            Intent data) {
+		
+		fillRemindersList();
+	}
+
+	
 	
 	
 	@Override

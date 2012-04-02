@@ -5,12 +5,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import cmput301W12.android.project.CheckBoxArrayAdapter;
 import cmput301W12.android.project.Container;
@@ -23,7 +31,6 @@ import cmput301W12.android.project.SkinCondition;
 import cmput301W12.android.project.SkinObserverApplication;
 import cmput301W12.android.project.SkinObserverIntent;
 import cmput301W12.android.project.ViewContainerListActivity;
-import cmput301W12.android.project.ViewCreateContainerActivity;
 
 /**
  * This class currently allows you to tag a new photo with Skin conditions and Groups. 
@@ -33,16 +40,20 @@ import cmput301W12.android.project.ViewCreateContainerActivity;
  *
  */
 
-/* Add annotation button */
+/* Add annotation button 
+ * http://i.thiyagaraaj.com/articles/android-articles/customdialogboxpopupusinglayoutinandroid
+ */
 
 public class PhotoEditorActivity extends  Activity {
 	private ListView groupList;// = (ExpandableListView) findViewById(R.id.groupsExpandableList);
 	private ListView conditionList;// = (ExpandableListView) findViewById(R.id.conditionExpList);
 	
+	private ImageView newImg;
+	
 	private Container[] groupArray = null;
 	private Container[] conditionArray = null;
 
-	private Photo newestPhoto = null;
+	private Photo editingPhoto = null;
 	
 	public static final int ACTIVITY_CREATE_GROUP = 0;
 	public static final int ACTIVITY_CREATE_SKINCONDITION = 1;
@@ -57,11 +68,27 @@ public class PhotoEditorActivity extends  Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.photo_editor);
 		//newestPhoto = (Photo) savedInstanceState.getSerializable("Photo");
-
-		newestPhoto = (Photo) getIntent().getSerializableExtra("Photo");
+		editingPhoto = (Photo) getIntent().getSerializableExtra("Photo");
+		
+		newImg = (ImageView) this.findViewById(R.id.recentlyTakenImage);
+		Uri uri = Uri.parse(editingPhoto.getLocation());
+		Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
+		newImg.setImageBitmap(bitmap);
 		
 		Button confirm = (Button) this.findViewById(R.id.confirm);
+
+		//Button confirm_Annotation = (Button) this.findViewById(R.id.annotation_button);
 		
+//		confirm_Annotation.setOnClickListener(new View.OnClickListener()
+//                {
+//                    
+//                    @Override
+//                    public void onClick(View m)
+//                    {
+////                        // TODO Auto-generated method stub
+//                        finish();
+//                    }
+//                });
 		confirm.setOnClickListener(new View.OnClickListener() 
 		{
 			@Override
@@ -90,11 +117,10 @@ public class PhotoEditorActivity extends  Activity {
 						skinConditions.add(cont2.getItemId());
 					}
 				}
-				newestPhoto.setGroups(groups);
-				newestPhoto.setSkinConditions(skinConditions);
-				
+				editingPhoto.setGroups(groups);
+				editingPhoto.setSkinConditions(skinConditions);
 				Bundle returnTags = new Bundle();
-				returnTags.putSerializable("Photo", newestPhoto);
+				returnTags.putSerializable("Photo", editingPhoto);
 				Intent i = new Intent();
 				i.putExtras(returnTags);
 				setResult(RESULT_OK, i);
@@ -130,7 +156,8 @@ public class PhotoEditorActivity extends  Activity {
                     createNewSkinCondition();
                     return true;
                 case ID_CREATE_ANNOTATION:
-                    getAnnotation();
+                	editingPhoto.editAnnotation(editingPhoto, this);
+                    //getAnnotation();
                     return true;
             }
 
@@ -138,19 +165,34 @@ public class PhotoEditorActivity extends  Activity {
 	}
 	
 	protected void fillLists() {
-		FController controller = SkinObserverApplication.getSkinObserverController(this);
+		
 		Set<? extends Container> setGroup = null;
 		Set<? extends Container> setCondition = null;
 		
 		/* Set up setGroup with group names */
-		setGroup = controller.getAllContainers(OptionType.GROUP);
-		groupArray = new Group[setGroup.size()];
-		setGroup.toArray(groupArray);
-
-		/* Set up setCondition with skin condition names */
-		setCondition = controller.getAllContainers(OptionType.SKINCONDITION);
-		conditionArray = new SkinCondition[setCondition.size()];
-		setCondition.toArray(conditionArray);
+		if (editingPhoto.isNew())
+		{
+			FController controller = SkinObserverApplication.getSkinObserverController(this);
+			setGroup = controller.getAllContainers(OptionType.GROUP);
+			groupArray = new Group[setGroup.size()];
+			setGroup.toArray(groupArray);
+	
+			/* Set up setCondition with skin condition names */
+			setCondition = controller.getAllContainers(OptionType.SKINCONDITION);
+			conditionArray = new SkinCondition[setCondition.size()];
+			setCondition.toArray(conditionArray);
+		}
+		else
+		{
+			setGroup = editingPhoto.getGroups(this);
+			groupArray = new Group[setGroup.size()];
+			setGroup.toArray(groupArray);
+			
+			setCondition = editingPhoto.getSkinConditions(this);
+			conditionArray = new SkinCondition[setCondition.size()];
+			setCondition.toArray(conditionArray);
+			
+		}
 
 			
     	CheckBoxArrayAdapter conAdapterGroup = new CheckBoxArrayAdapter(this, groupArray);
@@ -176,14 +218,46 @@ public class PhotoEditorActivity extends  Activity {
 	}
 	
 	protected void createNewSkinCondition()
-        {
-            Intent iCreateSC = new Intent(this, ViewContainerListActivity.class);
-            iCreateSC.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION, SkinObserverIntent.DATA_SKIN_CONDITION);
-            startActivityForResult(iCreateSC, ACTIVITY_CREATE_SKINCONDITION);
-        }
+    {
+        Intent iCreateSC = new Intent(this, ViewContainerListActivity.class);
+        iCreateSC.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION, SkinObserverIntent.DATA_SKIN_CONDITION);
+        startActivityForResult(iCreateSC, ACTIVITY_CREATE_SKINCONDITION);
+    }
 	
 	protected void getAnnotation()
 	{
+		AlertDialog.Builder popupBuilder = new AlertDialog.Builder(this);
+		popupBuilder.setTitle("Annotation");
+		final EditText annotation = new EditText(this);
+		annotation.setSingleLine();
+		annotation.setText("");
+		popupBuilder.setView(annotation);
+		popupBuilder.setNeutralButton("Confirm", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				//When click confirm save the annotation into the photo?
+				editingPhoto.setAnnotation(annotation.getText().toString());
+				
+			}
+		});
+		popupBuilder.create();
+		popupBuilder.show();
+		
+		
+//	    LayoutInflater inflater = (LayoutInflater) PhotoEditorActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//	    annotationWin = new PopupWindow(inflater.inflate(R.layout.annotation, null, false),
+//	            300, 300, true);
+//	    annotationWin.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
+//	    Button annotationButt = (Button) this.findViewById(R.id.annotation_button);
+//	    annotationButt.setOnClickListener(new OnClickListener() 
+//            {
+//                @Override
+//                public void onClick(View v) {
+//	            annotationWin.dismiss();
+//	        }
+//	    });
+	    
 	    //OH HELLO!
 	}
 	

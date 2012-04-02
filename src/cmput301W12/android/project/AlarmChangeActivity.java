@@ -39,7 +39,7 @@ public class AlarmChangeActivity extends Activity
 	Button alarmdate;
 	Button alarmdelete;
 	
-	private int alarm_type ;
+	private int alarm_type = 0 ;
 	private int theYear;
 	private int theMonth;
 	private int theDay;
@@ -110,14 +110,18 @@ public class AlarmChangeActivity extends Activity
     
     private void updateTimeDateDialogs(Timestamp t, String s) {
     	
-    	theYear = t.getYear();
-    	theMonth = t.getMonth();
-    	theDay = t.getDate();
-    	theHour = t.getHours();
-    	theMinute = t.getMinutes();
+    	Calendar cal = Calendar.getInstance();
+    	cal.clear();
+    	cal.setTimeInMillis(t.getTime());
     	
-    	timestamp = t;
+    	theYear = cal.get(Calendar.YEAR);
+    	theMonth = cal.get(Calendar.MONTH);
+    	theDay = cal.get(Calendar.DAY_OF_MONTH);
+    	theHour = cal.get(Calendar.HOUR);
+    	theMinute = cal.get(Calendar.MINUTE);
+    	
     	alarmtext.setText(s); 
+    	timestamp = t;
     }
     
     private OnDateSetListener odsListener = new OnDateSetListener()
@@ -129,19 +133,15 @@ public class AlarmChangeActivity extends Activity
 			// TODO Auto-generated method stub
 			
 			theYear = year;
-			theMonth = monthOfYear + 1;
+			theMonth = monthOfYear;
 			theDay = dayOfMonth;
+			
 			Calendar cal = Calendar.getInstance();
+			cal.clear();
+			cal.set(theYear, theMonth, theDay, theHour, theMinute, 0);
+			long time = cal.getTimeInMillis();
 			
-			if(theHour == -1) {
-				cal.get(Calendar.HOUR);
-			}
-			
-			if(theMinute == -1) {
-				cal.get(Calendar.MINUTE);
-			}
-			
-			timestamp = new Timestamp(theYear, theMonth, theDay, theHour, theMinute, 0, 0);
+			timestamp = new Timestamp(time);
 		}
     };
     
@@ -154,21 +154,14 @@ public class AlarmChangeActivity extends Activity
 			
 			theHour = hourOfDay;
 			theMinute = minute;
+		
+			
 			Calendar cal = Calendar.getInstance();
+			cal.clear();
+			cal.set(theYear, theMonth, theDay, theHour, theMinute, 0);
+			long time = cal.getTimeInMillis();
 			
-			if(theYear == -1) {
-				cal.get(Calendar.YEAR);
-			}
-			
-			if(theMonth == -1) {
-				cal.get(Calendar.MONTH);
-			}
-			
-			if(theDay == -1) {
-				cal.get(Calendar.DAY_OF_MONTH);
-			}
-			
-			timestamp = new Timestamp(theYear, theMonth, theDay, theHour, theMinute, 0, 0);
+			timestamp = new Timestamp(time);
 		}
 
 		
@@ -193,6 +186,18 @@ public class AlarmChangeActivity extends Activity
 				FController skinObserverController = SkinObserverApplication.getSkinObserverController(AlarmChangeActivity.this);
 				skinObserverController.updateAlarm(alarmId, timestamp, alarmtext.getText().toString());
 				
+				if(alarm_type == 0) {
+					setonetimeAlarm();
+				}
+				
+				else {
+					setrepeatingAlarm();
+				}
+				
+				mToast = Toast.makeText(AlarmChangeActivity.this, timestamp.toString() ,
+		                Toast.LENGTH_LONG);
+		        mToast.show();
+				
 				finish();
 			}
 		}
@@ -203,8 +208,7 @@ public class AlarmChangeActivity extends Activity
         public void onClick(View v) {
         
         	DatePickerDialog dpDialog = new DatePickerDialog(AlarmChangeActivity.this,
-        			odsListener, timestamp.getYear(), timestamp.getMonth(), 
-        			timestamp.getDate());
+        			odsListener, theYear, theMonth, theDay);
         			dpDialog.show();
         }
     };
@@ -213,7 +217,7 @@ public class AlarmChangeActivity extends Activity
         public void onClick(View v) {
         
         	TimePickerDialog tpDialog = new TimePickerDialog(AlarmChangeActivity.this,
-        			otsListener, timestamp.getHours(), timestamp.getMinutes(), false);
+        			otsListener, theHour, theMinute, false);
         			tpDialog.show();
         }
     };
@@ -256,7 +260,7 @@ public class AlarmChangeActivity extends Activity
     private void setonetimeAlarm() {
 		// TODO Auto-generated method stub
 		
-		Intent intent = new Intent(this, AlarmReceiver.class);
+		Intent intent = new Intent(this, OneTimeAlarmReceiver.class);
 		Bundle bundle = new Bundle();
 		//bundle.putParcelable(MEDIA_PLAYER, (Parcelable) mp);
 		//intent.putExtras(bundle);
@@ -285,7 +289,7 @@ public class AlarmChangeActivity extends Activity
 	private void setrepeatingAlarm() {
 		// TODO Auto-generated method stub
 		
-		Intent intent = new Intent(this, AlarmReceiver.class);
+		Intent intent = new Intent(this, RepeatingAlarmReceiver.class);
         PendingIntent sender = PendingIntent.getBroadcast(this,
                 0, intent, 0);
 
@@ -312,7 +316,7 @@ public class AlarmChangeActivity extends Activity
     	
             // Create the same intent, and thus a matching IntentSender, for
             // the one that was scheduled.
-            Intent intent = new Intent(this, AlarmReceiver.class);
+            Intent intent = new Intent(this, OneTimeAlarmReceiver.class);
             PendingIntent sender = PendingIntent.getBroadcast(this,
                     0, intent, 0);
 

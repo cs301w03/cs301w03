@@ -17,7 +17,9 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 import cmput301W12.android.project.FController;
+import cmput301W12.android.project.Group;
 import cmput301W12.android.project.Photo;
+import cmput301W12.android.project.SkinCondition;
 import cmput301W12.android.project.SkinObserverApplication;
 
 /**
@@ -89,6 +91,7 @@ public class TakeAPhotoActivity extends Activity
 
 				/* Construct a photo object from data */
 				newestPhoto = new Photo(photoUri.toString(), time, name, groups, skinConditions);
+				newestPhoto.setAnnotation("");
 				getTags(); // Ask the user to input data about the photo
 			} else if (resultCode == RESULT_CANCELED) {
 				// User cancelled the image capture

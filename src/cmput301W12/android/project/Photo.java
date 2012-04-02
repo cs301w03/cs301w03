@@ -2,12 +2,15 @@ package cmput301W12.android.project;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
+import java.util.SortedSet;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
+import android.widget.EditText;
 
 /**
  * 
@@ -64,6 +67,37 @@ public class Photo implements Comparable<Photo>, Serializable {
 		}
 	}
 
+	/**
+	 * @return void, this allows the user to edit the annotation of a given photo object
+	 */
+	public void editAnnotation(final Photo yourPhoto, Context context) {
+		AlertDialog.Builder popupBuilder = new AlertDialog.Builder(context);
+		popupBuilder.setTitle("Annotation");
+		final EditText annotation = new EditText(context);
+		if (yourPhoto.getAnnotation().equals(""))
+		{
+			annotation.setSingleLine();
+			annotation.setText("");
+		}
+		else
+		{
+			annotation.setSingleLine();
+			annotation.setText(yourPhoto.getAnnotation());
+		}
+		popupBuilder.setView(annotation);
+		popupBuilder.setNeutralButton("Confirm", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				//When click confirm save the annotation into the photo?
+				yourPhoto.setAnnotation(annotation.getText().toString());
+				
+			}
+		});
+		popupBuilder.create();
+		popupBuilder.show();
+	}
+	
 
 	/**
 	 * @return the photoId
@@ -127,6 +161,20 @@ public class Photo implements Comparable<Photo>, Serializable {
 	public Set<Integer> getGroups() {
 		return groups;
 	}
+	
+	/**
+	 * @return the skinConditions
+	 */
+	public Set<Group> getGroups(Context context) {
+		FController controller = SkinObserverApplication.getSkinObserverController(context);
+		if (photoId != DbAdapter.INVALID_ID)
+		{
+			SortedSet<Group> groupList = (SortedSet<Group>) controller.getAllContainersOfAPhoto(photoId, OptionType.GROUP);
+			return groupList;
+		}
+		else
+			return null;
+	}
 
 	/**
 	 * @param groups the groups to set
@@ -140,6 +188,20 @@ public class Photo implements Comparable<Photo>, Serializable {
 	 */
 	public Set<Integer> getSkinConditions() {
 		return skinConditions;
+	}
+	
+	/**
+	 * @return the skinConditions
+	 */
+	public Set<SkinCondition> getSkinConditions(Context context) {
+		FController controller = SkinObserverApplication.getSkinObserverController(context);
+		if (photoId != DbAdapter.INVALID_ID)
+		{
+			SortedSet<SkinCondition> scList = (SortedSet<SkinCondition>) controller.getAllContainersOfAPhoto(photoId, OptionType.GROUP);
+			return scList;
+		}
+		else
+			return null;
 	}
 
 	/**
@@ -169,5 +231,18 @@ public class Photo implements Comparable<Photo>, Serializable {
 
 	public int compareTo(Photo obj){
 		return (int) (this.timeStamp.getTime() - obj.timeStamp.getTime());
+	}
+	
+	/**
+	 * 
+	 * @return true if photo is not saved in database,
+	 * otherwise return false
+	 */
+	public boolean isNew()
+	{
+		if (photoId == DbAdapter.INVALID_ID)
+			return true;
+		else
+			return false;
 	}
 }

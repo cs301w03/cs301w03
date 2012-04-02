@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 
 
 import android.app.Activity;
@@ -43,7 +44,7 @@ public class AlarmController extends Activity implements FView<DbController>
 	Button alarmtime;
 	Button alarmdate;
 	
-	private int alarm_type ;
+	private int alarm_type = 1 ;
 	private int theYear = -1;
 	private int theMonth = -1;
 	private int theDay = -1;
@@ -114,7 +115,7 @@ public class AlarmController extends Activity implements FView<DbController>
 			// TODO Auto-generated method stub
 			
 			theYear = year;
-			theMonth = monthOfYear + 1;
+			theMonth = monthOfYear;
 			theDay = dayOfMonth;
 			Calendar cal = Calendar.getInstance();
 			
@@ -126,7 +127,10 @@ public class AlarmController extends Activity implements FView<DbController>
 				cal.get(Calendar.MINUTE);
 			}
 			
-			timestamp = new Timestamp(theYear, theMonth, theDay, theHour, theMinute, 0, 0);
+			long time = cal.getTimeInMillis();
+			timestamp = new Timestamp(time);
+			
+			
 		}
     };
     
@@ -152,8 +156,9 @@ public class AlarmController extends Activity implements FView<DbController>
 			if(theDay == -1) {
 				cal.get(Calendar.DAY_OF_MONTH);
 			}
+			long time = cal.getTimeInMillis();
 			
-			timestamp = new Timestamp(theYear, theMonth, theDay, theHour, theMinute, 0, 0);
+			timestamp = new Timestamp(time);
 		}
 
 		
@@ -181,6 +186,27 @@ public class AlarmController extends Activity implements FView<DbController>
         		
         		FController controller =  SkinObserverApplication.getSkinObserverController(AlarmController.this);
         		controller.addAlarm(alarm);
+        		
+        		if(alarm_type == 0) {
+					setonetimeAlarm();
+				}
+				
+				else {
+					setrepeatingAlarm();
+				}
+        		
+        		/*Calendar cal = Calendar.getInstance();
+        		Date date = cal.getTime();
+        		long time1 = date.getTime();
+
+        		long time2 = timestamp.getTime();
+        		
+        		long time3 = time2 - time1;
+        		String s = Long.toString(time3);
+        		
+        		mToast = Toast.makeText(AlarmController.this, s,
+                        Toast.LENGTH_LONG);
+                mToast.show();*/
         		
         		finish();
         	}
@@ -231,12 +257,14 @@ public class AlarmController extends Activity implements FView<DbController>
 	private void setonetimeAlarm() {
 		// TODO Auto-generated method stub
 		
-		Intent intent = new Intent(this, AlarmReceiver.class);
+		Intent intent = new Intent(this, OneTimeAlarmReceiver.class);
 		Bundle bundle = new Bundle();
 		//bundle.putParcelable(MEDIA_PLAYER, (Parcelable) mp);
 		//intent.putExtras(bundle);
         PendingIntent sender = PendingIntent.getBroadcast(this,
                 0, intent, 0);
+        
+        //PendingIntent pintent = 
 
         // We want the alarm to go off 30 seconds from now.
         Calendar calendar = Calendar.getInstance();
@@ -260,7 +288,7 @@ public class AlarmController extends Activity implements FView<DbController>
 	private void setrepeatingAlarm() {
 		// TODO Auto-generated method stub
 		
-		Intent intent = new Intent(this, AlarmReceiver.class);
+		Intent intent = new Intent(this, RepeatingAlarmReceiver.class);
         PendingIntent sender = PendingIntent.getBroadcast(this,
                 0, intent, 0);
 
@@ -287,7 +315,7 @@ public class AlarmController extends Activity implements FView<DbController>
     	
         // Create the same intent, and thus a matching IntentSender, for
         // the one that was scheduled.
-        Intent intent = new Intent(this, AlarmReceiver.class);
+        Intent intent = new Intent(this, OneTimeAlarmReceiver.class);
         PendingIntent sender = PendingIntent.getBroadcast(this,
                 0, intent, 0);
 

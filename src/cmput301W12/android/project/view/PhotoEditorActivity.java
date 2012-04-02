@@ -6,6 +6,7 @@ import java.util.Set;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -67,7 +68,6 @@ public class PhotoEditorActivity extends  Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.photo_editor);
 		//newestPhoto = (Photo) savedInstanceState.getSerializable("Photo");
-
 		editingPhoto = (Photo) getIntent().getSerializableExtra("Photo");
 		
 		newImg = (ImageView) this.findViewById(R.id.recentlyTakenImage);
@@ -89,7 +89,6 @@ public class PhotoEditorActivity extends  Activity {
 //                        finish();
 //                    }
 //                });
-		
 		confirm.setOnClickListener(new View.OnClickListener() 
 		{
 			@Override
@@ -120,7 +119,6 @@ public class PhotoEditorActivity extends  Activity {
 				}
 				editingPhoto.setGroups(groups);
 				editingPhoto.setSkinConditions(skinConditions);
-				
 				Bundle returnTags = new Bundle();
 				returnTags.putSerializable("Photo", editingPhoto);
 				Intent i = new Intent();
@@ -158,7 +156,8 @@ public class PhotoEditorActivity extends  Activity {
                     createNewSkinCondition();
                     return true;
                 case ID_CREATE_ANNOTATION:
-                    getAnnotation();
+                	editingPhoto.editAnnotation(editingPhoto, this);
+                    //getAnnotation();
                     return true;
             }
 

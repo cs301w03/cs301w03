@@ -6,8 +6,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
+import android.widget.EditText;
 
 /**
  * 
@@ -64,6 +67,37 @@ public class Photo implements Comparable<Photo>, Serializable {
 		}
 	}
 
+	/**
+	 * @return void, this allows the user to edit the annotation of a given photo object
+	 */
+	public void editAnnotation(final Photo yourPhoto, Context context) {
+		AlertDialog.Builder popupBuilder = new AlertDialog.Builder(context);
+		popupBuilder.setTitle("Annotation");
+		final EditText annotation = new EditText(context);
+		if (yourPhoto.getAnnotation().equals(""))
+		{
+			annotation.setSingleLine();
+			annotation.setText("");
+		}
+		else
+		{
+			annotation.setSingleLine();
+			annotation.setText(yourPhoto.getAnnotation());
+		}
+		popupBuilder.setView(annotation);
+		popupBuilder.setNeutralButton("Confirm", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				//When click confirm save the annotation into the photo?
+				yourPhoto.setAnnotation(annotation.getText().toString());
+				
+			}
+		});
+		popupBuilder.create();
+		popupBuilder.show();
+	}
+	
 
 	/**
 	 * @return the photoId

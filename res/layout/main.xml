@@ -44,5 +44,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/mainMenu" />
+    
+    <Button
+        android:id="@+id/close_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/close" />
 
 </LinearLayout>

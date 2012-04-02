@@ -38,8 +38,7 @@ public class ReminderListArrayAdapter extends ArrayAdapter<Alarm> {
 					remindertext.setText(alarms[position].getAlarmNote());
 					
 					Timestamp t = (alarms[position].getAlarmTime());
-					reminderdate.setText(t.getMonth() + "/" + t.getDate() + "/" +
-					t.getYear() + "      " + t.getHours() + " : " + t.getMinutes());
+					reminderdate.setText(t.toString());
 
 				}
 		return rowView;

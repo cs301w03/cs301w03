@@ -42,6 +42,7 @@
     <string name="confirm_annotation">Confirm</string>
     <string name="update_alarm">Update</string>
     <string name="delete_alarm">Delete</string>
+    <string name="close">Exit</string>
 
 
 </resources>

@@ -4,17 +4,18 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <ListView
-        android:id="@+id/listView1"
-        android:layout_width="fill_parent"
-        android:layout_height="386dp"
-        android:layout_weight="1.01" >
-    </ListView>
-
-    <Button
-        android:id="@+id/compare_photo_button"
+    <ImageView
+        android:id="@+id/ez_photo_one"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/confirm_view" />
+        android:layout_weight="0.50"
+        android:src="@drawable/ic_launcher" />
+
+    <ImageView
+        android:id="@+id/ez_photo_two"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.50"
+        android:src="@drawable/ic_launcher" />
 
 </LinearLayout>

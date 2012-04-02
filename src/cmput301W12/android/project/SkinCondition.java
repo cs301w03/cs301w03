@@ -2,6 +2,9 @@ package cmput301W12.android.project;
 
 import java.io.Serializable;
 import java.util.Set;
+import java.util.SortedSet;
+
+import android.content.Context;
 
 /**
  * @author Hieu Ngo
@@ -40,6 +43,18 @@ public class SkinCondition extends Container implements Serializable {
 	public SkinCondition(String name, Set<Integer> photos) {
 		super(name, photos);
 		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public SortedSet<Photo> getPhotos(Context context) {
+		FController controller = SkinObserverApplication.getSkinObserverController(context);
+		if (getItemId() != DbAdapter.INVALID_ID)
+		{
+			SortedSet<Photo> photoList = (SortedSet<Photo>) controller.getAllPhotoOfAContainer(getItemId(), OptionType.PHOTOSKIN);
+			return photoList;
+		}
+		else
+			return null;
 	}
 	
 }

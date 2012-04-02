@@ -12,7 +12,7 @@ import android.net.Uri;
 import android.widget.Toast;
 
 
-public class AlarmReceiver extends BroadcastReceiver
+public class OneTimeAlarmReceiver extends BroadcastReceiver
 {
 
 	@Override
@@ -20,7 +20,7 @@ public class AlarmReceiver extends BroadcastReceiver
 	{
 
 		// TODO Auto-generated method stub
-		Toast.makeText(context, "Alarm Received", Toast.LENGTH_SHORT).show();
+		Toast.makeText(context, "One Shot Alarm Received", Toast.LENGTH_SHORT).show();
 		
 		 
 		 MediaPlayer mp = new MediaPlayer();

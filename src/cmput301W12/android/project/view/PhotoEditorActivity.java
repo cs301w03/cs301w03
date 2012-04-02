@@ -8,16 +8,19 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import cmput301W12.android.project.CheckBoxArrayAdapter;
 import cmput301W12.android.project.Container;
-import cmput301W12.android.project.DbAdapter;
 import cmput301W12.android.project.FController;
 import cmput301W12.android.project.Group;
 import cmput301W12.android.project.OptionType;
@@ -44,6 +47,8 @@ public class PhotoEditorActivity extends  Activity {
 	private ListView groupList;// = (ExpandableListView) findViewById(R.id.groupsExpandableList);
 	private ListView conditionList;// = (ExpandableListView) findViewById(R.id.conditionExpList);
 	
+	private ImageView newImg;
+	
 	private Container[] groupArray = null;
 	private Container[] conditionArray = null;
 
@@ -64,6 +69,11 @@ public class PhotoEditorActivity extends  Activity {
 		//newestPhoto = (Photo) savedInstanceState.getSerializable("Photo");
 
 		editingPhoto = (Photo) getIntent().getSerializableExtra("Photo");
+		
+		newImg = (ImageView) this.findViewById(R.id.recentlyTakenImage);
+		Uri uri = Uri.parse(editingPhoto.getLocation());
+		Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
+		newImg.setImageBitmap(bitmap);
 		
 		Button confirm = (Button) this.findViewById(R.id.confirm);
 

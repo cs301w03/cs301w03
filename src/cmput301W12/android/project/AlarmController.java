@@ -250,7 +250,7 @@ public class AlarmController extends Activity implements FView<DbController>
         
         	Calendar cal = Calendar.getInstance();
         	TimePickerDialog tpDialog = new TimePickerDialog(AlarmController.this,
-        			otsListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false);
+        			otsListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false);
         			tpDialog.show();
         }
     };
@@ -364,19 +364,17 @@ public class AlarmController extends Activity implements FView<DbController>
         PendingIntent sender = PendingIntent.getBroadcast(this,
                 alarmId, intent, 0);
 
-        // We want the alarm to go off 30 seconds from now.
-        //long firstTime = SystemClock.elapsedRealtime();
+        //We want the alarm to go off 30 seconds from now.
+        long firstTime = SystemClock.elapsedRealtime();
         //firstTime += 15*1000;
         
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         
         long alarm_time = timestamp.getTime() - calendar.getTimeInMillis();
-        calendar.add(Calendar.MILLISECOND, (int)alarm_time);
+        //calendar.add(Calendar.MILLISECOND, (int)alarm_time);
         
-        mToast = Toast.makeText(AlarmController.this, "Testing Multiple Shot: " + (int)alarm_time,
-                Toast.LENGTH_LONG);
-        mToast.show();
+        firstTime += alarm_time;
         
         String s = alarmrepeat.getText().toString();
         int repeat = Integer.parseInt(s);
@@ -385,16 +383,16 @@ public class AlarmController extends Activity implements FView<DbController>
 
         // Schedule the alarm!
         AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
-        am.setRepeating(AlarmManager.RTC_WAKEUP,
-                        calendar.getTimeInMillis(), repeat, sender);
+        am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+				firstTime, repeat, sender);
 
         // Tell the user about what we did.
         if (mToast != null) {
             mToast.cancel();
         }
-        /*mToast = Toast.makeText(this, "Testing Repeating Shots",
+        mToast = Toast.makeText(this, "Testing Repeating Shots" + (int)alarm_time + repeat,
                 Toast.LENGTH_LONG);
-        mToast.show();*/
+        mToast.show();
 		
 	}
 	

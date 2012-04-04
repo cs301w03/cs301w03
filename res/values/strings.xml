@@ -43,6 +43,14 @@
     <string name="update_alarm">Update</string>
     <string name="delete_alarm">Delete</string>
     <string name="close">Exit</string>
+    <string name="repeat">Repeat Every :</string>
+    <string-array name="repeat_terms">
+        <item >Hour</item>
+        <item >Day</item>
+        <item >Week</item>
+        <item >Month (30 Days)</item>
+        <item >Year</item>
+    </string-array>
 
 
 </resources>

@@ -48,6 +48,32 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
     
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.02"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="118dp"
+            android:layout_height="wrap_content"
+            android:text="@string/repeat" />
+
+        <EditText
+            android:id="@+id/alarm_number_editview"
+            android:layout_width="76dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal" >
+            <requestFocus />
+        </EditText>
+        
+        <Spinner
+            android:id="@+id/repeat_spinner"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    
     <Button
         android:id="@+id/datepicker"
         android:layout_width="fill_parent"

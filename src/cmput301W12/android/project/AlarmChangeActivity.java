@@ -183,6 +183,8 @@ public class AlarmChangeActivity extends Activity
 
 				FController skinObserverController = SkinObserverApplication.getSkinObserverController(AlarmChangeActivity.this);
 				skinObserverController.updateAlarm(alarmId, timestamp, alarmtext.getText().toString());
+				
+				stopRepeatingAlarm();
 
 				if(alarm_type == 0) {
 					setonetimeAlarm();
@@ -229,6 +231,7 @@ public class AlarmChangeActivity extends Activity
 			// TODO Auto-generated method stub
 			FController skinObserverController = SkinObserverApplication.getSkinObserverController(AlarmChangeActivity.this);
 			skinObserverController.deleteAnAlarm(alarmId);
+			stopRepeatingAlarm();
 
 			finish();
 
@@ -263,12 +266,14 @@ public class AlarmChangeActivity extends Activity
 		//bundle.putParcelable(MEDIA_PLAYER, (Parcelable) mp);
 		//intent.putExtras(bundle);
 		PendingIntent sender = PendingIntent.getBroadcast(this,
-				0, intent, 0);
+				alarmId, intent, 0);
 
 		// We want the alarm to go off 30 seconds from now.
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());
-		calendar.add(Calendar.SECOND, 30);
+
+		long alarm_time = timestamp.getTime() - calendar.getTimeInMillis();
+        calendar.add(Calendar.MILLISECOND, (int)alarm_time);
 
 		// Schedule the alarm!
 		AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
@@ -278,7 +283,7 @@ public class AlarmChangeActivity extends Activity
 		if (mToast != null) {
 			mToast.cancel();
 		}
-		mToast = Toast.makeText(AlarmChangeActivity.this, "Testing One Shot",
+		mToast = Toast.makeText(AlarmChangeActivity.this, "Testing One Shot :" + (int)alarm_time,
 				Toast.LENGTH_LONG);
 		mToast.show();
 
@@ -289,7 +294,7 @@ public class AlarmChangeActivity extends Activity
 
 		Intent intent = new Intent(this, RepeatingAlarmReceiver.class);
 		PendingIntent sender = PendingIntent.getBroadcast(this,
-				0, intent, 0);
+				alarmId, intent, 0);
 
 		// We want the alarm to go off 30 seconds from now.
 		long firstTime = SystemClock.elapsedRealtime();
@@ -310,17 +315,21 @@ public class AlarmChangeActivity extends Activity
 
 	}
 
-	private void stopRepeatingListener() {
+	private void stopRepeatingAlarm() {
 
 		// Create the same intent, and thus a matching IntentSender, for
 		// the one that was scheduled.
 		Intent intent = new Intent(this, OneTimeAlarmReceiver.class);
+		Intent intent2 = new Intent(this, RepeatingAlarmReceiver.class);
 		PendingIntent sender = PendingIntent.getBroadcast(this,
-				0, intent, 0);
+				alarmId, intent, 0);
+		
+		PendingIntent sender2 = PendingIntent.getBroadcast(this, alarmId, intent2, 0);
 
 		// And cancel the alarm.
 		AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
 		am.cancel(sender);
+		am.cancel(sender2);
 
 		// Tell the user about what we did.
 		if (mToast != null) {

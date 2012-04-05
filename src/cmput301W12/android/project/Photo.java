@@ -229,7 +229,7 @@ public class Photo implements Comparable<Photo>, Serializable {
 	}
 
 	public int compareTo(Photo obj){
-		return (int) (this.timeStamp.getTime() - obj.timeStamp.getTime());
+		return (int) (obj.timeStamp.getTime() - this.timeStamp.getTime() );
 	}
 	
 	/**

@@ -36,6 +36,7 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 	private TextView timestamp;
 	private TextView skincondition;
 	private TextView group;
+	private Photo mPhoto;
 
 	private static void saveBMP( File intentPicture, Bitmap ourBMP) throws IOException, FileNotFoundException {
 		OutputStream out = new FileOutputStream(intentPicture);
@@ -53,17 +54,16 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 		timestamp = (TextView) findViewById(R.id.viewphototext1);
 		skincondition = (TextView) findViewById(R.id.viewphototext2);
 		group = (TextView) findViewById(R.id.viewphototext3);
-
+		mPhoto = (Photo) getIntent().getSerializableExtra(PhotoListActivity.PHOTO);
+		
 		this.getPhotos();
 		this.getTimeStamp();
-
 
 	}
 
 	public void getPhotos(){
 		try{
-			Photo photo = (Photo) getIntent().getSerializableExtra(PhotoListActivity.PHOTO);
-			String location = photo.getLocation();
+			String location = mPhoto.getLocation();
 			Uri uri = Uri.parse(location);
 			Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
 //			File newFile = new File(uri.getPath());
@@ -77,8 +77,7 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 	}
 
 	public void getTimeStamp() {
-		Photo photo = (Photo) getIntent().getSerializableExtra(PhotoListActivity.PHOTO);
-		Timestamp ts = photo.getTimeStamp();
+		Timestamp ts = mPhoto.getTimeStamp();
 		String time = ts.toString();
 		timestamp.setText(time);
 	}

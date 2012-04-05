@@ -154,7 +154,9 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 			return cont.getPhotos(this);
 		}
 		else
+		{
 			return fcontroller.getAllPhoto();
+		}
 	}
 
 

@@ -107,6 +107,20 @@ public class ProjectTwoActivity extends Activity
 				callReminderLists();
 			}
 		});
+        
+        Button exit = (Button) this.findViewById(R.id.close_button);
+        exit.setOnClickListener(new View.OnClickListener()
+		{
+			
+			@Override
+			public void onClick(View v)
+			{
+		
+				// TODO Auto-generated method stub
+				finish();
+				
+			}
+		});
 	}
         
     

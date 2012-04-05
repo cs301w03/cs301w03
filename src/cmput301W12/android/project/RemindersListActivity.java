@@ -31,6 +31,9 @@ public class RemindersListActivity extends ListActivity implements FView<DbContr
 	       	        	             	        
 	        registerForContextMenu(getListView());
 	        
+	        Button Menu = (Button) findViewById(R.id.menubutton);
+	        Menu.setVisibility(Button.INVISIBLE);
+	        
 	        fillRemindersList();
 	}
 	
@@ -56,10 +59,10 @@ public class RemindersListActivity extends ListActivity implements FView<DbContr
         Intent i = new Intent(this, AlarmChangeActivity.class);
         
         i.putExtra(ALARM, alarm);
-        
-        String s = Long.toString(id);
-        int id_int = Integer.valueOf(s);
-        i.putExtra(ALARM_ID, id_int);
+                
+        mToast = Toast.makeText(RemindersListActivity.this, "ID : " + alarm.getAlarmId() + " position : " +position,
+                Toast.LENGTH_LONG);
+        mToast.show();
         
         this.startActivityForResult(i, 0);
         
@@ -116,6 +119,14 @@ public class RemindersListActivity extends ListActivity implements FView<DbContr
 			setListAdapter(rAdapter);
 		}
 	}
+	
+	@Override 
+	protected void onActivityResult(int requestCode, int resultCode,
+            Intent data) {
+		
+		fillRemindersList();
+	}
+
 	
 	
 	

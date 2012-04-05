@@ -2,6 +2,7 @@ package cmput301W12.android.project;
 
 import java.util.Set;
 
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -33,44 +34,20 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 	private static final int CONNECT_ID = Menu.FIRST + 2;
 	private static final int DISCONNECT_ID = Menu.FIRST + 3;
 	private static final int RENAME_ID = Menu.FIRST + 4;
-	
+
 	/** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_text_view);
-        fillData();
-        
-        registerForContextMenu(getListView());
-    }
-    
-//    // Temporary method to demo
-//    public void fillData() {  
-//    	Container[] array = new Container[3];
-//    	Bundle bundle = getIntent().getExtras();
-//    	if (bundle != null)
-//		{
-//			if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
-//			{
-//				array[0] = new Group("Head");
-//				array[1] = new Group("LeafHand");
-//				array[2] = new Group("Chest");
-//			}
-//			else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
-//			{
-//				array[0] = new SkinCondition("Mole");
-//				array[1] = new SkinCondition("Acne");
-//				array[2] = new SkinCondition("Unknown");
-//			}
-//	    	ContainerArrayAdapter conAdapter = new ContainerArrayAdapter(this, array);
-//	    	setListAdapter(conAdapter);
-//		}
-//	    
-//    }
-    
-    
-    public void fillData() {        
-    	Container[] array = null;
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.list_text_view);
+		fillData();
+
+		registerForContextMenu(getListView());
+	}
+
+
+	public void fillData() {        
+		Container[] array = null;
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null)
 		{
@@ -88,53 +65,53 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 				array = new SkinCondition[setCon.size()];
 				setCon.toArray(array);
 			}
-			
-	    	ContainerArrayAdapter conAdapter = new ContainerArrayAdapter(this, array);
-	    	setListAdapter(conAdapter);
+
+			ContainerArrayAdapter conAdapter = new ContainerArrayAdapter(this, array);
+			setListAdapter(conAdapter);
 		}
 		else
 		{
 			//Not legitimate, go back
 			//not implemented
 		}
-    	
-    }
-    
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);     
-        
-        ListAdapter adapter = l.getAdapter();
-        Container cont  = (Container) adapter.getItem(position);
-        
-        Intent newIntent = new Intent(this, PhotoListActivity.class);
-        Bundle bundle = getIntent().getExtras();
-        newIntent.putExtras(bundle);
-        if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+	}
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);     
+
+		ListAdapter adapter = l.getAdapter();
+		Container cont  = (Container) adapter.getItem(position);
+
+		Intent newIntent = new Intent(this, PhotoListActivity.class);
+		Bundle bundle = getIntent().getExtras();
+		newIntent.putExtras(bundle);
+		if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
 		{
-        	newIntent.putExtra(SkinObserverIntent.DATA_GROUP,cont);
+			newIntent.putExtra(SkinObserverIntent.DATA_GROUP,cont);
 		}
 		else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
 		{
 			newIntent.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION,cont);
 		}
-        startActivity(newIntent);
-    }    
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        menu.add(0, CREATE_ID, 0, "Add New");
-        return true;
-    }
-    
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        switch(item.getItemId()) {
-            case CREATE_ID:
-            	createNewGroup();
-                return true;
-        }
+		startActivity(newIntent);
+	}    
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menu.add(0, CREATE_ID, 0, "Add New");
+		return true;
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch(item.getItemId()) {
+		case CREATE_ID:
+			createNewGroup();
+			return true;
+		}
+
 
         return super.onMenuItemSelected(featureId, item);
     }
@@ -215,6 +192,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
         return super.onContextItemSelected(item);
     }
 
+
 	protected void deleteContainer(Container cont)
 	{
 		Bundle bundle = getIntent().getExtras();
@@ -227,48 +205,48 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 				skinObserverController.deleteAContainer(cont, OptionType.SKINCONDITION);
 		}
 	}
-	
+
 	protected void connectContainer(Container cont)
 	{
 		Intent newIntent = new Intent(this, PhotoListActivity.class);
-        Bundle bundle = getIntent().getExtras();
-        newIntent.putExtras(bundle);
-        newIntent.putExtra(PhotoListActivity.CONNECT, PhotoListActivity.CONNECT);
-        
-        if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+		Bundle bundle = getIntent().getExtras();
+		newIntent.putExtras(bundle);
+		newIntent.putExtra(PhotoListActivity.CONNECT, PhotoListActivity.CONNECT);
+
+		if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
 		{
-        	newIntent.putExtra(SkinObserverIntent.DATA_GROUP,cont);
+			newIntent.putExtra(SkinObserverIntent.DATA_GROUP,cont);
 		}
 		else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
 		{
 			newIntent.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION,cont);
 		}
-        startActivityForResult(newIntent, ACTIVITY_EDIT);
+		startActivityForResult(newIntent, ACTIVITY_EDIT);
 	}
-	
+
 	protected void disconnectContainer(Container cont)
 	{
 		Intent newIntent = new Intent(this, PhotoListActivity.class);
-        Bundle bundle = getIntent().getExtras();
-        newIntent.putExtras(bundle);
-        newIntent.putExtra(PhotoListActivity.DISCONNECT, PhotoListActivity.DISCONNECT);
-        
-        if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+		Bundle bundle = getIntent().getExtras();
+		newIntent.putExtras(bundle);
+		newIntent.putExtra(PhotoListActivity.DISCONNECT, PhotoListActivity.DISCONNECT);
+
+		if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
 		{
-        	newIntent.putExtra(SkinObserverIntent.DATA_GROUP,cont);
+			newIntent.putExtra(SkinObserverIntent.DATA_GROUP,cont);
 		}
 		else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
 		{
 			newIntent.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION,cont);
 		}
-        startActivityForResult(newIntent, ACTIVITY_EDIT);
+		startActivityForResult(newIntent, ACTIVITY_EDIT);
 	}
-    
+
 	@Override
 	public void update(DbController model)
 	{
 		// TODO Auto-generated method stub
-		fillData();
+
 	}
-    
+
 }

@@ -145,7 +145,6 @@ public class TakeAPhotoActivity extends Activity
 		Date dDate = new Date();        // get a timestamp too!
 		time = new Timestamp(dDate.getTime());
 
-
 		sCamera.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);    // Sets the image file name
 
 

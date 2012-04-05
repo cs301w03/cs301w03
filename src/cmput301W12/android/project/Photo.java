@@ -60,7 +60,6 @@ public class Photo implements Comparable<Photo>, Serializable {
 		}
 
 		if(skinConditions == null){
-			Log.d("SKINOBSERVER", "69");
 			this.skinConditions = new HashSet<Integer>();
 		}else{
 			this.skinConditions = skinConditions;

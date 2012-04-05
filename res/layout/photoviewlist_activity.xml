@@ -13,7 +13,7 @@
         android:id="@+id/menubutton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Menu" />
+        android:text="@string/confirm" />
 
   	<TextView android:id="@+id/android:empty"
           android:layout_width="wrap_content"

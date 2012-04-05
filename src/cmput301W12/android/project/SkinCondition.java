@@ -3,7 +3,7 @@ package cmput301W12.android.project;
 import java.io.Serializable;
 import java.util.Set;
 import java.util.SortedSet;
-
+import java.util.TreeSet;
 import android.content.Context;
 
 /**
@@ -54,7 +54,7 @@ public class SkinCondition extends Container implements Serializable {
 			return photoList;
 		}
 		else
-			return null;
+			return new TreeSet<Photo>();
 	}
 	
 }

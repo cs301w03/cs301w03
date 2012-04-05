@@ -30,9 +30,13 @@
         <activity android:name="ComparePhotoActivity"></activity>
         <activity android:name=".view.PhotoEditorActivity"></activity>
         <activity android:name=".AlarmController"></activity>
-        <receiver android:name=".AlarmReceiver"></receiver>
+
         <activity android:name=".view.PhotoEditorActivity"></activity>
         <activity android:name=".RemindersListActivity"></activity>
+        <activity android:name=".AlarmChangeActivity"></activity>
+        
+        <receiver android:name=".OneTimeAlarmReceiver"></receiver>
+        <receiver android:name=".RepeatingAlarmReceiver"></receiver>
 
     </application>
 

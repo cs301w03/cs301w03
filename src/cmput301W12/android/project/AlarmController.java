@@ -266,6 +266,7 @@ public class AlarmController extends Activity implements FView<DbController>
         	  
         	  repeat_spinner.setVisibility(Spinner.INVISIBLE);
         	  alarmrepeat.setVisibility(EditText.INVISIBLE);
+        	  
           }
           
           else if (pos == 1) {
@@ -273,6 +274,7 @@ public class AlarmController extends Activity implements FView<DbController>
         	  
         	  repeat_spinner.setVisibility(Spinner.VISIBLE);
         	  alarmrepeat.setVisibility(EditText.VISIBLE);
+        	  
           }
         }
         
@@ -399,7 +401,8 @@ public class AlarmController extends Activity implements FView<DbController>
 	private String getFactoredString(String note) {
 	
 		if(alarm_type == 0) {
-			note = note.concat("0");
+			note = note.concat("~");
+			note = note.concat("5");
 			return note;
 		}
 		
@@ -408,7 +411,7 @@ public class AlarmController extends Activity implements FView<DbController>
 			note = note.concat(alarmrepeat.getText().toString());
 			note = note.concat("~");
 			note = note + repeat_type;
-			note = note.concat("~");
+			//note = note.concat("~");
 			
 			return note;
 		}

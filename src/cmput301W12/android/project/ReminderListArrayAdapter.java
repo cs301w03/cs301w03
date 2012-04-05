@@ -13,6 +13,7 @@ public class ReminderListArrayAdapter extends ArrayAdapter<Alarm> {
 
 	private final Context context;
 	private final Alarm[] alarms;
+	private String alarmnote;
 	
 	public ReminderListArrayAdapter(Context context, Alarm[] objects) {
 		super(context, R.layout.list_reminder_view, objects);
@@ -30,18 +31,58 @@ public class ReminderListArrayAdapter extends ArrayAdapter<Alarm> {
 		
 		TextView remindertext = (TextView) rowView.findViewById(R.id.reminder_text);
 		TextView reminderdate = (TextView) rowView.findViewById(R.id.reminder_timestamp);
+		TextView reminderrepeat = (TextView) rowView.findViewById(R.id.reminder_repeat);
 		
-		if ( remindertext != null && reminderdate != null)
+		if ( remindertext != null && reminderdate != null && reminderrepeat != null)
 			if (alarms.length > 0)
 				if (position < alarms.length)
 				{
-					remindertext.setText(alarms[position].getAlarmNote());
+					reminderrepeat.setText(this.getFactoredString(alarms[position].getAlarmNote()));
+					remindertext.setText("Text : " + alarmnote);
 					
 					Timestamp t = (alarms[position].getAlarmTime());
-					reminderdate.setText(t.toString());
+					reminderdate.setText("Timestamp : " + t.toString());
 
 				}
 		return rowView;
+	}
+	
+	private String getFactoredString(String note) {
+		
+		if (note.charAt(note.length() - 1) == '5') {
+			
+			String[] command = note.split("~");
+			alarmnote = command[0];
+			
+			return "One Shot Alarm";
+		}
+		
+		String[] command = note.split("~");
+		String s = "Repeat Every " + command[1] + " " ;
+		
+		if(command[2].equals("0")){
+			s = s + "Hour(s)";
+		}
+		
+		if(command[2].equals("1")){
+			s = s + "Day(s)";
+		}
+		
+		if(command[2].equals("2")){
+			s = s + "Week(s)";
+		}
+		
+		if(command[2].equals("3")){
+			s = s + "Month(s)";
+		}
+		
+		if(command[2].equals("4")){
+			s = s + "Year(s)";
+		}
+		
+		alarmnote = command[0];
+		
+		return s;
 	}
 
 }

@@ -31,6 +31,9 @@ public class RemindersListActivity extends ListActivity implements FView<DbContr
 	       	        	             	        
 	        registerForContextMenu(getListView());
 	        
+	        Button Menu = (Button) findViewById(R.id.menubutton);
+	        Menu.setVisibility(Button.INVISIBLE);
+	        
 	        fillRemindersList();
 	}
 	

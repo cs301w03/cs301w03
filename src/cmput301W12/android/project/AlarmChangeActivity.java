@@ -19,11 +19,13 @@ import android.os.SystemClock;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -37,6 +39,7 @@ public class AlarmChangeActivity extends Activity
 	Timestamp timestamp;
 	EditText alarmtext;
 	EditText alarmrepeat;
+	TextView repeatinfo;
 	Button alarmtime;
 	Button alarmdate;
 	Button alarmdelete;
@@ -51,6 +54,7 @@ public class AlarmChangeActivity extends Activity
 	private int repeat_type = 0;
 	private int repeatMillisec = 60000;
 	private int alarmId;
+	private String alarmnote;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,7 @@ public class AlarmChangeActivity extends Activity
 		alarmdelete = (Button)findViewById(R.id.delete_alarm_button);
 		alarmtext = (EditText)findViewById(R.id.alarm_text_editview);
 		alarmrepeat = (EditText)findViewById(R.id.alarm_number_editview);
+		repeatinfo  = (TextView)findViewById(R.id.alarm_repeat_info);
 
 		updateTimeDateDialogs(alarm.getAlarmTime(), alarm.getAlarmNote());
 
@@ -135,7 +140,8 @@ public class AlarmChangeActivity extends Activity
 		theHour = cal.get(Calendar.HOUR);
 		theMinute = cal.get(Calendar.MINUTE);
 
-		alarmtext.setText(s); 
+		repeatinfo.setText(this.getFactoredString(s));
+		alarmtext.setText(alarmnote); 
 		timestamp = t;
 	}
 
@@ -198,7 +204,7 @@ public class AlarmChangeActivity extends Activity
 
 			else {
 				
-				String s = getFactoredString(alarmtext.getText().toString());
+				String s = setFactoredString(alarmtext.getText().toString());
 
 				FController skinObserverController = SkinObserverApplication.getSkinObserverController(AlarmChangeActivity.this);
 				skinObserverController.updateAlarm(alarmId, timestamp, s);
@@ -264,10 +270,13 @@ public class AlarmChangeActivity extends Activity
 				View view, int pos, long id) {
 
 			if (pos == 0) {
+				
 				alarm_type = 0;
 				
 				repeat_spinner.setVisibility(Spinner.INVISIBLE);
 	        	alarmrepeat.setVisibility(EditText.INVISIBLE);
+	        	
+	        	//repeatinfo.setText("One Shot Alarm");
 			}
 
 			else if (pos == 1) {
@@ -275,12 +284,16 @@ public class AlarmChangeActivity extends Activity
 				
 				repeat_spinner.setVisibility(Spinner.VISIBLE);
 	        	alarmrepeat.setVisibility(EditText.VISIBLE);
+	        	
+	        	repeatinfo.setText("Repeat Every : ");
 			}
 		}
+
 
 		public void onNothingSelected(AdapterView parent) {
 			// Do nothing.
 		}
+			
 	}
 	
 	public class RepeatItemSelectedListener implements OnItemSelectedListener {
@@ -420,10 +433,11 @@ public class AlarmChangeActivity extends Activity
 		mToast.show();
 	}
 	
-	private String getFactoredString(String note) {
+	private String setFactoredString(String note) {
 		
 		if(alarm_type == 0) {
-			note = note.concat("0");
+			note = note.concat("~");
+			note = note.concat("5");
 			return note;
 		}
 		
@@ -432,10 +446,51 @@ public class AlarmChangeActivity extends Activity
 			note = note.concat(alarmrepeat.getText().toString());
 			note = note.concat("~");
 			note = note + repeat_type;
-			note = note.concat("~");
+			//note = note.concat("~");
 			
 			return note;
 		}
+	}
+	
+	private String getFactoredString(String note) {
+		
+		if (note.charAt(note.length() - 1) == '5') {
+			
+			String[] command = note.split("~");
+			alarmnote = command[0];
+			alarm_type = 0;
+			
+			return "One Shot Alarm";
+		}
+		
+		String[] command = note.split("~");
+		String s = "Repeat Every " + command[1] + " " ;
+		
+		if(command[2].equals("0")){
+			s = s + "Hour(s)";
+		}
+		
+		if(command[2].equals("1")){
+			s = s + "Day(s)";
+		}
+		
+		if(command[2].equals("2")){
+			s = s + "Week(s)";
+		}
+		
+		if(command[2].equals("3")){
+			s = s + "Month(s)";
+		}
+		
+		if(command[2].equals("4")){
+			s = s + "Year(s)";
+		}
+		
+		alarm_type = 1;
+		
+		alarmnote = command[0];
+		
+		return s;
 	}
 
 }

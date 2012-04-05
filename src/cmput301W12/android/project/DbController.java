@@ -23,7 +23,7 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 
 	private static DbController dbCon = null;
 
-	private DbController(Context ct){
+	DbController(Context ct){
 		super();
 		this.mDbAdap = DbAdapter.getDbAdapter(ct);
 		this.mDbAdap = this.mDbAdap.open();

@@ -2,10 +2,10 @@ package cmput301W12.android.project;
 
 import java.util.Set;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -31,6 +32,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 	private static final int DELETE_ID = Menu.FIRST + 1;
 	private static final int CONNECT_ID = Menu.FIRST + 2;
 	private static final int DISCONNECT_ID = Menu.FIRST + 3;
+	private static final int RENAME_ID = Menu.FIRST + 4;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -162,12 +164,13 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
         menu.add(0, DELETE_ID, 0, R.string.menu_delete);
         menu.add(0, CONNECT_ID, 0, "Connect photos");
         menu.add(0, DISCONNECT_ID, 0, "Disconnect photos");
+        menu.add(0, RENAME_ID, 0, "Rename");
     }
     
     @Override
     public boolean onContextItemSelected(MenuItem item) {
     	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();               
-        Container cont = (Container) getListAdapter().getItem(info.position);
+        final Container cont = (Container) getListAdapter().getItem(info.position);
         switch(item.getItemId()) {
             case DELETE_ID:
                 deleteContainer(cont);
@@ -180,6 +183,33 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
             case DISCONNECT_ID:
             	disconnectContainer(cont);
             	fillData();
+            	return true;
+            case RENAME_ID:
+            	//Pop up window and rename container.
+        		AlertDialog.Builder popupBuilder = new AlertDialog.Builder(this);
+        		popupBuilder.setTitle("Name");
+        		final EditText name = new EditText(this);
+    			name.setSingleLine();
+    			name.setText(cont.getName());
+    			popupBuilder.setView(name);
+    			popupBuilder.setNeutralButton("Confirm", new DialogInterface.OnClickListener() {
+    				
+    				@Override
+    				public void onClick(DialogInterface dialog, int which) {
+    					cont.setName(name.getText().toString());
+    					DbController db = (DbController) DbController.getDbController(null);
+    					if (cont instanceof SkinCondition){
+    						db.updateSkin(cont.getItemId(), cont.getName());
+    					} else if (cont instanceof Group){
+    						db.updateGroup(cont.getItemId(), cont.getName());
+    					}
+    					fillData();
+    					//<------------- SAVE THE NEW NAME TO THE DB!
+    				}
+    			});
+    			popupBuilder.create();
+    			popupBuilder.show();
+    			
             	return true;
         }
         return super.onContextItemSelected(item);
@@ -238,7 +268,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 	public void update(DbController model)
 	{
 		// TODO Auto-generated method stub
-		
+		fillData();
 	}
     
 }

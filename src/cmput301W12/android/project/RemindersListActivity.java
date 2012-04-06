@@ -81,7 +81,6 @@ public class RemindersListActivity extends ListActivity implements FView<DbContr
 	       case R.id.menudelete:
 	       	
 	       	FController skinObserverController = SkinObserverApplication.getSkinObserverController(this);
-	       	//int x = skinObserverController.deleteEntry(info.id, OptionType.PHOTO);
 	       	skinObserverController.deleteAnAlarm(info.position);
 	       	
 	       	fillRemindersList();

@@ -35,8 +35,16 @@
         <activity android:name=".RemindersListActivity"></activity>
         <activity android:name=".AlarmChangeActivity"></activity>
         
-        <receiver android:name=".OneTimeAlarmReceiver"></receiver>
-        <receiver android:name=".RepeatingAlarmReceiver"></receiver>
+        <receiver android:name=".OneTimeAlarmReceiver">
+            <intent-filter>
+                <action android:name="cmput301W12.android.project.CUSTOM_INTENT_ONESHOT"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".RepeatingAlarmReceiver">
+            <intent-filter>
+                <action android:name="cmput301W12.android.project.CUSTOM_INTENT_REPEAT"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

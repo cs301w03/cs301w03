@@ -3,8 +3,7 @@ package cmput301W12.android.project;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
-import cmput301W12.android.project.AlarmController.MyOnItemSelectedListener;
-import cmput301W12.android.project.AlarmController.RepeatItemSelectedListener;
+
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
@@ -19,7 +18,6 @@ import android.os.SystemClock;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -33,17 +31,18 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 public class AlarmChangeActivity extends Activity
 {
-	private static final String MEDIA_PLAYER = null;
 	Toast mToast;
 	MediaPlayer mp;
 	Timestamp timestamp;
-	EditText alarmtext;
-	EditText alarmrepeat;
-	TextView repeatinfo;
+	EditText alarmNote_editText;
+	EditText alarmRepeatConstant_editText;
+	TextView alarmRepeat_Infotext;
 	Button alarmtime;
 	Button alarmdate;
 	Button alarmdelete;
-	Spinner repeat_spinner;
+	Button alarmupdate;
+	Spinner alarmRepeat_Spinner;
+	Spinner alarmType_spinner;
 
 	private int alarm_type = 0 ;
 	private int theYear;
@@ -56,6 +55,11 @@ public class AlarmChangeActivity extends Activity
 	private int alarmId;
 	private String alarmnote;
 
+	/**
+	 * Activity method called when activity is created.
+	 * It gets alarmId extra from sending intent, creates an alarm object
+	 * and initializes and sets listeners for the resources required by activity.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,69 +69,67 @@ public class AlarmChangeActivity extends Activity
 
 		Alarm alarm = (Alarm) getIntent().getSerializableExtra(RemindersListActivity.ALARM);        
 		alarmId = alarm.getAlarmId();
-		alarmtime = (Button)findViewById(R.id.timePicker);
-		alarmdate = (Button)findViewById(R.id.datepicker);
-		alarmdelete = (Button)findViewById(R.id.delete_alarm_button);
-		alarmtext = (EditText)findViewById(R.id.alarm_text_editview);
-		alarmrepeat = (EditText)findViewById(R.id.alarm_number_editview);
-		repeatinfo  = (TextView)findViewById(R.id.alarm_repeat_info);
 
 		updateTimeDateDialogs(alarm.getAlarmTime(), alarm.getAlarmNote());
+		initializeResources();
+		setListeners();
 
-		Button button = (Button)findViewById(R.id.update_alarm_button);
-		button.setOnClickListener(updatealarmListener);
+	}
+	
+	/**
+	 * Sets different listeners for different view objects in 
+	 * alarm_layout.xml. The view objects will now respond to clicks
+	 * and selections by users.
+	 */
+	private void setListeners()
+	{
 
-
-		Spinner alarmtype_spinner = (Spinner) findViewById(R.id.spinner);
+	    ArrayAdapter<CharSequence> r_adapter = ArrayAdapter.createFromResource(
+                this, R.array.repeat_terms, android.R.layout.simple_spinner_item);
+        r_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        alarmRepeat_Spinner.setAdapter(r_adapter);
         
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.alarm_type, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        alarmtype_spinner.setAdapter(adapter);
+        alarmType_spinner.setAdapter(adapter);
         
-        alarmtype_spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
+        alarmType_spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
         
-        repeat_spinner = (Spinner) findViewById(R.id.repeat_spinner);
+		alarmRepeat_Spinner.setOnItemSelectedListener(new RepeatItemSelectedListener());
         
-        ArrayAdapter<CharSequence> r_adapter = ArrayAdapter.createFromResource(
-                this, R.array.repeat_terms, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        repeat_spinner.setAdapter(r_adapter);
-        
-        repeat_spinner.setOnItemSelectedListener(new RepeatItemSelectedListener());
-        
-        
-		alarmtime.setOnClickListener(invokeTimePicker);
-		alarmdate.setOnClickListener(invokeDatePicker);
-		alarmdelete.setOnClickListener(deleteAlarmListener);
+        alarmtime.setOnClickListener(invokeTimePicker);
+        alarmdate.setOnClickListener(invokeDatePicker);
+        alarmupdate.setOnClickListener(updatealarmListener);
+        alarmdelete.setOnClickListener(deleteAlarmListener);
+	}
+	
+	/**
+	 * Initializes view objects by their id from generated R file of project
+	 */
+	private void initializeResources()
+	{
 
-		/* mp = new MediaPlayer();
-        Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE); 
-        try {
-			mp.setDataSource(this, alert);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-
-		// Watch for button clicks
-
-		/*button = (Button)findViewById(R.id.start_repeating);
-        button.setOnClickListener(mStartRepeatingListener);
-        button = (Button)findViewById(R.id.stop_repeating);
-        button.setOnClickListener(mStopRepeatingListener);*/
-
+		alarmType_spinner = (Spinner) findViewById(R.id.spinner);
+		alarmtime = (Button)findViewById(R.id.timePicker);
+        alarmdate = (Button)findViewById(R.id.datepicker);
+        alarmupdate = (Button)findViewById(R.id.update_alarm_button);
+        alarmdelete = (Button) findViewById(R.id.delete_alarm_button);
+        alarmNote_editText = (EditText)findViewById(R.id.alarm_text_editview);
+        alarmRepeatConstant_editText = (EditText)findViewById(R.id.alarm_number_editview);
+        alarmRepeat_Spinner = (Spinner) findViewById(R.id.repeat_spinner);
+        alarmRepeat_Infotext  = (TextView)findViewById(R.id.alarm_repeat_info);
 	}
 
+	/**
+	 * This method updates the timestamp fields from information
+	 * taken from timestamp t. It also updates the alarmNote_editText
+	 * field with the correct string typed by the user before. The 
+	 * updated timestamp fields will be used by the datepicker
+	 * and timepicker dialogs for display.
+	 * @param t
+	 * @param s
+	 */
 	private void updateTimeDateDialogs(Timestamp t, String s) {
 
 		Calendar cal = Calendar.getInstance();
@@ -140,14 +142,21 @@ public class AlarmChangeActivity extends Activity
 		theHour = cal.get(Calendar.HOUR);
 		theMinute = cal.get(Calendar.MINUTE);
 
-		repeatinfo.setText(this.getFactoredString(s));
-		alarmtext.setText(alarmnote); 
+		alarmRepeat_Infotext.setText(this.getFactoredString(s));
+		alarmNote_editText.setText(alarmnote); 
 		timestamp = t;
 	}
 
 	private OnDateSetListener odsListener = new OnDateSetListener()
 	{
 
+		/**
+    	 * This method overrides the onDateSet method of OnDateSetListener.
+    	 * When the user changes the date and clicks on set button of
+    	 * a date dialog, all the fields of timestamp will be changed
+    	 * according to the parameters specified by this method.
+    	 * 
+    	 */
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
@@ -169,6 +178,13 @@ public class AlarmChangeActivity extends Activity
 	private OnTimeSetListener otsListener = new OnTimeSetListener() 
 	{
 
+		/**
+    	 * This method overrides the onTimeSet method of OnTimeSetListener.
+    	 * Once the user confirms the time selection based on a time
+    	 * dialog, the fields of timestamp will be updated according
+    	 * to the parameters in this method.
+    	 * 
+    	 */
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 			// TODO Auto-generated method stub
@@ -191,32 +207,55 @@ public class AlarmChangeActivity extends Activity
 
 	private OnClickListener updatealarmListener = new OnClickListener() {
 
+		/**
+		 * This method overrides the onClick method of OnClickListener.
+		 * According to the alarmId, taken from the intent sent to this activity,
+		 * the alarm pertaining to the alarmId will be updated with new values
+		 * of Text, timestamp and repeat_type the user has set. The database
+		 * is updated with the new note, and timestamp. The alarm set up
+		 * for the alarmId will be cancelled and a new alarm will be set
+		 * for the alarmId.
+		 */
 		@Override
 		public void onClick(View v)
 		{
 
 			// TODO Auto-generated method stub
-			if(alarmtext.getText().toString() == "") {
+			Calendar cal = Calendar.getInstance();
+			
+			if((alarmNote_editText.getText().toString()).contentEquals("")) {
 				mToast = Toast.makeText(AlarmChangeActivity.this, "Stopping Repeating Shots",
+						Toast.LENGTH_LONG);
+				mToast.show();
+			}
+			
+			else if (cal.getTimeInMillis() > timestamp.getTime()) {
+				mToast = Toast.makeText(AlarmChangeActivity.this, timestamp.toString() ,
+						Toast.LENGTH_LONG);
+				mToast.show();
+			}
+			
+			else if(alarm_type == 1 && (alarmRepeatConstant_editText.getText().toString()).contentEquals("")) {
+				mToast = Toast.makeText(AlarmChangeActivity.this, timestamp.toString() ,
 						Toast.LENGTH_LONG);
 				mToast.show();
 			}
 
 			else {
 				
-				String s = setFactoredString(alarmtext.getText().toString());
+				String s = setFactoredString(alarmNote_editText.getText().toString());
 
 				FController skinObserverController = SkinObserverApplication.getSkinObserverController(AlarmChangeActivity.this);
 				skinObserverController.updateAlarm(alarmId, timestamp, s);
 				
-				stopRepeatingAlarm();
+				stopScheduledAlarm();
 
 				if(alarm_type == 0) {
-					setonetimeAlarm();
+					setOneTimeAlarm();
 				}
 
 				else {
-					setrepeatingAlarm();
+					setRepeatingAlarm();
 				}
 
 				mToast = Toast.makeText(AlarmChangeActivity.this, timestamp.toString() ,
@@ -230,6 +269,13 @@ public class AlarmChangeActivity extends Activity
 	};
 
 	private OnClickListener invokeDatePicker = new OnClickListener() {
+		
+		/**
+    	 * This method overrides the onClick method of OnClickListener.
+    	 * The DatePicker Dialog is initialized for user to choose his
+    	 * own date for alarm through the dialog.
+    	 */
+		@Override
 		public void onClick(View v) {
 
 			DatePickerDialog dpDialog = new DatePickerDialog(AlarmChangeActivity.this,
@@ -239,6 +285,13 @@ public class AlarmChangeActivity extends Activity
 	};
 
 	private OnClickListener invokeTimePicker = new OnClickListener() {
+		
+		/**
+    	 * The method overrides the onClick method of OnClickListener.
+    	 * The TimePicker Dialog is initialized for user to choose his
+    	 * own specific time for alarm through the dailog.
+    	 */
+    	@Override
 		public void onClick(View v) {
 
 			TimePickerDialog tpDialog = new TimePickerDialog(AlarmChangeActivity.this,
@@ -247,6 +300,13 @@ public class AlarmChangeActivity extends Activity
 		}
 	};
 
+	/**
+	 * This method overrides the onClick method of OnClickListener.
+	 * Using the alarmId taken from the intent to this activity,
+	 * the method accesses the database and deletes the alarm
+	 * pertaining to the alarmId. The alarm scheduled for the 
+	 * alarmId is also stopped.
+	 */
 	private OnClickListener deleteAlarmListener = new OnClickListener() {
 
 		@Override
@@ -256,7 +316,7 @@ public class AlarmChangeActivity extends Activity
 			// TODO Auto-generated method stub
 			FController skinObserverController = SkinObserverApplication.getSkinObserverController(AlarmChangeActivity.this);
 			skinObserverController.deleteAnAlarm(alarmId);
-			stopRepeatingAlarm();
+			stopScheduledAlarm();
 
 			finish();
 
@@ -265,7 +325,13 @@ public class AlarmChangeActivity extends Activity
 	};
 
 	public class MyOnItemSelectedListener implements OnItemSelectedListener {
-
+		
+		/**
+    	 * This method overrides the onItemSelected method for OnItemSelectedListener.
+    	 * It responds to the item selection of alarmType_spinner where user
+    	 * can selected a one time alarm or a repeating alarm.
+    	 */
+    	@Override
 		public void onItemSelected(AdapterView<?> parent,
 				View view, int pos, long id) {
 
@@ -273,19 +339,18 @@ public class AlarmChangeActivity extends Activity
 				
 				alarm_type = 0;
 				
-				repeat_spinner.setVisibility(Spinner.INVISIBLE);
-	        	alarmrepeat.setVisibility(EditText.INVISIBLE);
-	        	
-	        	//repeatinfo.setText("One Shot Alarm");
+				alarmRepeat_Spinner.setVisibility(Spinner.INVISIBLE);
+	        	alarmRepeatConstant_editText.setVisibility(EditText.INVISIBLE);
+
 			}
 
 			else if (pos == 1) {
 				alarm_type = 1;
 				
-				repeat_spinner.setVisibility(Spinner.VISIBLE);
-	        	alarmrepeat.setVisibility(EditText.VISIBLE);
+				alarmRepeat_Spinner.setVisibility(Spinner.VISIBLE);
+	        	alarmRepeatConstant_editText.setVisibility(EditText.VISIBLE);
 	        	
-	        	repeatinfo.setText("Repeat Every : ");
+	        	alarmRepeat_Infotext.setText("Repeat Every : ");
 			}
 		}
 
@@ -296,8 +361,14 @@ public class AlarmChangeActivity extends Activity
 			
 	}
 	
-	public class RepeatItemSelectedListener implements OnItemSelectedListener {
-
+	private class RepeatItemSelectedListener implements OnItemSelectedListener {
+		
+		/**
+    	 * This method overrides the onItemSelected method for OnItemSelectedListener.
+    	 * It responds to the item selection of alarmRepeat_spinner where user
+    	 * can select one of five repeating constants from Month, Year, Day, Hour, Week.
+    	 */
+		@Override
         public void onItemSelected(AdapterView<?> parent,
             View view, int pos, long id) {
           
@@ -338,28 +409,30 @@ public class AlarmChangeActivity extends Activity
 		}
     }
 
-	private void setonetimeAlarm() {
+	/**
+     * This method uses Alarm Manager to create a one shot alarm from a pendingIntent.
+     * The alarm is sent to a BroadCastReceiver which plays the alarm when
+     * the time for the alarm goes off, as set by the user.
+     */
+	private void setOneTimeAlarm() {
 		// TODO Auto-generated method stub
 
 		Intent intent = new Intent(this, OneTimeAlarmReceiver.class);
-		Bundle bundle = new Bundle();
-		//bundle.putParcelable(MEDIA_PLAYER, (Parcelable) mp);
-		//intent.putExtras(bundle);
+		intent.setAction(AlarmController.INTENT_ACTION_ONESHOT);
+		intent.putExtra(AlarmController.NOTE, alarmNote_editText.getText().toString());
+		
 		PendingIntent sender = PendingIntent.getBroadcast(this,
 				alarmId, intent, 0);
 
-		// We want the alarm to go off 30 seconds from now.
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());
 
 		long alarm_time = timestamp.getTime() - calendar.getTimeInMillis();
         calendar.add(Calendar.MILLISECOND, (int)alarm_time);
 
-		// Schedule the alarm!
 		AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
 		am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
 
-		// Tell the user about what we did.
 		if (mToast != null) {
 			mToast.cancel();
 		}
@@ -369,49 +442,57 @@ public class AlarmChangeActivity extends Activity
 
 	}
 
-	private void setrepeatingAlarm() {
+	/**
+     * This method uses Alarm Manager to create a repeating alarm from a pendingIntent.
+     * The alarm is sent to a BroadCastReceiver which plays the alarm when
+     * the time for the alarm goes off, as set by the user. After that the 
+     * alarm repeats at regular intervals according to the repeat_type constant set 
+     * by the user.
+     */
+	private void setRepeatingAlarm() {
 		// TODO Auto-generated method stub
 
 		Intent intent = new Intent(this, RepeatingAlarmReceiver.class);
+		intent.setAction(AlarmController.INTENT_ACTION_REPEAT);
+		intent.putExtra(AlarmController.NOTE, alarmNote_editText.getText().toString());
+		
         PendingIntent sender = PendingIntent.getBroadcast(this,
                 alarmId, intent, 0);
 
-        //We want the alarm to go off 30 seconds from now.
         long firstTime = SystemClock.elapsedRealtime();
-        //firstTime += 15*1000;
         
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         
         long alarm_time = timestamp.getTime() - calendar.getTimeInMillis();
-        //calendar.add(Calendar.MILLISECOND, (int)alarm_time);
         
         firstTime += alarm_time;
         
-        String s = alarmrepeat.getText().toString();
-        int repeat = Integer.parseInt(s);
+        String s = alarmRepeatConstant_editText.getText().toString();
+
+        float repeat = Float.parseFloat(s);
         repeat = repeat * repeatMillisec;
         
-
-        // Schedule the alarm!
         AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
         am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-				firstTime, repeat, sender);
-
-        // Tell the user about what we did.
+				firstTime, (long)repeat, sender);
+        
         if (mToast != null) {
             mToast.cancel();
-        }
-        mToast = Toast.makeText(this, "Testing Repeating Shots" + (int)alarm_time + repeat,
+        
+        mToast = Toast.makeText(this, "Testing Repeating Shots" + (int)alarm_time + " " +(long)repeat,
                 Toast.LENGTH_LONG);
         mToast.show();
-
+        }
 	}
 
-	private void stopRepeatingAlarm() {
+	/**
+	 * This method cancels all pendingIntents to a particular alarmId as 
+	 * received from an intent to this activity. The scheduled alarm
+	 * is stopped for that particular alarmId.
+	 */
+	private void stopScheduledAlarm() {
 
-		// Create the same intent, and thus a matching IntentSender, for
-		// the one that was scheduled.
 		Intent intent = new Intent(this, OneTimeAlarmReceiver.class);
 		Intent intent2 = new Intent(this, RepeatingAlarmReceiver.class);
 		PendingIntent sender = PendingIntent.getBroadcast(this,
@@ -419,12 +500,10 @@ public class AlarmChangeActivity extends Activity
 		
 		PendingIntent sender2 = PendingIntent.getBroadcast(this, alarmId, intent2, 0);
 
-		// And cancel the alarm.
 		AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
 		am.cancel(sender);
 		am.cancel(sender2);
 
-		// Tell the user about what we did.
 		if (mToast != null) {
 			mToast.cancel();
 		}
@@ -433,6 +512,15 @@ public class AlarmChangeActivity extends Activity
 		mToast.show();
 	}
 	
+	/**
+	 * This method changes the text for the alarm in a specific way
+	 * to add information about its alarm_type and repeat_type since
+	 * that information is not added to the database. The factored
+	 * string is returned to be stored in the database and later
+	 * extracted to get the actual text set by user.
+	 * @param note
+	 * @return String
+	 */
 	private String setFactoredString(String note) {
 		
 		if(alarm_type == 0) {
@@ -443,15 +531,23 @@ public class AlarmChangeActivity extends Activity
 		
 		else {
 			note = note.concat("~");
-			note = note.concat(alarmrepeat.getText().toString());
+			note = note.concat(alarmRepeatConstant_editText.getText().toString());
 			note = note.concat("~");
 			note = note + repeat_type;
-			//note = note.concat("~");
 			
 			return note;
 		}
 	}
 	
+	/**
+	 * This method factors or changes the note which is taken from the
+	 * alarm table of database. note has information of the alarm's alarm_type
+	 * and repeat_type. note is changed and the information is returned as
+	 * String. Furthermore alarmnote is updated to contain the actual string
+	 * typed by the user.
+	 * @param note
+	 * @return String
+	 */
 	private String getFactoredString(String note) {
 		
 		if (note.charAt(note.length() - 1) == '5') {

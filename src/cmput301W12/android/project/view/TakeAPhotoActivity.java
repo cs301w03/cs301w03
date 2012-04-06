@@ -3,7 +3,6 @@ package cmput301W12.android.project.view;
 
 import java.io.File;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
@@ -17,9 +16,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 import cmput301W12.android.project.FController;
-import cmput301W12.android.project.Group;
 import cmput301W12.android.project.Photo;
-import cmput301W12.android.project.SkinCondition;
 import cmput301W12.android.project.SkinObserverApplication;
 
 /**
@@ -49,20 +46,21 @@ public class TakeAPhotoActivity extends Activity
 	private static final int MEDIA_TYPE_IMAGE = 1;
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	private static final int GET_IMAGE_INFO_REQUEST_CODE = 1250;
+	
+	public static final String TRANSPARENT_LAYER = "TRANSPARENT_LAYER";
 
-	private static Uri photoUri;
-	private static Timestamp time;
+	private Uri photoUri;
+	private Timestamp time;
 
 	//TAG METHODS
-	Set<Integer> groups = null;
-	Set<Integer> skinConditions = null;
+	private Set<Integer> groups = null;
+	private Set<Integer> skinConditions = null;
 	/* Make a photo object here */
 
 	//MAKE PHOTO OBJECT
-
-	String name = null;
-	Photo newestPhoto = null;
-
+	private String name = null;
+	private Photo newestPhoto = null;
+	
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -74,7 +72,7 @@ public class TakeAPhotoActivity extends Activity
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.take_a_photo);
-
+		
 		getPhoto(); // Calls camera activity and gets the user to take a picture.
 
 	}
@@ -94,8 +92,9 @@ public class TakeAPhotoActivity extends Activity
 				getTags(); // Ask the user to input data about the photo
 			} else if (resultCode == RESULT_CANCELED) {
 				// User cancelled the image capture
-				Toast.makeText(this, "The user canceled capturing a photo\n", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "You have canceled capturing a photo\n", Toast.LENGTH_LONG).show();
 				Log.d("SKINOBSERVER", "User canceled taking a photo.");
+				finish();
 			} else {
 				// Image capture failed, advise user
 				Log.d("SKINOBSERVER", "There was an error capturing the photo.");
@@ -113,7 +112,16 @@ public class TakeAPhotoActivity extends Activity
 			}
 			//put into db
 			FController controller = SkinObserverApplication.getSkinObserverController(this);
-			controller.addPhoto(newestPhoto);
+			Photo res = controller.addPhoto(newestPhoto);
+			if (res != null)
+			{
+				Toast.makeText(getApplicationContext(), "New photo has been stored in the SD Card", Toast.LENGTH_LONG);
+			}
+			else{
+				Toast.makeText(getApplicationContext(), "New photo has NOT been stored. Please try again", Toast.LENGTH_LONG);
+			}
+
+			finish();
 		}
 	}
 
@@ -137,14 +145,28 @@ public class TakeAPhotoActivity extends Activity
 		 */
 
 		//Create an intent to take a picture
-		Intent sCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
+		Intent sCamera;
+		
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null){
+			if (bundle.containsKey(TRANSPARENT_LAYER)){
+				sCamera = new Intent(this, SpecialTakePhotoActivity.class);
+				sCamera.putExtras(bundle);
+			}
+			else{
+				sCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			}
+		}
+		else
+			sCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		
 		photoUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);     // Create a file to store the image
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmm"); 
+//		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmm"); 
 		Date dDate = new Date();        // get a timestamp too!
 		time = new Timestamp(dDate.getTime());
 
 		sCamera.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);    // Sets the image file name
+		Log.d("take photo", photoUri.getPath());
 
 
 		startActivityForResult(sCamera, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE); // Calls the camera application to get a Photo

@@ -7,13 +7,13 @@
     <ListView
         android:id="@+id/android:list"
         android:layout_width="wrap_content"
-        android:layout_height="455dp" />
-    
+        android:layout_height="440dp" />
+
     <Button
         android:id="@+id/menubutton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/confirm" />
+        android:text="@string/connect" />
 
   	<TextView android:id="@+id/android:empty"
           android:layout_width="wrap_content"

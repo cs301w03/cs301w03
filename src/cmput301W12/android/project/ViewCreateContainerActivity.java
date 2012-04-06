@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 /**
@@ -39,27 +40,31 @@ public class ViewCreateContainerActivity extends Activity implements FView<DbCon
 		{
 
 			@Override
-			public void onClick(View v)
-			{
-				if (mNameText.getText().toString() != "")
+			public void onClick(View v){
+				String contName = mNameText.getText().toString().trim();
+				if (contName.length() > 0)
 				{
-					storeContainer();
+					storeContainer(contName);
+				}
+				else
+				{
+					Toast.makeText(getApplicationContext(),"The group's name cannot be empty!", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
 
 	}
 
-	private void storeContainer()
+	private void storeContainer(String contName)
 	{
 		Container cont = null;
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null)
 		{
 			if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
-				cont = new Group(mNameText.getText().toString());
+				cont = new Group(contName);
 			else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
-				cont = new SkinCondition(mNameText.getText().toString());
+				cont = new SkinCondition(contName);
 
 			FController skinObserverController = SkinObserverApplication.getSkinObserverController(this);
 			cont = skinObserverController.addContainObj(cont);

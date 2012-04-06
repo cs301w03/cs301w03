@@ -7,11 +7,6 @@
         android:visible="true">
     </item>
     <item
-        android:id="@+id/menudelete"
-        android:title="@string/delete_a_photo"
-        android:visible="true">
-    </item>
-    <item
         android:id="@+id/menucompare2"
         android:title="@string/compareSideBySide"
         android:visible="true">

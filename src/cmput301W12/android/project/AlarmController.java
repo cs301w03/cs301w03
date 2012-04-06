@@ -26,7 +26,12 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-
+/**
+ * AlarmController class is an inherited Activity class, responsible
+ * for creating alarms and adding them to the database.
+ * @author Tanvir Sajed
+ *
+ */
 public class AlarmController extends Activity implements FView<DbController>
 {
 
@@ -61,12 +66,8 @@ public class AlarmController extends Activity implements FView<DbController>
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         
         setContentView(R.layout.alarm_controller);
-        	
-
-        createalarm.setOnClickListener(createalarmListener);
         
         initializeResources();
         setListeners();

@@ -12,7 +12,13 @@ import android.net.Uri;
 import android.provider.Settings;
 import android.widget.Toast;
 
-
+/**
+ * RepeatingAlarmReceiver inherits from BroadcastReceiver class,
+ * and it is responsible for receiving scheduled one time alarms
+ * and playing a ringtone for the user at the set time.
+ * @author Tanvir Sajed
+ *
+ */
 public class OneTimeAlarmReceiver extends BroadcastReceiver
 {
 
@@ -21,19 +27,17 @@ public class OneTimeAlarmReceiver extends BroadcastReceiver
 	 * This method is called when an alarm is sent off. The Receiver receives
 	 * the pendingIntent set up for the alarm. Here, a ringtone is generated 
 	 * from mobile phones ringtones, and it is played as an alarm for some
-	 * time. The toast is displayed for a longer time of more than 30 seconds
-	 * for the user to know what he is supposed to do if he forgot. The 
-	 * application also gets started as soon as the alarm is received. This
+	 * time. Application also gets started as soon as the alarm is received. This
 	 * receiver receives one time alarms only. The note for the alarmId
 	 * that initiated the alarm, is received from the intent and that note
-	 * is displayed in the toast.
+	 * is displayed in a toast for some time.
 	 */
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
 
 		// TODO Auto-generated method stub
-		
+
 		String note = (String) intent.getCharSequenceExtra(AlarmController.NOTE);
 		
 		Uri defaultRingtonUri = RingtoneManager.getValidRingtoneUri(context);

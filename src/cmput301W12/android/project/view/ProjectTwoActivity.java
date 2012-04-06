@@ -123,6 +123,7 @@ public class ProjectTwoActivity extends Activity
 		});
 	}
         
+    /* The following are utility functions, their names should explain exactly what they do. */
     
     protected void callViewGroup()
     {

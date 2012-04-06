@@ -1,7 +1,11 @@
 package cmput301W12.android.project;
 
 import java.util.Set;
+
+
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -10,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -28,6 +33,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 	private static final int DELETE_ID = Menu.FIRST + 1;
 	private static final int CONNECT_ID = Menu.FIRST + 2;
 	private static final int DISCONNECT_ID = Menu.FIRST + 3;
+	private static final int RENAME_ID = Menu.FIRST + 4;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -40,7 +46,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 	}
 
 
-	public void fillData() {        
+	private void fillData() {        
 		Container[] array = null;
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null)
@@ -90,6 +96,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 		startActivity(newIntent);
 	}    
 
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
@@ -105,57 +112,86 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 			return true;
 		}
 
-		return super.onMenuItemSelected(featureId, item);
-	}
 
+        return super.onMenuItemSelected(featureId, item);
+    }
+    
+    /**
+     * 
+     * 
+     */
+    private void createNewGroup() {
+        Intent i = new Intent(this, ViewCreateContainerActivity.class);
+        i.putExtras(getIntent().getExtras());
+        startActivityForResult(i, ACTIVITY_CREATE);
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if ( requestCode == ACTIVITY_CREATE || requestCode == ACTIVITY_DELETE 
+        		|| requestCode == ACTIVITY_EDIT)
+        	fillData();
+    }
+    
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+            ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, DELETE_ID, 0, R.string.menu_delete);
+        menu.add(0, CONNECT_ID, 0, "Connect photos");
+        menu.add(0, DISCONNECT_ID, 0, "Disconnect photos");
+        menu.add(0, RENAME_ID, 0, "Rename");
+    }
+    
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+    	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();               
+        final Container cont = (Container) getListAdapter().getItem(info.position);
+        switch(item.getItemId()) {
+            case DELETE_ID:
+                deleteContainer(cont);
+                fillData();
+                return true;
+            case CONNECT_ID:
+                connectContainer(cont);
+                fillData();
+                return true;
+            case DISCONNECT_ID:
+            	disconnectContainer(cont);
+            	fillData();
+            	return true;
+            case RENAME_ID:
+            	//Pop up window and rename container.
+        		AlertDialog.Builder popupBuilder = new AlertDialog.Builder(this);
+        		popupBuilder.setTitle("Name");
+        		final EditText name = new EditText(this);
+    			name.setSingleLine();
+    			name.setText(cont.getName());
+    			popupBuilder.setView(name);
+    			popupBuilder.setNeutralButton("Confirm", new DialogInterface.OnClickListener() {
+    				
+    				@Override
+    				public void onClick(DialogInterface dialog, int which) {
+    					cont.setName(name.getText().toString());
+    					DbController db = (DbController) DbController.getDbController(null);
+    					if (cont instanceof SkinCondition){
+    						db.updateSkin(cont.getItemId(), cont.getName());
+    					} else if (cont instanceof Group){
+    						db.updateGroup(cont.getItemId(), cont.getName());
+    					}
+    					fillData();
+    					//<------------- SAVE THE NEW NAME TO THE DB!
+    				}
+    			});
+    			popupBuilder.create();
+    			popupBuilder.show();
+    			
+            	return true;
+        }
+        return super.onContextItemSelected(item);
+    }
 
-	/**
-	 * 
-	 * 
-	 */
-	private void createNewGroup() {
-		Intent i = new Intent(this, ViewCreateContainerActivity.class);
-		i.putExtras(getIntent().getExtras());
-		startActivityForResult(i, ACTIVITY_CREATE);
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
-		if ( requestCode == ACTIVITY_CREATE || requestCode == ACTIVITY_DELETE 
-				|| requestCode == ACTIVITY_EDIT)
-			fillData();
-	}
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		menu.add(0, DELETE_ID, 0, R.string.menu_delete);
-		menu.add(0, CONNECT_ID, 0, "Connect photos");
-		menu.add(0, DISCONNECT_ID, 0, "Disconnect photos");
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();               
-		Container cont = (Container) getListAdapter().getItem(info.position);
-		switch(item.getItemId()) {
-		case DELETE_ID:
-			deleteContainer(cont);
-			fillData();
-			return true;
-		case CONNECT_ID:
-			connectContainer(cont);
-			fillData();
-			return true;
-		case DISCONNECT_ID:
-			disconnectContainer(cont);
-			fillData();
-			return true;
-		}
-		return super.onContextItemSelected(item);
-	}
 
 	protected void deleteContainer(Container cont)
 	{

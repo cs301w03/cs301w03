@@ -3,10 +3,8 @@ package cmput301W12.android.project.view;
 //import android.R;
 import java.util.HashSet;
 import java.util.Set;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -30,7 +28,7 @@ import cmput301W12.android.project.R;
 import cmput301W12.android.project.SkinCondition;
 import cmput301W12.android.project.SkinObserverApplication;
 import cmput301W12.android.project.SkinObserverIntent;
-import cmput301W12.android.project.ViewContainerListActivity;
+import cmput301W12.android.project.ViewCreateContainerActivity;
 
 /**
  * This class currently allows you to tag a new photo with Skin conditions and Groups. 
@@ -193,14 +191,17 @@ public class PhotoEditorActivity extends  Activity {
 
 	protected void createNewGroup()
 	{
-		Intent iCreateGroup = new Intent(this, ViewContainerListActivity.class);
+
+		Intent iCreateGroup = new Intent(this, ViewCreateContainerActivity.class);
+
 		iCreateGroup.putExtra(SkinObserverIntent.DATA_GROUP, SkinObserverIntent.DATA_GROUP);
 		startActivityForResult(iCreateGroup, ACTIVITY_CREATE_GROUP);
 	}
 
 	protected void createNewSkinCondition()
 	{
-		Intent iCreateSC = new Intent(this, ViewContainerListActivity.class);
+
+		Intent iCreateSC = new Intent(this, ViewCreateContainerActivity.class);
 		iCreateSC.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION, SkinObserverIntent.DATA_SKIN_CONDITION);
 		startActivityForResult(iCreateSC, ACTIVITY_CREATE_SKINCONDITION);
 	}
@@ -230,10 +231,10 @@ public class PhotoEditorActivity extends  Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
-		if ( requestCode == ID_CREATE_GROUP)
+
+		if ( requestCode == ACTIVITY_CREATE_GROUP || requestCode == ACTIVITY_CREATE_SKINCONDITION ){
 			fillLists();
-		if ( requestCode == ID_CREATE_SKINCONDITION)
-			fillLists();
+		}
 
 	}
 }

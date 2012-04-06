@@ -48,9 +48,9 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	public static final int CONNECT_ID = Menu.FIRST;
 	public static final int DISCONNECT_ID = Menu.FIRST +1;
 
-	private static Photo photoCompare;
-	private static boolean compareMode = false;
-	private static Container cont = null;
+	private Photo photoCompare;
+	private boolean compareMode = false;
+	private Container cont = null;
 	private static FController fcontroller;
 
 	private Button confirmButton;
@@ -130,8 +130,9 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 			else
 				currentPhotoSet =  getAllCurrentPhoto();
 		}
-		else
+		else{
 			currentPhotoSet =  getAllCurrentPhoto();
+		}
 		displayList();
 	}
 
@@ -252,7 +253,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	private void changeSelection(View row, Photo photo)
 	{
 		Drawable drawable = row.getBackground();
-		
+
 		//Initially, drawble is null because row.getBackground() returns null.
 		if (drawable != null){
 			PaintDrawable paintDrawable = (PaintDrawable) drawable;

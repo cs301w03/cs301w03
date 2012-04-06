@@ -3,6 +3,7 @@ package cmput301W12.android.project.view;
 //import android.R;
 import java.util.HashSet;
 import java.util.Set;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,17 +19,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import cmput301W12.android.project.CheckBoxArrayAdapter;
-import cmput301W12.android.project.Container;
-import cmput301W12.android.project.FController;
-import cmput301W12.android.project.Group;
-import cmput301W12.android.project.OptionType;
-import cmput301W12.android.project.Photo;
+import cmput301W12.android.model.Container;
+import cmput301W12.android.model.Group;
+import cmput301W12.android.model.OptionType;
+import cmput301W12.android.model.Photo;
+import cmput301W12.android.model.SkinCondition;
+import cmput301W12.android.model.SkinObserverApplication;
 import cmput301W12.android.project.R;
-import cmput301W12.android.project.SkinCondition;
-import cmput301W12.android.project.SkinObserverApplication;
-import cmput301W12.android.project.SkinObserverIntent;
-import cmput301W12.android.project.ViewCreateContainerActivity;
+import cmput301W12.android.project.controller.FController;
+import cmput301W12.android.project.view.helper.CheckBoxArrayAdapter;
+import cmput301W12.android.project.view.helper.SkinObserverIntent;
 
 /**
  * This class currently allows you to tag a new photo with Skin conditions and Groups. 
@@ -191,7 +191,7 @@ public class PhotoEditorActivity extends  Activity {
 
 	protected void createNewGroup()
 	{
-		Intent iCreateGroup = new Intent(this, ViewCreateContainerActivity.class);
+		Intent iCreateGroup = new Intent(this, CreateContainerActivity.class);
 
 		iCreateGroup.putExtra(SkinObserverIntent.DATA_GROUP, SkinObserverIntent.DATA_GROUP);
 		startActivityForResult(iCreateGroup, ACTIVITY_CREATE_GROUP);
@@ -200,7 +200,7 @@ public class PhotoEditorActivity extends  Activity {
 	protected void createNewSkinCondition()
 	{
 
-		Intent iCreateSC = new Intent(this, ViewCreateContainerActivity.class);
+		Intent iCreateSC = new Intent(this, CreateContainerActivity.class);
 		iCreateSC.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION, SkinObserverIntent.DATA_SKIN_CONDITION);
 		startActivityForResult(iCreateSC, ACTIVITY_CREATE_SKINCONDITION);
 	}

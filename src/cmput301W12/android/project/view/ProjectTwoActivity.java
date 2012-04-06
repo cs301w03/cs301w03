@@ -6,12 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import cmput301W12.android.project.ComparePhotoActivity;
-import cmput301W12.android.project.PhotoListActivity;
 import cmput301W12.android.project.R;
-import cmput301W12.android.project.RemindersListActivity;
-import cmput301W12.android.project.SkinObserverIntent;
-import cmput301W12.android.project.ViewContainerListActivity;
+import cmput301W12.android.project.view.helper.SkinObserverIntent;
 
     /**
      * The ProjectTwoActivity.java file displays a menu that allows the user
@@ -87,15 +83,6 @@ public class ProjectTwoActivity extends Activity
         	}
     	});
         
-        Button menu = (Button) this.findViewById(R.id.mainMenu);
-        menu.setOnClickListener(new View.OnClickListener()
-    	{
-        	@Override
-        	public void onClick(View v)
-        	{
-        		comparePhotos();
-        	}
-    	});
         
         Button reminders = (Button) this.findViewById(R.id.reminders);
         reminders.setOnClickListener(new View.OnClickListener() {
@@ -144,13 +131,7 @@ public class ProjectTwoActivity extends Activity
 		Intent iViewGroup = new Intent(this, PhotoListActivity.class);
 		startActivity(iViewGroup);
 	}
-	
-	protected void comparePhotos()
-	{
-		Intent iViewGroup = new Intent(this, ComparePhotoActivity.class);
-		startActivity(iViewGroup);
-	}
-	
+
 	protected void callReminderLists()
 	{
 		Intent iViewGroup = new Intent(this, RemindersListActivity.class);

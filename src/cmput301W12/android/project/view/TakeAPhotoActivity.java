@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,9 +16,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
-import cmput301W12.android.project.FController;
-import cmput301W12.android.project.Photo;
-import cmput301W12.android.project.SkinObserverApplication;
+import cmput301W12.android.model.Photo;
+import cmput301W12.android.model.SkinObserverApplication;
+import cmput301W12.android.project.controller.FController;
 
 /**
  * The TakeAPhotoActivity allows the user to capture images. When an image is captured a time stamp

@@ -15,8 +15,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import cmput301W12.android.project.Photo;
+import cmput301W12.android.model.Photo;
 import cmput301W12.android.project.R;
+import cmput301W12.android.project.view.helper.CameraPreview;
 
 /**
  * Customized camera with a transparent layer.

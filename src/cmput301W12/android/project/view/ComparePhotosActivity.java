@@ -1,13 +1,12 @@
 package cmput301W12.android.project.view;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
-import cmput301W12.android.project.Photo;
+import cmput301W12.android.model.Photo;
 import cmput301W12.android.project.R;
 
 /**

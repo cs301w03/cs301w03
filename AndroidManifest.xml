@@ -27,37 +27,20 @@
         </activity>
         <activity android:name=".view.TakeAPhotoActivity" >
         </activity>
-        <activity android:name=".PhotoListActivity" >
+        <activity android:name=".view.PhotoListActivity" >
         </activity>
-        <activity android:name=".ViewContainerListActivity" >
+        <activity android:name=".view.ViewContainerListActivity" >
         </activity>
-        <activity android:name=".ViewCreateContainerActivity" >
+        <activity android:name=".view.CreateContainerActivity" >
         </activity>
-        <activity android:name=".ViewPhotoActivity" >
-        </activity>
-        <activity android:name="ComparePhotoActivity" >
-        </activity>
-        <activity android:name=".view.PhotoEditorActivity" >
-        </activity>
-        <activity android:name=".AlarmController" >
-        </activity>
-        <activity android:name=".view.PhotoEditorActivity" >
-        </activity>
-        <activity android:name=".RemindersListActivity" >
-        </activity>
-        <activity android:name=".AlarmChangeActivity" >
-        </activity>
-        <activity android:name=".RemindersListActivity" >
-        </activity>
-        <activity android:name=".view.ComparePhotosActivity" >
-        </activity>
+        
 
-        <receiver android:name=".OneTimeAlarmReceiver" >
+        <receiver android:name=".view.helper.OneTimeAlarmReceiver" >
             <intent-filter>
                 <action android:name="cmput301W12.android.project.CUSTOM_INTENT_ONESHOT" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".RepeatingAlarmReceiver" >
+        <receiver android:name=".view.helper.RepeatingAlarmReceiver" >
             <intent-filter>
                 <action android:name="cmput301W12.android.project.CUSTOM_INTENT_REPEAT" />
             </intent-filter>
@@ -70,6 +53,13 @@
 
             <!-- configure this activity to use landscape orientation -->
         </activity>
+        <activity android:name=".view.AlarmChangeActivity"></activity>
+        <activity android:name=".view.AlarmController"></activity>
+        <activity android:name=".view.ComparePhotoActivity"></activity>
+        <activity android:name=".view.ComparePhotosActivity"></activity>
+        <activity android:name=".view.PhotoEditorActivity"></activity>
+        <activity android:name=".view.RemindersListActivity"></activity>
+        <activity android:name=".view.ViewPhotoActivity"></activity>
     </application>
 
 </manifest>

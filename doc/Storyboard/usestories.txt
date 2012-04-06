@@ -1,0 +1,21 @@
+Authored by romansky on april 6th.
+User stories for our skin observer application.
+
+
+
+As a user, I want to keep a visual log of any skin conditions I might . The purpose could be to gather a personal history of  a medical condition as to provide evidence to a physician.
+As a user, I want pictures I take to be stored so that I may recall them and view them later.
+As a user, I want all pictures I take to be timestamped so that I can measure the time between photos and know when an event occurred.
+As a user, I want a method to organize these pictures so that I can view pictures of the same bit of skin over time and see if there is any progression or growth. For instance I might want to organize some photos that are related to my "gross mole that occurs on my right hand".
+As a user if I have an organizational tag or group, I want to be able to add photos to that group so that I can further track the progression of something relevant to that group.
+As a user, I want to be able to review any photos I have taken and view them so that I can see any changes.
+As a user, I want some method of helping me take consistent photos, so that when I show the doctor any progression such as the growth of a mole is evident.
+As a user, I should be able to retake photos I am taking, if I fail to take the photo I want to correct, so that I don't have erroneous photos.
+As a user, I should be able to compare pictures in some manner, so that I can personally inspect them for differences.
+	--we have implemented a unique transparent layer to satisfy this user request
+As a user, I want notifications about when I should take photos again. I'm forgetful and being told every so often to take new photos would be helpful. Certain photos I don't have to retake again.
+As a user I would like to annotate images with annotations to describe the scenario that I made this photo
+As a user I would like to tag the images so I can query the image by tag.
+As a user I would like to browse the photos in different ways, by time, by tag, etc.
+
+The above requirements are satisfied by our android application

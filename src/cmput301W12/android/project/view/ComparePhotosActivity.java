@@ -57,7 +57,7 @@ public class ComparePhotosActivity extends Activity
 		imageTwo = (ImageView) this.findViewById(R.id.ez_photo_two);
 		Uri uriTwo = Uri.parse(photoTwo.getLocation());
 		Bitmap bitmapTwo = BitmapFactory.decodeFile(uriTwo.getPath());
-		imageOne.setImageBitmap(bitmapTwo);
+		imageTwo.setImageBitmap(bitmapTwo);
 		
     }
     

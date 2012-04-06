@@ -37,6 +37,7 @@
         
         <receiver android:name=".OneTimeAlarmReceiver"></receiver>
         <receiver android:name=".RepeatingAlarmReceiver"></receiver>
+        <activity android:name=".view.ComparePhotosActivity"></activity>
 
     </application>
 

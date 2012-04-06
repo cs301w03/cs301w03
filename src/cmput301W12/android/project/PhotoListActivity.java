@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -22,6 +21,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import cmput301W12.android.project.view.ComparePhotosActivity;
 import cmput301W12.android.project.view.PhotoEditorActivity;
 
 /**
@@ -49,7 +49,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	public static final int DISCONNECT_ID = Menu.FIRST +1;
 
 	private Photo photoCompare;
-	private boolean compareMode = false;
+	private int compareMode = 0;
 	private Container cont = null;
 	private static FController fcontroller;
 
@@ -219,14 +219,20 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 			}
 		}
 
-		if(compareMode == false){
+		if(compareMode == 0){
 			viewPhoto(photo);
-		} else {
+		} else if (compareMode == 1){
 			Intent i = new Intent(this, ComparePhotoActivity.class);
 			i.putExtra(ComparePhotoActivity.BACKGROUND, photoCompare);
 			i.putExtra(ComparePhotoActivity.SURFACE, photo);
-			compareMode = false;
+			compareMode = 0;
 			startActivityForResult(i, 0);
+		} else if (compareMode == 2){
+			Intent comparePhotos = new Intent(this, ComparePhotosActivity.class);
+			comparePhotos.putExtra("PhotoOne", photoCompare);
+			comparePhotos.putExtra("PhotoTwo", photo);
+			compareMode = 0;
+			startActivity(comparePhotos);
 		}
 	}
 
@@ -279,13 +285,21 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 
 		case R.id.menucompare:
 			photoCompare = photo;
-			compareMode = true;
+			compareMode = 1;
 			CharSequence text = "Click at another photo to compare with this chosen photo!";
 			int duration = Toast.LENGTH_SHORT;
 			Toast toast = Toast.makeText(this, text, duration);
 			toast.show();
 			return true;
 
+		case R.id.menucompare2:
+			photoCompare = photo;
+			compareMode = 2;
+			CharSequence text2 = "Click at another photo to compare with this chosen photo!";
+			int duration2 = Toast.LENGTH_SHORT;
+			Toast toast2 = Toast.makeText(this, text2, duration2);
+			toast2.show();
+			return true;
 		default:
 			return super.onContextItemSelected(item);
 		}

@@ -1,22 +1,30 @@
 package cmput301W12.android.project;
 
 import cmput301W12.android.project.view.ProjectTwoActivity;
-import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.widget.Toast;
 
 
 public class RepeatingAlarmReceiver extends BroadcastReceiver
 {
 
-
+	/**
+	 * This method overrides the onReceive method of BroadCastReceiver.
+	 * This method is called when an alarm is sent off. The Receiver receives
+	 * the pendingIntent set up for the alarm. Here, a ringtone is generated 
+	 * from mobile phones ringtones, and it is played as an alarm for some
+	 * time. The toast is displayed for a longer time of more than 30 seconds
+	 * for the user to know what he is supposed to do if he forgot. The 
+	 * application also gets started as soon as the alarm is received. This
+	 * receiver receives repeating alarms only. The note for the alarmId
+	 * that initiated the alarm, is received from the intent and that note
+	 * is displayed in the toast.
+	 */
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{

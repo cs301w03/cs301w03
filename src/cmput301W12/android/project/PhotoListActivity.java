@@ -69,7 +69,6 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 				@Override
 				public void onClick(View v)
 				{
-					Log.d("", "click!");
 					updateContainer();
 					finish();
 				}
@@ -91,32 +90,24 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 
 		if (bundle.containsKey(CONNECT))
 		{
-			
+
 			Set<Integer> setInt = new HashSet<Integer>();
 			for(Photo p : selectedPhotoSet){
-				Log.d("Add to a set","Yes");
 				setInt.add(p.getPhotoId());
 			}
-			int res = fcontroller.connectAContainerToManyPhotos(cont.getItemId(), setInt, op);
-//			Log.d("Number of new photo connected", res+"");
-//			Log.d("Number of new photo chosen original", selectedPhotoSet.size()+"");
-//			Log.d("Number of new photo chosen in hashset", setInt.size()+"");
+			fcontroller.connectAContainerToManyPhotos(cont.getItemId(), setInt, op);
 		}  else if (bundle.containsKey(DISCONNECT)){
-			Log.d("C/D Mode","DisConnect");
 			Set<Integer> setInt = new HashSet<Integer>();
 			for(Photo p : selectedPhotoSet){
 				setInt.add(p.getPhotoId());
 			}
-			int res = fcontroller.disconnectAContainerFromManyPhotos(cont.getItemId(), setInt, op);
-//			Log.d("Number of new photo disconnected", res+"");
-//			Log.d("Number of new photo chosen original", selectedPhotoSet.size()+"");
-//			Log.d("Number of new photo chosen in hashset", setInt.size()+"");
+			fcontroller.disconnectAContainerFromManyPhotos(cont.getItemId(), setInt, op);
 		}
 
-		
+
 	}
 
-	protected void fillList()
+	private void fillList()
 	{
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null)
@@ -132,7 +123,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 		displayList();
 	}
 
-	protected void getContainer(Bundle bundle)
+	private void getContainer(Bundle bundle)
 	{
 		if (bundle != null)
 		{
@@ -148,7 +139,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	}
 
 
-	protected SortedSet<Photo> getAllCurrentPhoto() {
+	private SortedSet<Photo> getAllCurrentPhoto() {
 		if (cont != null)
 		{
 			return cont.getPhotos(this);
@@ -161,7 +152,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 
 
 
-	protected void displayList()
+	private void displayList()
 	{
 		if (currentPhotoSet != null)
 		{
@@ -175,7 +166,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	}
 
 
-	protected void fillUnseletedList(Bundle bundle){
+	private void fillUnseletedList(Bundle bundle){
 		currentPhotoSet = getAllCurrentPhoto();
 		//Pass null to get all photos from database
 		SortedSet<Photo> allPhotoSet = fcontroller.getAllPhoto();
@@ -239,33 +230,32 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	}
 
 
-	protected void viewPhoto(Photo photo)
+	private void viewPhoto(Photo photo)
 	{
 		Intent i = new Intent(this, ViewPhotoActivity.class);
 		i.putExtra(PHOTO, photo);
 		startActivityForResult(i, ACTIVITY_VIEW_PHOTO);
 	}
 
-	protected void changeSelection(View row, Photo photo)
+	private void changeSelection(View row, Photo photo)
 	{
 		Drawable drawable = row.getBackground();
+		
+		//Initially, drawble is null because row.getBackground() returns null.
 		if (drawable != null){
 			PaintDrawable paintDrawable = (PaintDrawable) drawable;
 			if (paintDrawable != SelectiveColor.getSelectedDrawable()){
 				row.setBackgroundDrawable(SelectiveColor.getSelectedDrawable());
 				selectedPhotoSet.add(photo);
-				Log.d("Num of photo selected",selectedPhotoSet.size()+"");
 			}
 			else{
 				row.setBackgroundDrawable(SelectiveColor.getUnselectedDrawable());
 				selectedPhotoSet.remove(photo);
-				Log.d("Num of photo selected",selectedPhotoSet.size()+"");
 			}
 		}
 		else {
 			row.setBackgroundDrawable(SelectiveColor.getSelectedDrawable());
 			selectedPhotoSet.add(photo);
-			Log.d("Num of photo selected (drawable =null)",selectedPhotoSet.size()+"");
 		}
 	}
 
@@ -312,10 +302,6 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	@Override
 	public void update(DbController model)
 	{
-
-		//fillSelectableList();
-		// TODO Auto-generated method stub
-
 	}
 
 }

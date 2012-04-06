@@ -42,9 +42,11 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 	private TextView timestamp;
 	private TextView skincondition;
 	private TextView group;
-	private Photo photo = null;
+
+	private Photo mPhoto = null;
 	
 	public static final int ID_CREATE_ANNOTATION = Menu.FIRST;
+
 
 	private static void saveBMP( File intentPicture, Bitmap ourBMP) throws IOException, FileNotFoundException {
 		OutputStream out = new FileOutputStream(intentPicture);
@@ -58,27 +60,28 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_photo);
 		
-		photo = (Photo) getIntent().getSerializableExtra("PHOTO");
+		mPhoto = (Photo) getIntent().getSerializableExtra("PHOTO");
 		newimage = (ImageView) findViewById(R.id.imageView1);
 		timestamp = (TextView) findViewById(R.id.viewphototext1);
 		skincondition = (TextView) findViewById(R.id.viewphototext2);
 		group = (TextView) findViewById(R.id.viewphototext3);
+		mPhoto = (Photo) getIntent().getSerializableExtra(PhotoListActivity.PHOTO);
 
 		this.getPhotos();
 		this.getTimeStamp();
-
 
 	}
 
 	public void getPhotos(){
 		try{
-			//photo = (Photo)getIntent().getSerializableExtra(PhotoListActivity.PHOTO);
-			String location = photo.getLocation();
+
+			String location = mPhoto.getLocation();
+
 			Uri uri = Uri.parse(location);
 			Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
-//			File newFile = new File(uri.getPath());
-//			Bitmap bitmap = BogoPicGen.generateBitmap(400, 400);
-//			ViewPhoto.saveBMP(newFile, bitmap);
+			//			File newFile = new File(uri.getPath());
+			//			Bitmap bitmap = BogoPicGen.generateBitmap(400, 400);
+			//			ViewPhoto.saveBMP(newFile, bitmap);
 			newimage.setImageBitmap(bitmap);
 		}catch(Exception ex){
 			System.out.println("Can't show the photo!");
@@ -97,7 +100,7 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch(item.getItemId()) {
 		case ID_CREATE_ANNOTATION:
-			showAnnotation(photo, this);
+			showAnnotation(mPhoto, this);
 			//return true;
 		}
 
@@ -135,8 +138,9 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 	}
 	
 	public void getTimeStamp() {
-		//Photo photo = (Photo) getIntent().getSerializableExtra(PhotoListActivity.PHOTO);
-		Timestamp ts = photo.getTimeStamp();
+
+		Timestamp ts = mPhoto.getTimeStamp();
+
 		String time = ts.toString();
 		timestamp.setText(time);
 	}
@@ -144,8 +148,7 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 	@Override
 	public void update(DbController model)
 	{
-			this.getPhotos();
-
+		this.getPhotos();
 	}
 
 

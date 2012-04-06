@@ -2,6 +2,7 @@ package cmput301W12.android.project;
 
 import java.io.File;
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
@@ -202,7 +203,7 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 	public static SortedSet<Photo> getPhotoFromCursor(Cursor cursor){
 		boolean repeat = false;
 		int photoId;
-		String location, name;
+		String location, name, annotation;
 		Timestamp timeStamp;
 
 		Photo photo;
@@ -217,7 +218,8 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 			location = cursor.getString(cursor.getColumnIndexOrThrow(DbAdapter.LOCATION));
 			timeStamp = Timestamp.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(DbAdapter.TIMESTAMP)));
 			name = cursor.getString(cursor.getColumnIndexOrThrow(DbAdapter.PHOTONAME));
-			photo = new Photo(location, timeStamp, name, null, null);
+			annotation = cursor.getString(cursor.getColumnIndexOrThrow(DbAdapter.PHOTOANNOTATION));
+			photo = new Photo(location, timeStamp, name, null, null,annotation );
 			photo.setPhotoId(photoId);
 			aSet.add(photo);
 			repeat = cursor.moveToNext();

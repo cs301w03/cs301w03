@@ -10,7 +10,11 @@ import android.widget.ImageView;
 import cmput301W12.android.project.Photo;
 import cmput301W12.android.project.R;
 
-
+/**
+ * Activity for comparing two photos side-by-side
+ * @author hieungo
+ *
+ */
 public class ComparePhotosActivity extends Activity
 {
 	private Photo photoOne;

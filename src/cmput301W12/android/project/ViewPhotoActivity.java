@@ -55,7 +55,7 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 		skincondition = (TextView) findViewById(R.id.viewphototext2);
 		group = (TextView) findViewById(R.id.viewphototext3);
 		mPhoto = (Photo) getIntent().getSerializableExtra(PhotoListActivity.PHOTO);
-		
+
 		this.getPhotos();
 		this.getTimeStamp();
 
@@ -66,9 +66,9 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 			String location = mPhoto.getLocation();
 			Uri uri = Uri.parse(location);
 			Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
-//			File newFile = new File(uri.getPath());
-//			Bitmap bitmap = BogoPicGen.generateBitmap(400, 400);
-//			ViewPhoto.saveBMP(newFile, bitmap);
+			//			File newFile = new File(uri.getPath());
+			//			Bitmap bitmap = BogoPicGen.generateBitmap(400, 400);
+			//			ViewPhoto.saveBMP(newFile, bitmap);
 			newimage.setImageBitmap(bitmap);
 		}catch(Exception ex){
 			System.out.println("Can't show the photo!");
@@ -85,8 +85,7 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 	@Override
 	public void update(DbController model)
 	{
-			this.getPhotos();
-
+		this.getPhotos();
 	}
 
 

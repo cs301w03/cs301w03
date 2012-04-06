@@ -1,7 +1,6 @@
 package cmput301W12.android.project;
 
 import java.sql.Timestamp;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+/**
+ * The adapter for the list of alarms.
+ * @author hieungo
+ *
+ */
 public class ReminderListArrayAdapter extends ArrayAdapter<Alarm> {
 
 	private final Context context;

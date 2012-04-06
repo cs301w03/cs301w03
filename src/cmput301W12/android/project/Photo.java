@@ -19,10 +19,9 @@ import android.widget.EditText;
  * 
  * Data class, store information of Photo
  * includes image uri, timestamp and name
- * 
- * Note: Expect to implement Proxy design pattern
  */
 public class Photo implements Comparable<Photo>, Serializable {
+	private static final long serialVersionUID = 1L;
 	private int photoId = DbAdapter.INVALID_ID;
 	private String location;
 	private Timestamp timeStamp;
@@ -42,7 +41,7 @@ public class Photo implements Comparable<Photo>, Serializable {
 	 * @param skinConditions
 	 */
 	public Photo(String location, Timestamp timeStamp,
-			String name, Set<Integer> groups, Set<Integer> skinConditions){
+			String name, Set<Integer> groups, Set<Integer> skinConditions, String annotation){
 		//this.photoId = photoId;
 		this.location = location;
 		this.timeStamp = timeStamp;
@@ -64,16 +63,22 @@ public class Photo implements Comparable<Photo>, Serializable {
 		}else{
 			this.skinConditions = skinConditions;
 		}
+		
+		if(annotation == null){
+			this.annotation = "";
+		} else {
+			this.annotation = annotation;
+		}
 	}
 
 	/**
 	 * @return void, this allows the user to edit the annotation of a given photo object
 	 */
-	public void editAnnotation(final Photo yourPhoto, Context context) {
+	public void editAnnotation(Context context) {
 		AlertDialog.Builder popupBuilder = new AlertDialog.Builder(context);
 		popupBuilder.setTitle("Annotation");
 		final EditText annotation = new EditText(context);
-		if (yourPhoto.getAnnotation().equals(""))
+		if (this.getAnnotation().equals(""))
 		{
 			annotation.setSingleLine();
 			annotation.setText("");
@@ -81,22 +86,23 @@ public class Photo implements Comparable<Photo>, Serializable {
 		else
 		{
 			annotation.setSingleLine();
-			annotation.setText(yourPhoto.getAnnotation());
+			annotation.setText(this.getAnnotation());
 		}
 		popupBuilder.setView(annotation);
+		final Photo thePhoto = this;
 		popupBuilder.setNeutralButton("Confirm", new DialogInterface.OnClickListener() {
-			
+
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				//When click confirm save the annotation into the photo?
-				yourPhoto.setAnnotation(annotation.getText().toString());
-				
+				thePhoto.setAnnotation(annotation.getText().toString());
+
 			}
 		});
 		popupBuilder.create();
 		popupBuilder.show();
 	}
-	
+
 
 	/**
 	 * @return the photoId
@@ -160,7 +166,7 @@ public class Photo implements Comparable<Photo>, Serializable {
 	public Set<Integer> getGroups() {
 		return groups;
 	}
-	
+
 	/**
 	 * @return the skinConditions
 	 */
@@ -188,7 +194,7 @@ public class Photo implements Comparable<Photo>, Serializable {
 	public Set<Integer> getSkinConditions() {
 		return skinConditions;
 	}
-	
+
 	/**
 	 * @return the skinConditions
 	 */
@@ -218,7 +224,7 @@ public class Photo implements Comparable<Photo>, Serializable {
 		this.annotation = newAnnotation;
 	}
 
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if(o instanceof Photo == false){
@@ -231,9 +237,8 @@ public class Photo implements Comparable<Photo>, Serializable {
 	public int compareTo(Photo obj){
 		return (int) (obj.timeStamp.getTime() - this.timeStamp.getTime() );
 	}
-	
+
 	/**
-	 * 
 	 * @return true if photo is not saved in database,
 	 * otherwise return false
 	 */

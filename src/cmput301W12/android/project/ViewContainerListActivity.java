@@ -40,7 +40,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 	}
 
 
-	public void fillData() {        
+	private void fillData() {        
 		Container[] array = null;
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null)

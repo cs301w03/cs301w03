@@ -2,11 +2,8 @@ package cmput301W12.android.project;
 
 import java.util.ArrayList;
 
-/**
- * @author Hieu Ngo
- * @date Mar 14, 2012
- * 
- * The Model of the system
+/** 
+ * The Model class obtained from FillerCreep Application.
  */
 public class FModel<V extends FView> {
     private ArrayList<V> views;

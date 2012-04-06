@@ -145,6 +145,7 @@ public class PhotoEditorActivity extends  Activity {
 		return super.onMenuItemSelected(featureId, item);
 	}
 
+	// Fill the list with items from the database
 	protected void fillLists() {
 
 		Set<? extends Container> setGroup = null;

@@ -396,11 +396,17 @@ public class DbAdapter {
 	 */
 	public int addPhotoGroup(int photoId, int groupId) {
 		ContentValues initialValues = new ContentValues();
+		Cursor cursor1 = this.fetchAnEntry(photoId, OptionType.PHOTO);
+		Cursor cursor2 = this.fetchAnEntry(groupId, OptionType.GROUP);
+		boolean valid = cursor1.getCount() == 1 && cursor2.getCount() == 1;
+		if(valid){
+			initialValues.put(PHOTOID, photoId);
+			initialValues.put(GROUPID, groupId);
 
-		initialValues.put(PHOTOID, photoId);
-		initialValues.put(GROUPID, groupId);
-
-		return (int) mDb.insert(PHOTOGROUP_TABLE, null, initialValues);
+			return (int) mDb.insert(PHOTOGROUP_TABLE, null, initialValues);
+		} else {
+			return -1;
+		}
 	}
 
 	/**
@@ -411,9 +417,16 @@ public class DbAdapter {
 	 */
 	public int addPhotoSkinCondition(int photoId, int skinConditionId) {
 		ContentValues initialValues = new ContentValues();
-		initialValues.put(PHOTOID, photoId);
-		initialValues.put(SKINCONDITIONID, skinConditionId);
-		return (int) mDb.insert(PHOTOSKIN_TABLE, null, initialValues);
+		Cursor cursor1 = this.fetchAnEntry(photoId, OptionType.PHOTO);
+		Cursor cursor2 = this.fetchAnEntry(skinConditionId, OptionType.GROUP);
+		boolean valid = cursor1.getCount() == 1 && cursor2.getCount() == 1;
+		if(valid){
+			initialValues.put(PHOTOID, photoId);
+			initialValues.put(SKINCONDITIONID, skinConditionId);
+			return (int) mDb.insert(PHOTOSKIN_TABLE, null, initialValues);
+		} else {
+			return -1;
+		}
 	}
 
 	/**

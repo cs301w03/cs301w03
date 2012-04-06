@@ -21,10 +21,14 @@ public class OneTimeAlarmReceiver extends BroadcastReceiver
 
 		// TODO Auto-generated method stub
 		Toast.makeText(context, "One Shot Alarm Received", Toast.LENGTH_SHORT).show();
+		Uri defaultRingtoneUri = RingtoneManager.getValidRingtoneUri(context);	        
+		Ringtone rtone = RingtoneManager.getRingtone(context, defaultRingtoneUri);
 		
-		 
-		 MediaPlayer mp = new MediaPlayer();
-	        
+		if(rtone == null){
+			Toast.makeText(context, "No such ringtone", Toast.LENGTH_SHORT).show();
+		} else {
+			rtone.play();
+		}
 		
 	}
 

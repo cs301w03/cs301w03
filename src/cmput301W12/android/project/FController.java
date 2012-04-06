@@ -80,31 +80,6 @@ public interface FController {
 	public SortedSet<Alarm> getAllAlarms();
 
 
-	// NOTICE: The three methods above are enough for project part 3. Specifically,
-	// TRI: call fetchAllContainers(DbAdapter.INVALID_ID, OptionType.GROUP) to obtain all the groups.
-	// call fetchAllContainers(DbAdapter.INVALID_ID, OptionType.SKINCONDITION) to obtain all the skin conditions.
-
-	// TANVIR: call fetchAllPhotoObj() to obtain all photos in the database
-	/// call fetchAllPhotoObjConnected(ID of the group or skin condition, OptionType.GROUP or OptionType.SKIN CONDITION)
-	// to obtain all photos associated with some group or skin condition.
-
-	// KALLEN: call addPhotoObj(phoObj) to add the newly created photo along with its association 
-	// with any group and skin conditions to the database. 
-
-	// NOTICE you GUYS: we need to have activity to add new group or skin condition. This activity
-	// is called when we click "menu" and choose "create new group" within the activity "show all groups" of TRI.
-	// or when we click "menu" and choose "create new skin condition" within the activity "show all skin conditions" of TRI.
-	// Also it's used within the activity "showing the newly created photo and let user attach it to group or skin conditiion " 
-	// of KALLEN in case the user would like to attach it with new group or skin condition.
-
-	// LAST BUT NOT LEAST: we postpone "delete" and "edit" for now...
-
-	//	/**
-	//	 * This method is unlikely to be useful.
-	//	 */
-	//	public int deleteEntry(long rowID, OptionType option);
-
-
 	/**
 	 * NOTICE: this method will delete the photo with the provided photoId in the photo table
 	 * and all tuples containing this photoId in the PhotoGroup and PhotoSkinCondition tables.
@@ -223,7 +198,7 @@ public interface FController {
 	 * @return number of photos that are connected to the container.
 	 */
 	public int connectAContainerToManyPhotos(int containerId, Set<Integer> setOfIDs, OptionType option);
-	
+
 	/**
 	 * Update the photo's information.
 	 * @param photoId 

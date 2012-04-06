@@ -90,8 +90,7 @@ public class TakeAPhotoActivity extends Activity
 				/*if the program gets here, a picture was succesfully captured, call the method to tag the photo here */
 
 				/* Construct a photo object from data */
-				newestPhoto = new Photo(photoUri.toString(), time, name, groups, skinConditions);
-				newestPhoto.setAnnotation("");
+				newestPhoto = new Photo(photoUri.toString(), time, name, groups, skinConditions, null);
 				getTags(); // Ask the user to input data about the photo
 			} else if (resultCode == RESULT_CANCELED) {
 				// User cancelled the image capture

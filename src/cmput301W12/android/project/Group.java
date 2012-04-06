@@ -10,31 +10,21 @@ import android.content.Context;
  * @author Hieu Ngo
  * @date Mar 15, 2012
  * 
- * Data class, stores information of group
- * 
- * Note: Expect to implement Proxy design pattern
+ * Data class for group. This group object keeps a list of photo IDs 
+ * of the photos associated with the group
  */
 public class Group extends Container implements Serializable {
-
-	/**
-	 * 
-	 */
 
 	private static final long serialVersionUID = 1L;
 
 	public Group(String name, Set<Integer> photos) {
 		super(name, photos);
-		// TODO Auto-generated constructor stub
 	}
 
 	public Group(String name) {
 		super(name);
-		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see cmput301W12.android.project.ContainObj#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object o) {
 		// TODO Auto-generated method stub

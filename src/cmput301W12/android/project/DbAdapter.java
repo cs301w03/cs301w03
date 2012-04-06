@@ -264,7 +264,11 @@ public class DbAdapter {
 		mDbHelper.close();
 	}
 
-
+	/**
+	 * Return the name of the column id based on the OptionType provided
+	 * @param option 
+	 * @return name of the column id based on the OptionType provided
+	 */
 	public static String returnIdColumn(OptionType option){
 		String id = "";
 		switch(option){
@@ -290,6 +294,11 @@ public class DbAdapter {
 		return id;
 	}
 
+	/**
+	 * Return the table name based on the OptionType provided.
+	 * @param option
+	 * @return
+	 */
 	public static String returnTableName(OptionType option){
 		String tableName = "";
 		switch(option){
@@ -315,6 +324,11 @@ public class DbAdapter {
 		return tableName;
 	}
 
+	/**
+	 * Return the name of the column storing the name of the item.
+	 * @param option
+	 * @return
+	 */
 	public static String returnItemName(OptionType option){
 		String itemName = "";
 		if(option == OptionType.GROUP){
@@ -382,11 +396,17 @@ public class DbAdapter {
 	 */
 	public int addPhotoGroup(int photoId, int groupId) {
 		ContentValues initialValues = new ContentValues();
+		Cursor cursor1 = this.fetchAnEntry(photoId, OptionType.PHOTO);
+		Cursor cursor2 = this.fetchAnEntry(groupId, OptionType.GROUP);
+		boolean valid = cursor1.getCount() == 1 && cursor2.getCount() == 1;
+		if(valid){
+			initialValues.put(PHOTOID, photoId);
+			initialValues.put(GROUPID, groupId);
 
-		initialValues.put(PHOTOID, photoId);
-		initialValues.put(GROUPID, groupId);
-
-		return (int) mDb.insert(PHOTOGROUP_TABLE, null, initialValues);
+			return (int) mDb.insert(PHOTOGROUP_TABLE, null, initialValues);
+		} else {
+			return -1;
+		}
 	}
 
 	/**
@@ -397,17 +417,24 @@ public class DbAdapter {
 	 */
 	public int addPhotoSkinCondition(int photoId, int skinConditionId) {
 		ContentValues initialValues = new ContentValues();
-		initialValues.put(PHOTOID, photoId);
-		initialValues.put(SKINCONDITIONID, skinConditionId);
-		return (int) mDb.insert(PHOTOSKIN_TABLE, null, initialValues);
+		Cursor cursor1 = this.fetchAnEntry(photoId, OptionType.PHOTO);
+		Cursor cursor2 = this.fetchAnEntry(skinConditionId, OptionType.GROUP);
+		boolean valid = cursor1.getCount() == 1 && cursor2.getCount() == 1;
+		if(valid){
+			initialValues.put(PHOTOID, photoId);
+			initialValues.put(SKINCONDITIONID, skinConditionId);
+			return (int) mDb.insert(PHOTOSKIN_TABLE, null, initialValues);
+		} else {
+			return -1;
+		}
 	}
 
 	/**
 	 * Add a new alarm
 	 * If the new alarm is successfully added, return the row id for that alarm, 
 	 * otherwise return -1 to indicate failure.
-	 * @param timeStamp
-	 * @param note
+	 * @param timeStamp timestamp of the alarm
+	 * @param note the note for the alarm
 	 * @return
 	 */
 	public int addAlarm(Timestamp timeStamp, String note){
@@ -435,7 +462,7 @@ public class DbAdapter {
 	 * Search for the container(group or skin condition) 
 	 * @param name
 	 * @param option
-	 * @return
+	 * @return the Cursor that contains all the matching rows 
 	 */
 	public Cursor searchForContainer(String name, OptionType option){
 		Cursor mCursor = mDb.query(true, DbAdapter.returnTableName(option), 
@@ -447,12 +474,11 @@ public class DbAdapter {
 	}
 
 	/**
-	 * Use OptionType.GROUP in the third argument for search a Photo - group row.
-	 * Use OptionType.SKINCONDITION in the third argument for search a photo - skin condition row.
 	 * @param photoId
 	 * @param itemId
-	 * @param option
-	 * @return
+	 * @param option OptionType.GROUP in the third argument for search a Photo - group row
+	 OptionType.SKINCONDITION in the third argument for search a photo - skin condition row.
+	 * @return the Cursor that contains all the matching rows
 	 */
 	public Cursor searchForPhotoContainer(int photoId, int itemId, OptionType option){
 		String itemIdName = "";
@@ -469,7 +495,16 @@ public class DbAdapter {
 		return mCursor;
 	}
 
-
+	/**
+	 * Update the row specified by photoId in the photo table with new information for the photo.
+	 * @param photoId photo id of the photo to be updated
+	 * @param newLocation new location for the photo. Passing null keeps the
+	 * current location
+	 * @param newTimeStamp. Passing null keeps the current timestamp
+	 * @param newName. Passing null keeps the current name
+	 * @param newAnnotation. Passing null keeps the current annotation
+	 * @return the number of rows affected. 
+	 */
 	public int updatePhoto(int photoId, String newLocation, Timestamp newTimeStamp, 
 			String newName, String newAnnotation ){
 
@@ -495,10 +530,11 @@ public class DbAdapter {
 				DbAdapter.returnIdColumn(OptionType.PHOTO) + " = " + photoId, null);
 	}
 	/**
-	 * Update group
-	 * @param rowId
-	 * @param newName
-	 * @return
+	 * Update group specified by groupId with new name
+	 * @param groupId the id of the group to be updated
+	 * @param newName the new name of the group. Passing null keeps
+	 * the current name.
+	 * @return the number of rows affected.
 	 */
 	public int updateGroup(int groupId, String newName ){
 		ContentValues initialValues = new ContentValues();
@@ -512,10 +548,11 @@ public class DbAdapter {
 	}
 
 	/**
-	 * Update skin
-	 * @param rowId
-	 * @param newName
-	 * @return
+	 * Update skin specified by skinId with new name
+	 * @param rowId the id of the skin condition to be updated
+	 * @param newName the new name of the group. Passing null keeps the 
+	 * current name.
+	 * @return the number of rows affected.
 	 */
 	public int updateSkin(int skinId, String newName ){
 		ContentValues initialValues = new ContentValues();
@@ -533,7 +570,7 @@ public class DbAdapter {
 	 * @param rowId
 	 * @param photoId
 	 * @param groupId
-	 * @return
+	 * @return the number of rows affected.
 	 */
 
 	public int updatePhotoGroup(int rowId, int photoId, int groupId){
@@ -554,10 +591,11 @@ public class DbAdapter {
 
 	/**
 	 * update the alarm with new timeStamp and new note.
-	 * @param alarmId
-	 * @param timeStamp
-	 * @param note
-	 * @return
+	 * @param alarmId the id of the alarm to be updated
+	 * @param timeStamp the new timestamp for the alarm. Passing null keeps
+	 * the current timestamp
+	 * @param note the new note for the alarm. Passing null keeps the current note.
+	 * @return the number of rows affected.
 	 */
 	public int updateAlarm(int alarmId, Timestamp timeStamp, String note){
 		ContentValues cv = new ContentValues();
@@ -570,12 +608,24 @@ public class DbAdapter {
 		return mDb.update(ALARM_TABLE, cv, ALARMID + " = " + alarmId, null);
 	}
 
-	// delete section.
+	/**
+	 * Delete the row specified by rowId.
+	 * @param rowId the id of the row to be deleted.
+	 * @param option the OptionType indicates in which table the row is removed.
+	 * @return number of rows affected.
+	 */
 	public int deleteEntry(int rowId, OptionType option) {
 		String id = DbAdapter.returnIdColumn(option);
 		return mDb.delete(DbAdapter.returnTableName(option), id + " = " + rowId, null) ;
 	}
 
+	/**
+	 * Remove all connections between some photo specifed by photo id and containers.
+	 * @param photoId the id of the photo in interest.
+	 * @param option OptionType.PHOTOGROUP for removing all connections between the photo and groups
+	 * OptionType.PHOTOSKIN for removing all connections between the photo and skin conditions.
+	 * @return
+	 */
 	public int disconnectAPhotoFromManyContainers(int photoId, OptionType option){
 		if(option != OptionType.PHOTOGROUP && option != OptionType.PHOTOSKIN){
 			return 0;
@@ -587,6 +637,13 @@ public class DbAdapter {
 		}
 	}
 
+	/**
+	 * Remove all connections between some photo specified by photo Id and containers.
+	 * @param photoId
+	 * @param setOfIDs
+	 * @param option
+	 * @return
+	 */
 	public int disconnectAPhotoFromManyContainers(int photoId, Set<Integer> setOfIDs, OptionType option){
 		int count = 0;
 		if(option != OptionType.PHOTOGROUP && option != OptionType.PHOTOSKIN){
@@ -642,6 +699,12 @@ public class DbAdapter {
 		}
 	}
 
+	/**
+	 * Get a cursor containing all the containers 
+	 * @param option OptionType.GROUP for retrieving all the groups
+	 * OptionType.SKINCONDITION for retrieving all the skin conditions.
+	 * @return the cursor containing all the containers.
+	 */
 	public Cursor fetchAllContainers(OptionType option){
 		if(option != OptionType.GROUP && option != OptionType.SKINCONDITION){
 			option = null;
@@ -662,8 +725,9 @@ public class DbAdapter {
 	 * fetch all containers associated with the indicated photo. option = OptionType. PHOTOGROUP for
 	 * retrieving all groups associated with the photo, option = OptionType.PHOTOSKIN for retrieving all
 	 * skin conditions associated with the photo.
-	 * @param photoId
-	 * @param table
+	 * @param photoId the id of the photo
+	 * @param option OptionType.PHOTOGROUP for retrieving all groups associated with the photo
+	 * OptionType.PHOTOSKIN for retrieving all skin conditions associated with the photo.
 	 * @return
 	 */
 	public Cursor fetchAllContainersOfAPhoto(int photoId, OptionType option){
@@ -726,13 +790,6 @@ public class DbAdapter {
 				" from " + PHOTO_TABLE + " , " + lookUpTable + 
 				" where " + PHOTO_TABLE + "." + PHOTOID + " = " + lookUpTable + "." + PHOTOID +
 				" and " + itemIdName + " = " + containerId;
-
-
-		//		String preparedStatement = "select ?s.?s as ?s, ?s , ?s , ?s, ?s from ?s , ?s " +
-		//				" where ?s" + "." + "?s = ?s" + "." + "?s and ?s = ?s";
-		//		String[] args = {PHOTO_TABLE, PHOTOID, PHOTOID, LOCATION, TIMESTAMP, PHOTONAME, 
-		//				PHOTOANNOTATION, PHOTO_TABLE, lookUpTable, PHOTO_TABLE, PHOTOID, lookUpTable, PHOTOID , 
-		//				itemIdName, containerId + ""};
 		Cursor mCursor = mDb.rawQuery(sql, null);
 		return mCursor;
 
@@ -749,6 +806,13 @@ public class DbAdapter {
 				null, null, null, null, null);
 	}
 
+	/**
+	 * Return a cursor containing one row specified by the row id.
+	 * @param rowId
+	 * @param option
+	 * @return
+	 * @throws SQLException
+	 */
 	public Cursor fetchAnEntry(int rowId, OptionType option) throws SQLException {
 
 		Cursor mCursor =

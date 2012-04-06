@@ -11,12 +11,12 @@ public class Alarm implements Comparable<Alarm>, Serializable{
 	private int alarmId = DbAdapter.INVALID_ID;
 	private Timestamp alarmTime;
 	private String alarmNote;
-	
-	
+
+
 	public Alarm(Timestamp time, String note){
 		alarmTime = time;
 		if(note != null){
-		alarmNote = note;
+			alarmNote = note;
 		} else {
 			alarmNote = "";
 		}
@@ -64,9 +64,6 @@ public class Alarm implements Comparable<Alarm>, Serializable{
 		this.alarmNote = alarmNote;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object o) {
 		if(o instanceof Alarm){

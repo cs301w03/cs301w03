@@ -2,15 +2,12 @@ package cmput301W12.android.project;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-
-import cmput301W12.android.project.AlarmController.MyOnItemSelectedListener;
-import cmput301W12.android.project.AlarmController.RepeatItemSelectedListener;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -19,7 +16,7 @@ import android.os.SystemClock;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -28,7 +25,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 
 public class AlarmChangeActivity extends Activity

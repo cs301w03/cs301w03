@@ -15,6 +15,10 @@ import android.widget.TextView;
 	 *
 	 *	This tutorial was used to help setup this Adapter 
 	 *  http://www.vogella.de/articles/AndroidListView/article.html#overview_listview
+	 * This adapter object acts as a bridge between an array of check boxes
+	 * and the underlying container objects.
+	 * The Adapter provides access to the data items.
+	 *The Adapter is also responsible for making a View for each item in the data set.
 	 */
 public class CheckBoxArrayAdapter extends ArrayAdapter<Container> {
 	private final Context context;
@@ -33,24 +37,10 @@ public class CheckBoxArrayAdapter extends ArrayAdapter<Container> {
 		protected CheckBox ckBox;
 	}
 	
-
-		
-//	@Override
-//	public View getView(int position, View convertView, ViewGroup parent) {
-//		LayoutInflater inflater = (LayoutInflater) context
-//				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//		View rowView = inflater.inflate(R.layout.list_checkbox_view, parent, false);
-//		TextView textView = (TextView) rowView.findViewById(R.id.textLabel);
-//		if ( textView != null)
-//			if (containers.length > 0)
-//				if (position < containers.length)
-//				{
-//					textView.setText(containers[position].getName());
-//				}
-//		return rowView;
-//	}
-//}
-	
+	/**
+	 * Get a View that displays the data at the specified position in the data set.
+	 * Each view (row) displays the name of the container along with the check box.
+	 */
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {

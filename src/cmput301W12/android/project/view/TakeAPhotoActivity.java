@@ -3,14 +3,12 @@ package cmput301W12.android.project.view;
 
 import java.io.File;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -94,7 +92,7 @@ public class TakeAPhotoActivity extends Activity
 				getTags(); // Ask the user to input data about the photo
 			} else if (resultCode == RESULT_CANCELED) {
 				// User cancelled the image capture
-				Toast.makeText(this, "The user canceled capturing a photo\n", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "You have canceled capturing a photo\n", Toast.LENGTH_LONG).show();
 				Log.d("SKINOBSERVER", "User canceled taking a photo.");
 				finish();
 			} else {
@@ -114,7 +112,16 @@ public class TakeAPhotoActivity extends Activity
 			}
 			//put into db
 			FController controller = SkinObserverApplication.getSkinObserverController(this);
-			controller.addPhoto(newestPhoto);
+			Photo res = controller.addPhoto(newestPhoto);
+			if (res != null)
+			{
+				Toast.makeText(getApplicationContext(), "New photo has been stored in the SD Card", Toast.LENGTH_LONG);
+			}
+			else{
+				Toast.makeText(getApplicationContext(), "New photo has NOT been stored. Please try again", Toast.LENGTH_LONG);
+			}
+
+			finish();
 		}
 	}
 

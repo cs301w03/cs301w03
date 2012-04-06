@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 /**
@@ -40,10 +41,14 @@ public class ViewCreateContainerActivity extends Activity implements FView<DbCon
 
 			@Override
 			public void onClick(View v){
-
-				if (mNameText.getText().toString().trim() != "")
+				String groupName = mNameText.getText().toString().trim();
+				if (groupName.length() > 0)
 				{
 					storeContainer();
+				}
+				else
+				{
+					Toast.makeText(getApplicationContext(),"The group's name cannot be empty!", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});

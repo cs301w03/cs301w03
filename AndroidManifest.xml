@@ -1,63 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="cmput301W12.android.project"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cmput301W12.android.project"
     android:versionCode="1"
-    android:versionName="1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    android:versionName="1.0" >
 
     <uses-sdk android:minSdkVersion="7" />
-<!-- 		Get camera permissions -->
-    <uses-permission android:name="android.permission.CAMERA"/>
-<!--     	This will be where the hardware permissions for the camera go, i.e auto-focus -->
-<!-- 		Get access for storing our database and photos -->
-		<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    
+    <!-- Get camera permissions -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- This will be where the hardware permissions for the camera go, i.e auto-focus -->
+    <!-- Get access for storing our database and photos -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
-        <activity android:name=".view.ProjectTwoActivity" android:launchMode="standard">
-            <intent-filter >
-<!-- 			Declare this as the main activity -->
+        <activity
+            android:name=".view.ProjectTwoActivity"
+            android:launchMode="standard" >
+            <intent-filter>
+
+                <!-- Declare this as the main activity -->
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.TakeAPhotoActivity"></activity>
-        <activity android:name=".PhotoListActivity"></activity>
-        <activity android:name=".ViewContainerListActivity"></activity>
-        <activity android:name=".ViewCreateContainerActivity"></activity>
-        <activity android:name=".ViewPhotoActivity"></activity>
-        <activity android:name="ComparePhotoActivity"></activity>
-        <activity android:name=".view.PhotoEditorActivity"></activity>
-        <activity android:name=".AlarmController"></activity>
+        <activity android:name=".view.TakeAPhotoActivity" >
+        </activity>
+        <activity android:name=".PhotoListActivity" >
+        </activity>
+        <activity android:name=".ViewContainerListActivity" >
+        </activity>
+        <activity android:name=".ViewCreateContainerActivity" >
+        </activity>
+        <activity android:name=".ViewPhotoActivity" >
+        </activity>
+        <activity android:name="ComparePhotoActivity" >
+        </activity>
+        <activity android:name=".view.PhotoEditorActivity" >
+        </activity>
+        <activity android:name=".AlarmController" >
+        </activity>
+        <activity android:name=".view.PhotoEditorActivity" >
+        </activity>
+        <activity android:name=".RemindersListActivity" >
+        </activity>
+        <activity android:name=".AlarmChangeActivity" >
+        </activity>
 
-        <activity android:name=".view.PhotoEditorActivity"></activity>
-        <activity android:name=".RemindersListActivity"></activity>
-        <activity android:name=".AlarmChangeActivity"></activity>
-        
-<<<<<<< HEAD
-        <receiver android:name=".OneTimeAlarmReceiver"></receiver>
-        <receiver android:name=".RepeatingAlarmReceiver"></receiver>
-        <activity android:name=".view.SpecialTakePhotoActivity"
-                  android:label="@string/app_name"
-
-          android:screenOrientation="landscape">
-          <!-- configure this activity to use landscape orientation -->
-         </activity>
-=======
-        <receiver android:name=".OneTimeAlarmReceiver">
+        <receiver android:name=".OneTimeAlarmReceiver" >
             <intent-filter>
-                <action android:name="cmput301W12.android.project.CUSTOM_INTENT_ONESHOT"/>
+                <action android:name="cmput301W12.android.project.CUSTOM_INTENT_ONESHOT" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".RepeatingAlarmReceiver">
+        <receiver android:name=".RepeatingAlarmReceiver" >
             <intent-filter>
-                <action android:name="cmput301W12.android.project.CUSTOM_INTENT_REPEAT"/>
+                <action android:name="cmput301W12.android.project.CUSTOM_INTENT_REPEAT" />
             </intent-filter>
         </receiver>
->>>>>>> branch 'master' of git@github.com:cs301w03/cs301w03.git
 
+        <activity
+            android:name=".view.SpecialTakePhotoActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" >
+
+            <!-- configure this activity to use landscape orientation -->
+        </activity>
     </application>
 
 </manifest>
-

@@ -4,8 +4,12 @@
         android:title="@string/edit_a_photo" android:visible="true">
         
     </item>
-    <item android:id="@+id/menudelete" android:title="@string/delete_a_photo" android:visible="true"></item>
-    <item android:id="@+id/menucompare" android:title="@string/comare_photos" android:visible="true"></item>
+    <item android:id="@+id/menudelete" android:title="@string/delete_a_photo" android:visible="true">
+        
+    </item>
+    <item android:id="@+id/menucompare" android:title="@string/comare_photos" android:visible="true">
+        
+    </item>
     
 
 </menu>

@@ -53,18 +53,27 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	private static Container cont = null;
 	private static FController fcontroller;
 
+	private Button confirmButton;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+				
 		setContentView(R.layout.photoviewlist_activity);
+		confirmButton = (Button) this.findViewById(R.id.menubutton);
+		
 		fcontroller = SkinObserverApplication.getSkinObserverController(this);
-		registerForContextMenu(getListView());                
+		registerForContextMenu(getListView()); 
+		
 		fillList();
 		Bundle bundle = getIntent().getExtras(); 
-		if(bundle != null && (bundle.containsKey(CONNECT) || bundle.containsKey(DISCONNECT))){
+		confirmButton.setText(R.string.disconnect);
+		if (bundle != null && (bundle.containsKey(CONNECT) || bundle.containsKey(DISCONNECT))){
+			if (bundle.containsKey(CONNECT))
+				confirmButton.setText(R.string.connect);
+			else 
+				confirmButton.setText(R.string.disconnect);
 			selectedPhotoSet = new TreeSet<Photo>();
-			Button confirm = (Button) this.findViewById(R.id.menubutton);
-			confirm.setOnClickListener(new View.OnClickListener()
+			confirmButton.setOnClickListener(new View.OnClickListener()
 			{   
 				@Override
 				public void onClick(View v)
@@ -74,6 +83,9 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 					finish();
 				}
 			});
+		}
+		else {
+			confirmButton.setVisibility(View.GONE);
 		}
 
 	}
@@ -138,7 +150,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 		{
 			if (bundle.containsKey(SkinObserverIntent.DATA_GROUP) )
 			{
-				cont = (Container) bundle.getSerializable(SkinObserverIntent.DATA_GROUP);	 
+				cont = (Container) bundle.getSerializable(SkinObserverIntent.DATA_GROUP);
 			}
 			else if (bundle.containsKey(SkinObserverIntent.DATA_SKIN_CONDITION))
 			{
@@ -201,11 +213,11 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		Bundle bundle = getIntent().getExtras();
-		if (bundle.containsKey(CONNECT))
-			menu.add(0, CONNECT_ID, 0, "Connect");
-		if (bundle.containsKey(CONNECT))
-			menu.add(0, DISCONNECT_ID, 0, "Disconnect");
+//		Bundle bundle = getIntent().getExtras();
+//		if (bundle.containsKey(CONNECT))
+//			menu.add(0, CONNECT_ID, 0, "Connect");
+//		if (bundle.containsKey(CONNECT))
+//			menu.add(0, DISCONNECT_ID, 0, "Disconnect");
 
 		return true;
 	}
@@ -276,16 +288,15 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 		Photo photo = (Photo) getListAdapter().getItem(info.position);
 
 		switch (item.getItemId()) {
-		case R.id.menuedit:
-			Intent editPhoto = new Intent(this, PhotoEditorActivity.class);
-			editPhoto.putExtra("Photo", photo);
-			startActivityForResult(editPhoto, ACTIVITY_EDIT_PHOTO);
-			return true;
+//		case R.id.menuedit:
+//			Intent editPhoto = new Intent(this, PhotoEditorActivity.class);
+//			editPhoto.putExtra("Photo", photo);
+//			startActivityForResult(editPhoto, ACTIVITY_EDIT_PHOTO);
+//			return true;
 		case R.id.menudelete:
 			fcontroller.deleteAPhoto(photo);
 			fillList();              
 			return true;
-
 		case R.id.menucompare:
 			photoCompare = photo;
 			compareMode = true;

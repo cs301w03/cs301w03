@@ -43,7 +43,7 @@ public class ViewCreateContainerActivity extends Activity implements FView<DbCon
 			public void onClick(View v)
 			{
 //				Log.d("CreateContainer","2...");
-				if (mNameText.getText().toString()== "")
+				if (mNameText.getText().toString().trim()== "")
 				{
 //					Toast.makeText(PhotoListActivity.this, "Please enter a name!", Toast.LENGTH_SHORT).show();
 //					Log.d("CreateContainer","null string");

@@ -42,6 +42,8 @@
     <string name="confirm_annotation">Confirm</string>
     <string name="update_alarm">Update</string>
     <string name="delete_alarm">Delete</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
     <string name="close">Exit</string>
     <string name="repeat">Repeat Every :</string>
     <string-array name="repeat_terms">

@@ -21,14 +21,15 @@ import android.widget.TextView;
  */
 public class PhotoListArrayAdapter extends ArrayAdapter<Photo> {
 	private final Context context;
-	private final Photo[] photo_array;
+	private final Photo[] photoArray;
 
 	public PhotoListArrayAdapter(Context context, Photo[] photos) {
 		super(context, R.layout.list_photo_view, photos);
 		this.context = context;
-		this.photo_array = photos;
+		this.photoArray = photos;
 	}
 
+	//This method is called by the adapter to set the View of a row in a ListView
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -39,11 +40,11 @@ public class PhotoListArrayAdapter extends ArrayAdapter<Photo> {
 		ImageView imageView = (ImageView) rowView.findViewById(R.id.imageViewPhotoThumbnail);
 
 		if ( textView != null && imageView != null)
-			if (photo_array.length > 0)
-				if (position < photo_array.length)
+			if (photoArray.length > 0)
+				if (position < photoArray.length)
 				{
-					textView.setText(photo_array[position].getName());
-					String location = photo_array[position].getLocation();
+					textView.setText(photoArray[position].getName());
+					String location = photoArray[position].getLocation();
 					Uri uri = Uri.parse(location);
 					Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
 					imageView.setImageBitmap(bitmap);

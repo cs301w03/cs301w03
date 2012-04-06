@@ -10,13 +10,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 /**
  * Activity for adding a new container(either a group(tag) or a skin condition).
- * @author hieungo
+ * @author Tri Lai
  *
  */
 public class CreateContainerActivity extends Activity {
 
-	private EditText mNameText;
-	private Button mAddButton;
+	private EditText containerNameEditText;
+	private Button addButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,41 +25,39 @@ public class CreateContainerActivity extends Activity {
 		setContentView(R.layout.create_container);
 		setTitle(R.string.app_name);
 
-		mNameText = (EditText) findViewById(R.id.editTextNames);
-		mAddButton = (Button) findViewById(R.id.buttonAdd);
-		mAddButton.setOnClickListener(new View.OnClickListener()
+		containerNameEditText = (EditText) findViewById(R.id.editTextNames);
+		addButton = (Button) findViewById(R.id.buttonAdd);
+		addButton.setOnClickListener(new View.OnClickListener()
 		{
 
 			@Override
 			public void onClick(View v)
 			{
-				if (mNameText.getText().toString() != "")
+				String contName =containerNameEditText.getText().toString() ;
+				if (contName.length() > 0)
 				{
-					storeContainer();
+					Container cont = null;
+					Bundle bundle = getIntent().getExtras();
+					if (bundle != null)
+					{
+						if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
+							cont = new Group(contName);
+						else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
+							cont = new SkinCondition(contName);
+
+						FController skinObserverController = 
+								SkinObserverApplication.getSkinObserverController(getApplicationContext());
+						cont = skinObserverController.addContainObj(cont);
+
+						setResult(RESULT_OK);
+						finish();
+					}
 				}
 			}
 		});
 
 	}
 
-	protected void storeContainer()
-	{
-		Container cont = null;
-		Bundle bundle = getIntent().getExtras();
-		if (bundle != null)
-		{
-			if (bundle.getString(SkinObserverIntent.DATA_GROUP) != null)
-				cont = new Group(mNameText.getText().toString());
-			else if (bundle.getString(SkinObserverIntent.DATA_SKIN_CONDITION) != null)
-				cont = new SkinCondition(mNameText.getText().toString());
-
-			FController skinObserverController = SkinObserverApplication.getSkinObserverController(this);
-			cont = skinObserverController.addContainObj(cont);
-			Log.d("container id", cont.getItemId() + "");
-			setResult(RESULT_OK);
-			finish();
-		}
-	}
 
 
 }

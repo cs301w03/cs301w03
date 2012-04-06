@@ -10,8 +10,8 @@ import android.graphics.drawable.PaintDrawable;
  */
 public class SelectiveColor extends Color {
 	
-	private final static PaintDrawable selectedColorDrawable = new PaintDrawable(Color.GREEN);
-	private final static PaintDrawable unselectedColorDrawable = new PaintDrawable(Color.TRANSPARENT);
+	private final static PaintDrawable SELECTED_COLOR_DRAWABLE = new PaintDrawable(Color.GREEN);
+	private final static PaintDrawable UNSELECTED_COLOR_DRAWABLE = new PaintDrawable(Color.TRANSPARENT);
 	
 	/**
 	 * Return an {@link PaintDrawable} of a {@link Color} indicates selected components
@@ -19,7 +19,7 @@ public class SelectiveColor extends Color {
 	 */
 	public static PaintDrawable getSelectedDrawable()
 	{
-		return selectedColorDrawable;
+		return SELECTED_COLOR_DRAWABLE;
 	}
 	
 	/**
@@ -28,7 +28,7 @@ public class SelectiveColor extends Color {
 	 */
 	public static PaintDrawable getUnselectedDrawable()
 	{
-		return unselectedColorDrawable;
+		return UNSELECTED_COLOR_DRAWABLE;
 	}
 	
 }

@@ -29,29 +29,33 @@ import cmput301W12.android.project.view.PhotoEditorActivity;
  * @author MinhTri & Tanvir Sajed
  * @date Mar 16, 2012
  * 
- * This class is an activity use to display a list
+ * This class is an activity used to display a list
  * of photo thumbnails and names
  */
 public class PhotoListActivity extends ListActivity implements FView<DbController>
 {
-	private static SortedSet<Photo> currentPhotoSet = new TreeSet<Photo>();
-	private static SortedSet<Photo> selectedPhotoSet;
+	
 
 	public static final String CONNECT = "CONNECT";
 	public static final String DISCONNECT = "DISCONNECT";
 	public static final String VIEW = "VIEW";
-	public static final String ADD_PHOTO = "Add Photo";
+	public static final String ADD_PHOTO = "ADD_PHOTO";
 	public static final String PHOTO = "PHOTO";
+	
 	public static final int ACTIVITY_VIEW_PHOTO = 0;
 	public static final int ACTIVITY_EDIT_PHOTO = 1;
 
+	//Menu ID
 	public static final int CONNECT_ID = Menu.FIRST;
 	public static final int DISCONNECT_ID = Menu.FIRST +1;
 
+	private SortedSet<Photo> currentPhotoSet = new TreeSet<Photo>();
+	private SortedSet<Photo> selectedPhotoSet;
+	
 	private Photo photoCompare;
 	private boolean compareMode = false;
 	private Container cont = null;
-	private static FController fcontroller;
+	private FController fcontroller;
 
 	private Button confirmButton;
 	@Override
@@ -60,18 +64,21 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 				
 		setContentView(R.layout.photoviewlist_activity);
 		confirmButton = (Button) this.findViewById(R.id.menubutton);
+		registerForContextMenu(getListView());
 		
 		fcontroller = SkinObserverApplication.getSkinObserverController(this);
-		registerForContextMenu(getListView()); 
-		
-		fillList();
+		 
 		Bundle bundle = getIntent().getExtras(); 
-		confirmButton.setText(R.string.disconnect);
+
 		if (bundle != null && (bundle.containsKey(CONNECT) || bundle.containsKey(DISCONNECT))){
-			if (bundle.containsKey(CONNECT))
+			
+			if (bundle.containsKey(CONNECT)) {
 				confirmButton.setText(R.string.connect);
-			else 
+			}
+			else{ 
 				confirmButton.setText(R.string.disconnect);
+			}
+			
 			selectedPhotoSet = new TreeSet<Photo>();
 			confirmButton.setOnClickListener(new View.OnClickListener()
 			{   
@@ -83,10 +90,12 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 				}
 			});
 		}
+		//In view photo mode
 		else {
 			confirmButton.setVisibility(View.GONE);
 		}
-
+		
+		fillList();
 	}
 
 
@@ -235,8 +244,8 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 			viewPhoto(photo);
 		} else {
 			Intent i = new Intent(this, ComparePhotoActivity.class);
-			i.putExtra(ComparePhotoActivity.BACKGROUND, photoCompare);
-			i.putExtra(ComparePhotoActivity.SURFACE, photo);
+			i.putExtra(ComparePhotoActivity.BACKGROUND_PHOTO, photoCompare);
+			i.putExtra(ComparePhotoActivity.SURFACE_PHOTO, photo);
 			compareMode = false;
 			startActivityForResult(i, 0);
 		}

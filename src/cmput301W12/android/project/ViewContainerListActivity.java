@@ -29,6 +29,8 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 	private static final int ACTIVITY_CREATE=0;
 	private static final int ACTIVITY_DELETE=1;
 	private static final int ACTIVITY_EDIT=1;
+	
+	//Menu id
 	private static final int CREATE_ID = Menu.FIRST;
 	private static final int DELETE_ID = Menu.FIRST + 1;
 	private static final int CONNECT_ID = Menu.FIRST + 2;
@@ -40,13 +42,13 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_text_view);
-		fillData();
+		fillList();
 
 		registerForContextMenu(getListView());
 	}
 
 
-	private void fillData() {        
+	private void fillList() {        
 		Container[] array = null;
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null)
@@ -79,8 +81,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);     
 
-		ListAdapter adapter = l.getAdapter();
-		Container cont  = (Container) adapter.getItem(position);
+		Container cont  = (Container) l.getAdapter().getItem(position);
 
 		Intent newIntent = new Intent(this, PhotoListActivity.class);
 		Bundle bundle = getIntent().getExtras();
@@ -131,7 +132,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
         super.onActivityResult(requestCode, resultCode, intent);
         if ( requestCode == ACTIVITY_CREATE || requestCode == ACTIVITY_DELETE 
         		|| requestCode == ACTIVITY_EDIT)
-        	fillData();
+        	fillList();
     }
     
     @Override
@@ -151,15 +152,15 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
         switch(item.getItemId()) {
             case DELETE_ID:
                 deleteContainer(cont);
-                fillData();
+                fillList();
                 return true;
             case CONNECT_ID:
                 connectContainer(cont);
-                fillData();
+                fillList();
                 return true;
             case DISCONNECT_ID:
             	disconnectContainer(cont);
-            	fillData();
+            	fillList();
             	return true;
             case RENAME_ID:
             	//Pop up window and rename container.
@@ -180,7 +181,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
     					} else if (cont instanceof Group){
     						db.updateGroup(cont.getItemId(), cont.getName());
     					}
-    					fillData();
+    					fillList();
     					//<------------- SAVE THE NEW NAME TO THE DB!
     				}
     			});
@@ -221,6 +222,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 		{
 			newIntent.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION,cont);
 		}
+		
 		startActivityForResult(newIntent, ACTIVITY_EDIT);
 	}
 
@@ -239,6 +241,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 		{
 			newIntent.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION,cont);
 		}
+		
 		startActivityForResult(newIntent, ACTIVITY_EDIT);
 	}
 

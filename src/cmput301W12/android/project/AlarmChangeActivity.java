@@ -2,6 +2,7 @@ package cmput301W12.android.project;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
@@ -10,7 +11,6 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
@@ -29,17 +29,17 @@ import android.widget.Toast;
 
 public class AlarmChangeActivity extends Activity
 {
-	private static final String MEDIA_PLAYER = null;
-	Toast mToast;
-	MediaPlayer mp;
-	Timestamp timestamp;
-	EditText alarmtext;
-	EditText alarmrepeat;
-	TextView repeatinfo;
-	Button alarmtime;
-	Button alarmdate;
-	Button alarmdelete;
-	Spinner repeat_spinner;
+
+	private Toast mToast;
+	
+	private Timestamp timestamp;
+	private EditText alarmtext;
+	private EditText alarmrepeat;
+	private TextView repeatinfo;
+	private Button alarmtime;
+	private Button alarmdate;
+	private Button alarmdelete;
+	private Spinner repeat_spinner;
 
 	private int alarm_type = 0 ;
 	private int theYear;
@@ -212,7 +212,7 @@ public class AlarmChangeActivity extends Activity
 				}
 
 				else {
-					setrepeatingAlarm();
+					setRepeatingAlarm();
 				}
 
 				mToast = Toast.makeText(AlarmChangeActivity.this, timestamp.toString() ,
@@ -338,9 +338,7 @@ public class AlarmChangeActivity extends Activity
 		// TODO Auto-generated method stub
 
 		Intent intent = new Intent(this, OneTimeAlarmReceiver.class);
-		Bundle bundle = new Bundle();
-		//bundle.putParcelable(MEDIA_PLAYER, (Parcelable) mp);
-		//intent.putExtras(bundle);
+
 		PendingIntent sender = PendingIntent.getBroadcast(this,
 				alarmId, intent, 0);
 
@@ -352,8 +350,8 @@ public class AlarmChangeActivity extends Activity
         calendar.add(Calendar.MILLISECOND, (int)alarm_time);
 
 		// Schedule the alarm!
-		AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
-		am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+		AlarmManager alarmMan = (AlarmManager)getSystemService(ALARM_SERVICE);
+		alarmMan.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
 
 		// Tell the user about what we did.
 		if (mToast != null) {
@@ -365,7 +363,7 @@ public class AlarmChangeActivity extends Activity
 
 	}
 
-	private void setrepeatingAlarm() {
+	private void setRepeatingAlarm() {
 		// TODO Auto-generated method stub
 
 		Intent intent = new Intent(this, RepeatingAlarmReceiver.class);

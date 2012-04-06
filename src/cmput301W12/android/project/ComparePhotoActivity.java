@@ -15,15 +15,15 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 /**
  * Compare photo activity. This activity displays two photos with one on top of the other. The 
  * opacity of the front photo is adjusted by a slide bar
- * @author hieungo
+ * @author Tri Lai
  *
  */
 public class ComparePhotoActivity extends Activity {
+	public static final String BACKGROUND_PHOTO = "BACKGROUND";
+	public static final String SURFACE_PHOTO = "SURFACE";
+	
 	private ImageView imageView;
 	private SeekBar seekBarOpacity;
-
-	public static final String BACKGROUND = "BACKGROUND";
-	public static final String SURFACE = "SURFACE";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +38,8 @@ public class ComparePhotoActivity extends Activity {
 		Bundle bundle = getIntent().getExtras();
 
 		try {
-			Object backgroundObject = bundle.getSerializable(ComparePhotoActivity.BACKGROUND);
-			Object surfaceObject = bundle.getSerializable(ComparePhotoActivity.SURFACE);
+			Object backgroundObject = bundle.getSerializable(ComparePhotoActivity.BACKGROUND_PHOTO);
+			Object surfaceObject = bundle.getSerializable(ComparePhotoActivity.SURFACE_PHOTO);
 			if (backgroundObject != null && surfaceObject != null)
 			{
 				Photo backgroundPhoto = (Photo) backgroundObject;
@@ -58,7 +58,7 @@ public class ComparePhotoActivity extends Activity {
 			else
 			{
 				//Toast: Cannot load the images. Please press back and try again
-				CharSequence text = "Cannot load the images. Please press back and try again!";
+				CharSequence text = "Cannot load the images. Please try again!";
 				int duration = Toast.LENGTH_SHORT;
 				Toast toast = Toast.makeText(this, text, duration);
 				toast.show();
@@ -87,8 +87,10 @@ public class ComparePhotoActivity extends Activity {
 		seekBarOpacity.setFocusable(true);
 		seekBarOpacity.setClickable(true);
 
+		// 255 is the maximum opacity of a drawable
 		seekBarOpacity.setMax(255);		
 
+		// Set the default opacity to 70
 		seekBarOpacity.setProgress(70);
 		imageView.setAlpha(70);
 

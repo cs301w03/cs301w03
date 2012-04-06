@@ -16,15 +16,15 @@ import android.widget.TextView;
  */
 public class ContainerArrayAdapter extends ArrayAdapter<Container> {
 		private final Context context;
-		private final Container[] containers;
+		private final Container[] containerArray;
 
 		public ContainerArrayAdapter(Context context, Container[] containers) {
 			super(context, R.layout.list_text_view, containers);
 			this.context = context;
-			this.containers = containers;
+			this.containerArray = containers;
 		}
 
-		
+		//This method is called by the adapter to set the View of a row in a ListView
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			LayoutInflater inflater = (LayoutInflater) context
@@ -32,10 +32,10 @@ public class ContainerArrayAdapter extends ArrayAdapter<Container> {
 			View rowView = inflater.inflate(R.layout.list_text_view, parent, false);
 			TextView textView = (TextView) rowView.findViewById(R.id.textLabel);
 			if ( textView != null)
-				if (containers.length > 0)
-					if (position < containers.length)
+				if (containerArray.length > 0)
+					if (position < containerArray.length)
 					{
-						textView.setText(containers[position].getName());
+						textView.setText(containerArray[position].getName());
 					}
 			return rowView;
 		}

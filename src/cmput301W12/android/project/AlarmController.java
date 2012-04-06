@@ -241,7 +241,7 @@ public class AlarmController extends Activity implements FView<DbController>
         	
         	else {
         		
-        		String s = getFactoredString(alarmNote_editText.getText().toString());
+        		String s = setFactoredString(alarmNote_editText.getText().toString());
         		
         		Alarm alarm = new Alarm(timestamp, s);
         		
@@ -392,7 +392,7 @@ public class AlarmController extends Activity implements FView<DbController>
 		
 		Intent intent = new Intent(this, OneTimeAlarmReceiver.class);
 		intent.setAction(AlarmController.INTENT_ACTION_ONESHOT);
-		intent.putExtra(AlarmController.NOTE, alarmNote_editText.getText().toString());
+		intent.putExtra(NOTE, alarmNote_editText.getText().toString());
 
         PendingIntent sender = PendingIntent.getBroadcast(this,
                 alarmId, intent, 0);
@@ -428,7 +428,7 @@ public class AlarmController extends Activity implements FView<DbController>
 		
 		Intent intent = new Intent(this, RepeatingAlarmReceiver.class);
 		intent.setAction(AlarmController.INTENT_ACTION_REPEAT);
-		intent.putExtra(AlarmController.NOTE, alarmNote_editText.getText().toString());
+		intent.putExtra(NOTE, alarmNote_editText.getText().toString());
 		
         PendingIntent sender = PendingIntent.getBroadcast(this,
                 alarmId, intent, 0);
@@ -471,7 +471,7 @@ public class AlarmController extends Activity implements FView<DbController>
 	 * @param note
 	 * @return String
 	 */
-	private String getFactoredString(String note) {
+	private String setFactoredString(String note) {
 	
 		if(alarm_type == 0) {
 			note = note.concat("~");

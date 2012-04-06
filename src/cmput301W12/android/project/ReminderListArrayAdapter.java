@@ -10,11 +10,13 @@ import android.widget.TextView;
 
 /**
  * The adapter for the list of alarms.
- * @author hieungo
+ * @author Tanvir Sajed
  *
  */
 public class ReminderListArrayAdapter extends ArrayAdapter<Alarm> {
 
+	private static final String REPEAT = "Repeat Every ";
+	private static final String ONE_SHOT_ALARM = "One Shot Alarm";
 	private final Context context;
 	private final Alarm[] alarms;
 	private String alarmnote;
@@ -58,11 +60,11 @@ public class ReminderListArrayAdapter extends ArrayAdapter<Alarm> {
 			String[] command = note.split("~");
 			alarmnote = command[0];
 			
-			return "One Shot Alarm";
+			return ONE_SHOT_ALARM;
 		}
 		
 		String[] command = note.split("~");
-		String s = "Repeat Every " + command[1] + " " ;
+		String s = REPEAT + command[1] + " " ;
 		
 		if(command[2].equals("0")){
 			s = s + "Hour(s)";

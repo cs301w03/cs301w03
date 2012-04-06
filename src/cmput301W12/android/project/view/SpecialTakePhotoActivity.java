@@ -3,6 +3,7 @@ package cmput301W12.android.project.view;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
@@ -14,20 +15,29 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import cmput301W12.android.project.Photo;
 import cmput301W12.android.project.R;
 
+/**
+ * Customized camera with a transparent layer.
+ * This camera provide better method to capture consistent photo
+ * 
+ * Reuse the camera here:
+ * http://developer.android.com/reference/android/hardware/Camera.html
+ * @author Tri Lai
+ *
+ */
 public class SpecialTakePhotoActivity extends Activity {
 
-	private static final String TAG = "SpecialTakePhotoActivity";
-	
 	public static final String TRANSPARENT_LAYER = "TRANSPARENT_LAYER";
 	
-	private Camera mCamera;
-    private CameraPreview mPreview;
-    private Drawable transparentLayer = null;
+	private Camera camera;
+    private CameraPreview cameraPreview;
+    private Photo transparentLayer = null;
     
+    private static final String TAG = "SpecialTakePhotoActivity";
 
-    protected PictureCallback mPictureCallback = new PictureCallback() {
+    protected PictureCallback pictureCallback = new PictureCallback() {
     	
     	
     	
@@ -67,26 +77,29 @@ public class SpecialTakePhotoActivity extends Activity {
         Bundle bundle = getIntent().getExtras();
 		if (bundle != null){
 			if (bundle.containsKey(TRANSPARENT_LAYER))
-				transparentLayer = (Drawable) bundle.get(TRANSPARENT_LAYER);
+				transparentLayer = (Photo) bundle.get(TRANSPARENT_LAYER);
 		}
+		
+		Uri uri = Uri.parse(transparentLayer.getLocation());
+		Drawable transparentLayerDrawable = Drawable.createFromPath(uri.getPath());
         // Create an instance of Camera
-        mCamera = getCameraInstance();
+        camera = getCameraInstance();
         
         // Create our Preview view and set it as the content of our activity.
-        mPreview = new CameraPreview(this, mCamera);
+        cameraPreview = new CameraPreview(this, camera);
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
 
         //Drawable transparentLayer = new PaintDrawable(Color.GREEN);
         
-        transparentLayer.setAlpha(100);
-        transparentLayer.setBounds(preview.getLeft(), 
+        transparentLayerDrawable.setAlpha(100);
+        transparentLayerDrawable.setBounds(preview.getLeft(), 
 				preview.getTop(), 
 				preview.getRight(), 
 				preview.getBottom());
         
         preview.setMinimumHeight(preview.getWidth()*3/4);
-        preview.setForeground(transparentLayer);
-        preview.addView(mPreview);
+        preview.setForeground(transparentLayerDrawable);
+        preview.addView(cameraPreview);
         
         Button captureButton = (Button) findViewById(R.id.button_capture);
         captureButton.setOnClickListener(
@@ -94,9 +107,7 @@ public class SpecialTakePhotoActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     // get an image from the camera
-                	Log.d("specialtakephoto", "before take picture");
-                    mCamera.takePicture(null, null, mPictureCallback);
-                    Log.d("specialtakephoto", "after take picture");
+                    camera.takePicture(null, null, pictureCallback);
                 }
             }
         );
@@ -122,9 +133,9 @@ public class SpecialTakePhotoActivity extends Activity {
 
 
     private void releaseCamera(){
-        if (mCamera != null){
-            mCamera.release();        // release the camera for other applications
-            mCamera = null;
+        if (camera != null){
+            camera.release();        // release the camera for other applications
+            camera = null;
         }
     }
 

@@ -54,6 +54,7 @@
         <item >Year</item>
     </string-array>
     <string name="compareSideBySide">Compare Photos side-by-side</string>
+    <string name="takeConsistPhoto">Take Consistent Photo</string>
 
 
 </resources>

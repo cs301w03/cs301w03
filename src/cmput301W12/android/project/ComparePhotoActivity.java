@@ -1,17 +1,13 @@
 package cmput301W12.android.project;
 
 import android.app.Activity;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.Toast;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Toast;
 /**
  * Compare photo activity. This activity displays two photos with one on top of the other. The 
  * opacity of the front photo is adjusted by a slide bar
@@ -19,8 +15,8 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
  *
  */
 public class ComparePhotoActivity extends Activity {
-	public static final String BACKGROUND_PHOTO = "BACKGROUND";
-	public static final String SURFACE_PHOTO = "SURFACE";
+	public static final String BACKGROUND_PHOTO = "BACKGROUND_PHOTO";
+	public static final String SURFACE_PHOTO = "SURFACE_PHOTO";
 	
 	private ImageView imageView;
 	private SeekBar seekBarOpacity;

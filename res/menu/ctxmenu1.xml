@@ -21,5 +21,6 @@
         android:title="@string/comare_photos"
         android:visible="true">
     </item>
+    <item android:id="@+id/take_consist_photo" android:title="Take Consistent Photo"></item>
 
 </menu>

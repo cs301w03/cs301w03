@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -22,7 +23,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import cmput301W12.android.project.view.ComparePhotosActivity;
-import cmput301W12.android.project.view.PhotoEditorActivity;
+import cmput301W12.android.project.view.TakeAPhotoActivity;
 
 /**
  * 
@@ -44,6 +45,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	
 	public static final int ACTIVITY_VIEW_PHOTO = 0;
 	public static final int ACTIVITY_EDIT_PHOTO = 1;
+	public static final int ACTIVITY_TAKE_PHOTO = 0;
 
 	//Menu ID
 	public static final int CONNECT_ID = Menu.FIRST;
@@ -324,8 +326,16 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 			Toast toast2 = Toast.makeText(this, text2, duration2);
 			toast2.show();
 			return true;
+			
+		case R.id.take_consist_photo:
+			Intent i = new Intent(this, TakeAPhotoActivity.class);
+			i.putExtra(TakeAPhotoActivity.TRANSPARENT_LAYER, photo);
+			startActivityForResult(i, ACTIVITY_VIEW_PHOTO);
+			return true;
+			
 		default:
 			return super.onContextItemSelected(item);
+			
 		}
 
 	}
@@ -337,7 +347,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 		//	        	fillSelectableList();
 		fillList();
 	}
-
+	
 	@Override
 	public void update(DbController model)
 	{

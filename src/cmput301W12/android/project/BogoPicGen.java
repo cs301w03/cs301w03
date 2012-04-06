@@ -55,6 +55,7 @@ public class BogoPicGen {
 		boolean isHSV = (Math.random() > 0.5);
 		int constantT = (Math.random() > 0.5)?1:0;
 		int c;
+		
 		//public void setPixels (int[] pixels, int offset, int stride, int x, int y, int width, int height) 
 		for (int i = 0; i < height; i++) {		
 			for (int j = 0 ; j < width; j++) {

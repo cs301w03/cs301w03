@@ -12,7 +12,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 import cmput301W12.android.project.controller.DbAdapter;
-import cmput301W12.android.project.controller.DbControllerInterface;
+import cmput301W12.android.project.controller.DatabaseModelInterface;
 import cmput301W12.android.project.view.FView;
 /**
  * @user Hieu Ngo
@@ -22,20 +22,20 @@ import cmput301W12.android.project.view.FView;
  * 
  * Note: This class name is expected to be changed in the next phase
  */
-public class DbController extends FModel<FView> implements DbControllerInterface {
+public class DatabaseModel extends FModel<FView> implements DatabaseModelInterface {
 	private DbAdapter mDbAdap;
 
-	private static DbController dbCon = null;
+	private static DatabaseModel dbCon = null;
 
-	DbController(Context ct){
+	DatabaseModel(Context ct){
 		super();
 		this.mDbAdap = DbAdapter.getDbAdapter(ct);
 		this.mDbAdap = this.mDbAdap.open();
 	}
 
-	public static DbControllerInterface getDbController(Context ct){
+	public static DatabaseModelInterface getDbController(Context ct){
 		if(dbCon == null){
-			dbCon = new DbController(ct);
+			dbCon = new DatabaseModel(ct);
 		}
 		return dbCon;
 	}
@@ -123,30 +123,30 @@ public class DbController extends FModel<FView> implements DbControllerInterface
 
 	public SortedSet<Photo> getAllPhoto(){
 		Cursor cursor = this.fetchAllPhotoObj();
-		return DbController.getPhotoFromCursor(cursor);
+		return DatabaseModel.getPhotoFromCursor(cursor);
 	}
 
 	public SortedSet<Photo> getAllPhotoOfAContainer(int itemId, OptionType option){
 		Cursor cursor = this.fetchAllPhotoObjConnected(itemId, option);
-		return DbController.getPhotoFromCursor(cursor);
+		return DatabaseModel.getPhotoFromCursor(cursor);
 	}
 
 	public SortedSet<? extends Container> getAllContainers(OptionType option)
 	{
 		Cursor cursor = this.fetchAllContainers(option);
-		return DbController.getContainersFromCursor(cursor, option);
+		return DatabaseModel.getContainersFromCursor(cursor, option);
 	}
 
 	public SortedSet<? extends Container> getAllContainersOfAPhoto(int photoId, OptionType option){
 		Cursor cursor = this.fetchAllContainersOfAPhoto(photoId, option);
-		return DbController.getContainersFromCursor(cursor, option);
+		return DatabaseModel.getContainersFromCursor(cursor, option);
 	}
 
 
 	@Override
 	public SortedSet<Alarm> getAllAlarms() {
 		Cursor cursor = this.fetchAllAlarms();
-		return DbController.getAlarmFromCursor(cursor);
+		return DatabaseModel.getAlarmFromCursor(cursor);
 	}
 
 	public int deleteEntry(int rowID, OptionType option) {

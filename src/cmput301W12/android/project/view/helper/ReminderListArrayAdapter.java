@@ -2,16 +2,14 @@ package cmput301W12.android.project.view.helper;
 
 import java.sql.Timestamp;
 
-import cmput301W12.android.model.Alarm;
-import cmput301W12.android.project.R;
-import cmput301W12.android.project.R.id;
-import cmput301W12.android.project.R.layout;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import cmput301W12.android.model.Alarm;
+import cmput301W12.android.project.R;
 
 /**
  * The adapter for the list of alarms.
@@ -26,6 +24,11 @@ public class ReminderListArrayAdapter extends ArrayAdapter<Alarm> {
 	private final Alarm[] alarms;
 	private String alarmnote;
 	
+	/**
+	 * Creates an arrayAdapter for the listview to show alarm objects
+	 * @param context
+	 * @param objects
+	 */
 	public ReminderListArrayAdapter(Context context, Alarm[] objects) {
 		super(context, R.layout.list_reminder_view, objects);
 		// TODO Auto-generated constructor stub
@@ -34,6 +37,10 @@ public class ReminderListArrayAdapter extends ArrayAdapter<Alarm> {
 		this.alarms = objects;
 	}
 	
+	/**
+	 * This method updates each list item in a listview with the required information
+	 * and the required layout for presenting the information
+	 */
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		LayoutInflater inflater = (LayoutInflater) context
@@ -58,6 +65,14 @@ public class ReminderListArrayAdapter extends ArrayAdapter<Alarm> {
 		return rowView;
 	}
 	
+	/**
+	 * This method returns alarm_type as
+	 * a string. The alarmnote contains
+	 * the actual String that the user entered during
+	 * creating or updating alarm.
+	 * @param note
+	 * @return
+	 */
 	private String getFactoredString(String note) {
 		
 		if (note.charAt(note.length() - 1) == '5') {

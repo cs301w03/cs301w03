@@ -1,9 +1,5 @@
 package cmput301W12.android.project.view.helper;
 
-import cmput301W12.android.model.Photo;
-import cmput301W12.android.project.R;
-import cmput301W12.android.project.R.id;
-import cmput301W12.android.project.R.layout;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cmput301W12.android.model.Photo;
+import cmput301W12.android.project.R;
 
 /**
  * 

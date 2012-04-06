@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import cmput301W12.android.model.Container;
-import cmput301W12.android.model.DbController;
+import cmput301W12.android.model.DatabaseModel;
 import cmput301W12.android.model.Group;
 import cmput301W12.android.model.OptionType;
 import cmput301W12.android.model.SkinCondition;
@@ -34,7 +34,7 @@ import cmput301W12.android.project.view.helper.SkinObserverIntent;
  * 
  * An activity to display all groups/skin conditions
  */
-public class ViewContainerListActivity extends ListActivity implements FView<DbController>{
+public class ViewContainerListActivity extends ListActivity implements FView<DatabaseModel>{
 	private static final int ACTIVITY_CREATE=0;
 	private static final int ACTIVITY_DELETE=1;
 	private static final int ACTIVITY_EDIT=1;
@@ -269,7 +269,7 @@ public class ViewContainerListActivity extends ListActivity implements FView<DbC
 	}
 
 	@Override
-	public void update(DbController model)
+	public void update(DatabaseModel model)
 	{
 		// TODO Auto-generated method stub
 

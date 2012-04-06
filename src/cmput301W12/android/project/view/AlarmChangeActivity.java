@@ -3,6 +3,13 @@ package cmput301W12.android.project.view;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
+import cmput301W12.android.model.Alarm;
+import cmput301W12.android.model.SkinObserverApplication;
+import cmput301W12.android.project.R;
+import cmput301W12.android.project.controller.FController;
+import cmput301W12.android.project.view.helper.OneTimeAlarmReceiver;
+import cmput301W12.android.project.view.helper.RepeatingAlarmReceiver;
+
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
@@ -25,19 +32,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import cmput301W12.android.model.Alarm;
-import cmput301W12.android.model.SkinObserverApplication;
-import cmput301W12.android.project.R;
-import cmput301W12.android.project.controller.FController;
-import cmput301W12.android.project.view.helper.OneTimeAlarmReceiver;
-import cmput301W12.android.project.view.helper.RepeatingAlarmReceiver;
 
 
 public class AlarmChangeActivity extends Activity
 {
-
-
-	private static final String MEDIA_PLAYER = null;
 	Toast mToast;
 	Timestamp timestamp;
 	TextView alarmRepeat_Info;
@@ -58,7 +56,7 @@ public class AlarmChangeActivity extends Activity
 	private int theHour;
 	private int theMinute;
 	private int repeat_type = 0;
-	private int repeatMillisec = 60000;
+	private int repeatMillisec = 3600000;
 	private int alarmId;
 	private String alarmnote;
 
@@ -146,7 +144,7 @@ public class AlarmChangeActivity extends Activity
 		theYear = cal.get(Calendar.YEAR);
 		theMonth = cal.get(Calendar.MONTH);
 		theDay = cal.get(Calendar.DAY_OF_MONTH);
-		theHour = cal.get(Calendar.HOUR);
+		theHour = cal.get(Calendar.HOUR_OF_DAY);
 		theMinute = cal.get(Calendar.MINUTE);
 
 		alarmRepeat_Info.setText(this.getFactoredString(s));
@@ -227,22 +225,22 @@ public class AlarmChangeActivity extends Activity
 
 			// TODO Auto-generated method stub
 			Calendar cal = Calendar.getInstance();
-			
-		    if((alarmNote_editText.getText().toString()).contentEquals("")) {
-        		mToast = Toast.makeText(AlarmChangeActivity.this, "Stopping Repeating Shots",
-                        Toast.LENGTH_LONG);
+		     	
+        	if((alarmNote_editText.getText().toString()).contentEquals("")) {
+        		mToast = Toast.makeText(AlarmChangeActivity.this, "You have not set every parameters of Alarm",
+                        Toast.LENGTH_SHORT);
                 mToast.show();
         	}
         	
         	else if (cal.getTimeInMillis() > timestamp.getTime()) {
-				mToast = Toast.makeText(AlarmChangeActivity.this, timestamp.toString() ,
-						Toast.LENGTH_LONG);
+				mToast = Toast.makeText(AlarmChangeActivity.this, "The current time is ahead of Alarm time. Please select a future Alarm Time.",
+						Toast.LENGTH_SHORT);
 				mToast.show();
         	}
         	
         	else if(alarm_type == 1 && (alarmRepeatConstant_editText.getText().toString()).contentEquals("")) {
-				mToast = Toast.makeText(AlarmChangeActivity.this, timestamp.toString() ,
-						Toast.LENGTH_LONG);
+				mToast = Toast.makeText(AlarmChangeActivity.this, "You have not set every parameters of Alarm" ,
+						Toast.LENGTH_SHORT);
 				mToast.show();
         	}
 
@@ -378,7 +376,7 @@ public class AlarmChangeActivity extends Activity
           
           if (pos == 0) {
         	  repeat_type = 0;
-        	  repeatMillisec = 1000*60;
+        	  repeatMillisec = 3600000;
           }
           
           else if (pos == 1) {
@@ -424,8 +422,8 @@ public class AlarmChangeActivity extends Activity
 
 		Intent intent = new Intent(this, OneTimeAlarmReceiver.class);
 
-		intent.setAction(AlarmController.INTENT_ACTION_ONESHOT);
-		intent.putExtra(AlarmController.NOTE, alarmNote_editText.getText().toString());
+		intent.setAction(CreateAlarmActivity.INTENT_ACTION_ONESHOT);
+		intent.putExtra(CreateAlarmActivity.NOTE, alarmNote_editText.getText().toString());
 
 		PendingIntent sender = PendingIntent.getBroadcast(this,
 				alarmId, intent, 0);
@@ -445,7 +443,7 @@ public class AlarmChangeActivity extends Activity
 		if (mToast != null) {
 			mToast.cancel();
 		}
-		mToast = Toast.makeText(AlarmChangeActivity.this, "Testing One Shot :" + (int)alarm_time,
+		mToast = Toast.makeText(AlarmChangeActivity.this, "One Time Alarm Created",
 				Toast.LENGTH_LONG);
 		mToast.show();
 
@@ -465,8 +463,8 @@ public class AlarmChangeActivity extends Activity
 
 
 		Intent intent = new Intent(this, RepeatingAlarmReceiver.class);
-		intent.setAction(AlarmController.INTENT_ACTION_REPEAT);
-		intent.putExtra(AlarmController.NOTE, alarmNote_editText.getText().toString());
+		intent.setAction(CreateAlarmActivity.INTENT_ACTION_REPEAT);
+		intent.putExtra(CreateAlarmActivity.NOTE, alarmNote_editText.getText().toString());
 		
         PendingIntent sender = PendingIntent.getBroadcast(this,
                 alarmId, intent, 0);
@@ -494,7 +492,7 @@ public class AlarmChangeActivity extends Activity
         if (mToast != null) {
             mToast.cancel();
         }
-        mToast = Toast.makeText(this, "Testing Repeating Shots" + (int)alarm_time + " " + (long)repeat,
+        mToast = Toast.makeText(this, "Repeating Alarm Created",
                 Toast.LENGTH_LONG);
         mToast.show();
 
@@ -505,31 +503,20 @@ public class AlarmChangeActivity extends Activity
 	 */
 	private void stopScheduledAlarm() {
 
-		// Create the same intent, and thus a matching IntentSender, for
-		// the one that was scheduled.
 		Intent intent = new Intent(this, OneTimeAlarmReceiver.class);
-		intent.setAction(AlarmController.INTENT_ACTION_ONESHOT);
+		intent.setAction(CreateAlarmActivity.INTENT_ACTION_ONESHOT);
 		
 		Intent intent2 = new Intent(this, RepeatingAlarmReceiver.class);
-		intent2.setAction(AlarmController.INTENT_ACTION_REPEAT);
+		intent2.setAction(CreateAlarmActivity.INTENT_ACTION_REPEAT);
 		
 		PendingIntent sender = PendingIntent.getBroadcast(this,
 				alarmId, intent, 0);
 		
 		PendingIntent sender2 = PendingIntent.getBroadcast(this, alarmId, intent2, 0);
 
-		// And cancel the alarm.
 		AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
 		am.cancel(sender);
 		am.cancel(sender2);
-
-		// Tell the user about what we did.
-		if (mToast != null) {
-			mToast.cancel();
-		}
-		mToast = Toast.makeText(this, "Stopping Repeating Shots",
-				Toast.LENGTH_LONG);
-		mToast.show();
 	}
 	
 	/**

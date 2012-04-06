@@ -1,9 +1,5 @@
 package cmput301W12.android.project.view.helper;
 
-import cmput301W12.android.model.Container;
-import cmput301W12.android.project.R;
-import cmput301W12.android.project.R.id;
-import cmput301W12.android.project.R.layout;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import cmput301W12.android.model.Container;
+import cmput301W12.android.project.R;
 
 	/**
 	 * 

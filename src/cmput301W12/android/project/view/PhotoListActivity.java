@@ -23,7 +23,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import cmput301W12.android.model.Container;
-import cmput301W12.android.model.DbController;
+import cmput301W12.android.model.DatabaseModel;
 import cmput301W12.android.model.Group;
 import cmput301W12.android.model.OptionType;
 import cmput301W12.android.model.Photo;
@@ -43,7 +43,7 @@ import cmput301W12.android.project.view.helper.SkinObserverIntent;
  * This class is an activity used to display a list
  * of photo thumbnails and names
  */
-public class PhotoListActivity extends ListActivity implements FView<DbController>
+public class PhotoListActivity extends ListActivity implements FView<DatabaseModel>
 {
 	
 
@@ -359,7 +359,7 @@ public class PhotoListActivity extends ListActivity implements FView<DbControlle
 	}
 	
 	@Override
-	public void update(DbController model)
+	public void update(DatabaseModel model)
 	{
 	}
 

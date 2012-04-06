@@ -26,7 +26,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import cmput301W12.android.model.Alarm;
-import cmput301W12.android.model.DbController;
+import cmput301W12.android.model.DatabaseModel;
 import cmput301W12.android.model.SkinObserverApplication;
 import cmput301W12.android.project.R;
 import cmput301W12.android.project.controller.FController;
@@ -39,7 +39,7 @@ import cmput301W12.android.project.view.helper.RepeatingAlarmReceiver;
  * @author Tanvir Sajed
  *
  */
-public class AlarmController extends Activity implements FView<DbController>
+public class CreateAlarmActivity extends Activity implements FView<DatabaseModel>
 {
 
 	public static final String NOTE ="note";
@@ -62,7 +62,7 @@ public class AlarmController extends Activity implements FView<DbController>
 	private int theHour = -1;
 	private int theMinute = -1;
 	private int repeat_type = 0;
-	private float repeatMillisec = 60000;
+	private float repeatMillisec = 3600000;
 	private int alarmId;
 	
 	/**
@@ -180,7 +180,7 @@ public class AlarmController extends Activity implements FView<DbController>
 			theMinute = minute;
 			Calendar cal = Calendar.getInstance();
 			
-			cal.set(Calendar.HOUR, theHour);
+			cal.set(Calendar.HOUR_OF_DAY, theHour);
 			cal.set(Calendar.MINUTE, theMinute);
 			cal.set(Calendar.SECOND, 0);
 			
@@ -223,26 +223,26 @@ public class AlarmController extends Activity implements FView<DbController>
         	Calendar cal = Calendar.getInstance();
         	
         	if(theYear == -1 || theMonth == -1 || theDay == -1 || theHour == -1 || theMinute == -1) {
-        		mToast = Toast.makeText(AlarmController.this, "Stopping Repeating Shots",
-                        Toast.LENGTH_LONG);
+        		mToast = Toast.makeText(CreateAlarmActivity.this, "You have not set every parameters of Alarm",
+                        Toast.LENGTH_SHORT);
                 mToast.show();
         	}
         	
         	else if((alarmNote_editText.getText().toString()).contentEquals("")) {
-        		mToast = Toast.makeText(AlarmController.this, "Stopping Repeating Shots",
-                        Toast.LENGTH_LONG);
+        		mToast = Toast.makeText(CreateAlarmActivity.this, "You have not set every parameters of Alarm",
+                        Toast.LENGTH_SHORT);
                 mToast.show();
         	}
         	
         	else if (cal.getTimeInMillis() > timestamp.getTime()) {
-				mToast = Toast.makeText(AlarmController.this, timestamp.toString() ,
-						Toast.LENGTH_LONG);
+				mToast = Toast.makeText(CreateAlarmActivity.this, "The current time is ahead of Alarm time. Please select a future Alarm Time.",
+						Toast.LENGTH_SHORT);
 				mToast.show();
         	}
         	
         	else if(alarm_type == 1 && (alarmRepeatConstant_editText.getText().toString()).contentEquals("")) {
-				mToast = Toast.makeText(AlarmController.this, timestamp.toString() ,
-						Toast.LENGTH_LONG);
+				mToast = Toast.makeText(CreateAlarmActivity.this, "You have not set every parameters of Alarm" ,
+						Toast.LENGTH_SHORT);
 				mToast.show();
         	}
         	
@@ -252,7 +252,7 @@ public class AlarmController extends Activity implements FView<DbController>
         		
         		Alarm alarm = new Alarm(timestamp, s);
         		
-        		FController controller =  SkinObserverApplication.getSkinObserverController(AlarmController.this);
+        		FController controller =  SkinObserverApplication.getSkinObserverController(CreateAlarmActivity.this);
         		alarm = controller.addAlarm(alarm);
         		alarmId = alarm.getAlarmId();
         		
@@ -281,7 +281,7 @@ public class AlarmController extends Activity implements FView<DbController>
         public void onClick(View v) {
         
         	Calendar cal = Calendar.getInstance();
-        	DatePickerDialog dpDialog = new DatePickerDialog(AlarmController.this,
+        	DatePickerDialog dpDialog = new DatePickerDialog(CreateAlarmActivity.this,
         			odsListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), 
         			cal.get(Calendar.DAY_OF_MONTH));
         			dpDialog.show();
@@ -299,8 +299,8 @@ public class AlarmController extends Activity implements FView<DbController>
         public void onClick(View v) {
         
         	Calendar cal = Calendar.getInstance();
-        	TimePickerDialog tpDialog = new TimePickerDialog(AlarmController.this,
-        			otsListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false);
+        	TimePickerDialog tpDialog = new TimePickerDialog(CreateAlarmActivity.this,
+        			otsListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false);
         			tpDialog.show();
         }
     };
@@ -353,7 +353,7 @@ public class AlarmController extends Activity implements FView<DbController>
           
           if (pos == 0) {
         	  repeat_type = 0;
-        	  repeatMillisec = 1000*60;
+        	  repeatMillisec = 3600000;
           }
           
           else if (pos == 1) {
@@ -398,7 +398,7 @@ public class AlarmController extends Activity implements FView<DbController>
 		// TODO Auto-generated method stub
 		
 		Intent intent = new Intent(this, OneTimeAlarmReceiver.class);
-		intent.setAction(AlarmController.INTENT_ACTION_ONESHOT);
+		intent.setAction(CreateAlarmActivity.INTENT_ACTION_ONESHOT);
 		intent.putExtra(NOTE, alarmNote_editText.getText().toString());
 
         PendingIntent sender = PendingIntent.getBroadcast(this,
@@ -417,7 +417,7 @@ public class AlarmController extends Activity implements FView<DbController>
         if (mToast != null) {
             mToast.cancel();
         }
-        mToast = Toast.makeText(AlarmController.this, "Testing One Shot: " + (int)alarm_time,
+        mToast = Toast.makeText(CreateAlarmActivity.this, "One Time Alarm Created",
                 Toast.LENGTH_LONG);
         mToast.show();
 		
@@ -434,7 +434,7 @@ public class AlarmController extends Activity implements FView<DbController>
 		// TODO Auto-generated method stub
 		
 		Intent intent = new Intent(this, RepeatingAlarmReceiver.class);
-		intent.setAction(AlarmController.INTENT_ACTION_REPEAT);
+		intent.setAction(CreateAlarmActivity.INTENT_ACTION_REPEAT);
 		intent.putExtra(NOTE, alarmNote_editText.getText().toString());
 		
         PendingIntent sender = PendingIntent.getBroadcast(this,
@@ -463,7 +463,7 @@ public class AlarmController extends Activity implements FView<DbController>
         if (mToast != null) {
             mToast.cancel();
         }
-        mToast = Toast.makeText(this, "Testing Repeating Shots" + (int)alarm_time + " " + (long)repeat,
+        mToast = Toast.makeText(this, "Repeating Alarm Created",
                 Toast.LENGTH_LONG);
         mToast.show();
 		
@@ -498,7 +498,7 @@ public class AlarmController extends Activity implements FView<DbController>
 			
 
 	@Override
-	public void update(DbController model) {
+	public void update(DatabaseModel model) {
 		// TODO Auto-generated method stub
 		
 	}

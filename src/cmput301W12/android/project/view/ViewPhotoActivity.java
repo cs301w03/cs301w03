@@ -33,7 +33,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cmput301W12.android.model.DbController;
+import cmput301W12.android.model.DatabaseModel;
 import cmput301W12.android.model.Photo;
 import cmput301W12.android.project.R;
 
@@ -44,13 +44,14 @@ import cmput301W12.android.project.R;
  * @author Tanvir Sajed
  *
  */
-public class ViewPhotoActivity extends Activity implements FView<DbController>
+public class ViewPhotoActivity extends Activity implements FView<DatabaseModel>
 {
 
-	private ImageView newimage;
-	private TextView timestamp;
-	private TextView skincondition;
-	private TextView group;
+	private ImageView imageView;
+	private TextView timestampTextView;
+	private TextView groupTextView;
+	private TextView skinconditionTextView;
+
 
 	private Photo mPhoto = null;
 
@@ -82,10 +83,10 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 		setContentView(R.layout.view_photo);
 
 		mPhoto = (Photo) getIntent().getSerializableExtra("PHOTO");
-		newimage = (ImageView) findViewById(R.id.imageView1);
-		timestamp = (TextView) findViewById(R.id.viewphototext1);
-		skincondition = (TextView) findViewById(R.id.viewphototext2);
-		group = (TextView) findViewById(R.id.viewphototext3);
+		imageView = (ImageView) findViewById(R.id.imageView1);
+		timestampTextView = (TextView) findViewById(R.id.viewphototext1);
+		skinconditionTextView = (TextView) findViewById(R.id.viewphototext2);
+		groupTextView = (TextView) findViewById(R.id.viewphototext3);
 		mPhoto = (Photo) getIntent().getSerializableExtra(PhotoListActivity.PHOTO);
 
 		this.getPhotos();
@@ -108,7 +109,7 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 			//			File newFile = new File(uri.getPath());
 			//			Bitmap bitmap = BogoPicGen.generateBitmap(400, 400);
 			//			ViewPhoto.saveBMP(newFile, bitmap);
-			newimage.setImageBitmap(bitmap);
+			imageView.setImageBitmap(bitmap);
 		}catch(Exception ex){
 			System.out.println("Can't show the photo!");
 		}
@@ -189,7 +190,7 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 		Timestamp ts = mPhoto.getTimeStamp();
 
 		String time = ts.toString();
-		timestamp.setText(time);
+		timestampTextView.setText(time);
 	}
 
 	/**
@@ -197,7 +198,7 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 	 * after it has been updated.
 	 */
 	@Override
-	public void update(DbController model)
+	public void update(DatabaseModel model)
 	{
 		this.getPhotos();
 	}

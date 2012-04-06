@@ -3,23 +3,31 @@
     android:id="@+id/takePhotoLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
-    >
-    
-	<FrameLayout
-    android:id="@+id/camera_preview"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_weight="1"
-    android:background="@drawable/ic_launcher"
-    />
-    
-	<Button
-    android:id="@+id/button_capture"
-    android:text="Capture"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    />
-	
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:id="@+id/camera_preview"
+            android:layout_width="268dp"
+            android:layout_height="459dp"
+            android:background="@drawable/ic_launcher" />
+        >
+
+        <SeekBar
+            android:id="@+id/seekBarOpacity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_capture"
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:text="Capture" />
+
 </LinearLayout>

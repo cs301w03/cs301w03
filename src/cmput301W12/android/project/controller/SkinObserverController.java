@@ -6,7 +6,7 @@ import java.util.SortedSet;
 
 import cmput301W12.android.model.Alarm;
 import cmput301W12.android.model.Container;
-import cmput301W12.android.model.DbController;
+import cmput301W12.android.model.DatabaseModel;
 import cmput301W12.android.model.OptionType;
 import cmput301W12.android.model.Photo;
 import android.content.Context;
@@ -19,10 +19,10 @@ import android.content.Context;
  * System's controller
  */
 public class SkinObserverController implements FController {
-	DbControllerInterface dbCon = null;
+	DatabaseModelInterface dbCon = null;
 
 	public SkinObserverController(Context ctx){
-		this.dbCon = DbController.getDbController(ctx);
+		this.dbCon = DatabaseModel.getDbController(ctx);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import cmput301W12.android.model.Container;
-import cmput301W12.android.model.DbController;
+import cmput301W12.android.model.DatabaseModel;
 import cmput301W12.android.model.Group;
 import cmput301W12.android.model.SkinCondition;
 import cmput301W12.android.model.SkinObserverApplication;
@@ -29,7 +29,7 @@ import cmput301W12.android.project.view.helper.SkinObserverIntent;
  * Note: Might be expanding if Group/Skin Condition evolve over time
  * 
  */
-public class CreateContainerActivity extends Activity implements FView<DbController>{
+public class CreateContainerActivity extends Activity implements FView<DatabaseModel>{
 
 	private EditText containerNameEditText;
 	private Button addButton;
@@ -79,7 +79,7 @@ public class CreateContainerActivity extends Activity implements FView<DbControl
 
 
 	@Override
-	public void update(DbController model) {
+	public void update(DatabaseModel model) {
 	}
 
 

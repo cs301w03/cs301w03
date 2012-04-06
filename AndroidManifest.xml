@@ -54,7 +54,7 @@
             <!-- configure this activity to use landscape orientation -->
         </activity>
         <activity android:name=".view.AlarmChangeActivity"></activity>
-        <activity android:name=".view.AlarmController"></activity>
+        <activity android:name=".view.CreateAlarmActivity"></activity>
         <activity android:name=".view.ComparePhotoActivity"></activity>
         <activity android:name=".view.ComparePhotosActivity"></activity>
         <activity android:name=".view.PhotoEditorActivity"></activity>

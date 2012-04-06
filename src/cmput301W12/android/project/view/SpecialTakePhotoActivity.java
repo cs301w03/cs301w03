@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import cmput301W12.android.model.Photo;
 import cmput301W12.android.project.R;
 import cmput301W12.android.project.view.helper.CameraPreview;
@@ -34,13 +36,13 @@ public class SpecialTakePhotoActivity extends Activity {
 	
 	private Camera camera;
     private CameraPreview cameraPreview;
-    private Photo transparentLayer = null;
+    private Drawable transparentLayerDrawable = null;
+    
+    private SeekBar seekBarOpacity;
     
     private static final String TAG = "SpecialTakePhotoActivity";
 
     protected PictureCallback pictureCallback = new PictureCallback() {
-    	
-    	
     	
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
@@ -74,33 +76,38 @@ public class SpecialTakePhotoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.take_a_photo);
 
+        seekBarOpacity = (SeekBar) findViewById(R.id.seekBarOpacity);
+
+        
         
         Bundle bundle = getIntent().getExtras();
 		if (bundle != null){
-			if (bundle.containsKey(TRANSPARENT_LAYER))
-				transparentLayer = (Photo) bundle.get(TRANSPARENT_LAYER);
+			if (bundle.containsKey(TRANSPARENT_LAYER)){
+				Photo transparentLayer = (Photo) bundle.get(TRANSPARENT_LAYER);
+
+				Uri uri = Uri.parse(transparentLayer.getLocation());
+				Drawable transparentLayerDrawable = Drawable.createFromPath(uri.getPath());
+		        // Create an instance of Camera
+		        camera = getCameraInstance();
+		        
+		        // Create our Preview view and set it as the content of our activity.
+		        cameraPreview = new CameraPreview(this, camera);
+		        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
+
+		        //Drawable transparentLayer = new PaintDrawable(Color.GREEN);
+		        
+		        transparentLayerDrawable.setAlpha(100);
+		        transparentLayerDrawable.setBounds(preview.getLeft(), 
+						preview.getTop(), 
+						preview.getRight(), 
+						preview.getBottom());
+		        
+		        preview.setMinimumHeight(preview.getWidth()*3/4);
+		        preview.setForeground(transparentLayerDrawable);
+		        preview.addView(cameraPreview);
+			}
 		}
 		
-		Uri uri = Uri.parse(transparentLayer.getLocation());
-		Drawable transparentLayerDrawable = Drawable.createFromPath(uri.getPath());
-        // Create an instance of Camera
-        camera = getCameraInstance();
-        
-        // Create our Preview view and set it as the content of our activity.
-        cameraPreview = new CameraPreview(this, camera);
-        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
-
-        //Drawable transparentLayer = new PaintDrawable(Color.GREEN);
-        
-        transparentLayerDrawable.setAlpha(100);
-        transparentLayerDrawable.setBounds(preview.getLeft(), 
-				preview.getTop(), 
-				preview.getRight(), 
-				preview.getBottom());
-        
-        preview.setMinimumHeight(preview.getWidth()*3/4);
-        preview.setForeground(transparentLayerDrawable);
-        preview.addView(cameraPreview);
         
         Button captureButton = (Button) findViewById(R.id.button_capture);
         captureButton.setOnClickListener(
@@ -112,6 +119,8 @@ public class SpecialTakePhotoActivity extends Activity {
                 }
             }
         );
+        
+        setupSeekBar();
     }
 
     /** A safe way to get an instance of the Camera object. */
@@ -139,5 +148,40 @@ public class SpecialTakePhotoActivity extends Activity {
             camera = null;
         }
     }
+
+
+    /**
+	 * Set up the slide bar to adjust the opacity of the front image
+	 */
+	private void setupSeekBar()
+	{
+		seekBarOpacity.setEnabled(true);
+		seekBarOpacity.setFocusable(true);
+		seekBarOpacity.setClickable(true);
+
+		// 255 is the maximum opacity of a drawable
+		seekBarOpacity.setMax(255);		
+
+		// Set the default opacity to 70
+		seekBarOpacity.setProgress(70);
+		transparentLayerDrawable.setAlpha(70);
+
+		seekBarOpacity.setOnSeekBarChangeListener( new OnSeekBarChangeListener() {
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				transparentLayerDrawable.setAlpha(progress);
+			}
+		});
+	}
 
 }

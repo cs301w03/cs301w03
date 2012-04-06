@@ -16,7 +16,7 @@ import cmput301W12.android.model.Photo;
  * Interface to implement Adapter design pattern
  * Use to provide flexibility in future, decouple database and software
  */
-public interface DbControllerInterface {
+public interface DatabaseModelInterface {
 	public void close();
 
 	/**

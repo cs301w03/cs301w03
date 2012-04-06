@@ -185,7 +185,7 @@ public class PhotoEditorActivity extends  Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, ID_CREATE_ANNOTATION, 0, "Add Photo Annotation");
-		menu.add(0, ID_CREATE_GROUP, 0, "Add Group");
+		menu.add(0, ID_CREATE_GROUP, 0, "Add Tag");
 		menu.add(0, ID_CREATE_SKINCONDITION, 0, "Add Skin Condition");
 		return true;
 	}

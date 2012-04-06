@@ -8,14 +8,14 @@
         android:id="@+id/ez_photo_one"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.50"
+        android:layout_weight="1"
         android:src="@drawable/ic_launcher" />
 
     <ImageView
         android:id="@+id/ez_photo_two"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.50"
+        android:layout_weight="1"
         android:src="@drawable/ic_launcher" />
 
 </LinearLayout>

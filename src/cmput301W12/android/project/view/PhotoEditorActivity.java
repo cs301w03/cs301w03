@@ -192,12 +192,14 @@ public class PhotoEditorActivity extends  Activity {
 	protected void createNewGroup()
 	{
 		Intent iCreateGroup = new Intent(this, ViewCreateContainerActivity.class);
+
 		iCreateGroup.putExtra(SkinObserverIntent.DATA_GROUP, SkinObserverIntent.DATA_GROUP);
 		startActivityForResult(iCreateGroup, ACTIVITY_CREATE_GROUP);
 	}
 
 	protected void createNewSkinCondition()
 	{
+
 		Intent iCreateSC = new Intent(this, ViewCreateContainerActivity.class);
 		iCreateSC.putExtra(SkinObserverIntent.DATA_SKIN_CONDITION, SkinObserverIntent.DATA_SKIN_CONDITION);
 		startActivityForResult(iCreateSC, ACTIVITY_CREATE_SKINCONDITION);
@@ -228,8 +230,10 @@ public class PhotoEditorActivity extends  Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
+
 		if ( requestCode == ACTIVITY_CREATE_GROUP || requestCode == ACTIVITY_CREATE_SKINCONDITION ){
 			fillLists();
 		}
+
 	}
 }

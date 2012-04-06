@@ -35,6 +35,16 @@
         <activity android:name=".RemindersListActivity"></activity>
         <activity android:name=".AlarmChangeActivity"></activity>
         
+<<<<<<< HEAD
+        <receiver android:name=".OneTimeAlarmReceiver"></receiver>
+        <receiver android:name=".RepeatingAlarmReceiver"></receiver>
+        <activity android:name=".view.SpecialTakePhotoActivity"
+                  android:label="@string/app_name"
+
+          android:screenOrientation="landscape">
+          <!-- configure this activity to use landscape orientation -->
+         </activity>
+=======
         <receiver android:name=".OneTimeAlarmReceiver">
             <intent-filter>
                 <action android:name="cmput301W12.android.project.CUSTOM_INTENT_ONESHOT"/>
@@ -45,6 +55,7 @@
                 <action android:name="cmput301W12.android.project.CUSTOM_INTENT_REPEAT"/>
             </intent-filter>
         </receiver>
+>>>>>>> branch 'master' of git@github.com:cs301w03/cs301w03.git
 
     </application>
 

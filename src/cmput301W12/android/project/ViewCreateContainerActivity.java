@@ -39,9 +39,9 @@ public class ViewCreateContainerActivity extends Activity implements FView<DbCon
 		{
 
 			@Override
-			public void onClick(View v)
-			{
-				if (mNameText.getText().toString() != "")
+			public void onClick(View v){
+
+				if (mNameText.getText().toString().trim() != "")
 				{
 					storeContainer();
 				}

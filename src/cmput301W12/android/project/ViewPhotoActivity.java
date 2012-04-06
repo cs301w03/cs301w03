@@ -50,8 +50,9 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 	private TextView group;
 
 	private Photo mPhoto = null;
-	
+
 	public static final int ID_CREATE_ANNOTATION = Menu.FIRST;
+
 
 
 	/**
@@ -76,7 +77,7 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_photo);
-		
+
 		mPhoto = (Photo) getIntent().getSerializableExtra("PHOTO");
 		newimage = (ImageView) findViewById(R.id.imageView1);
 		timestamp = (TextView) findViewById(R.id.viewphototext1);
@@ -111,16 +112,17 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 
 	}
 
+
 	/**
 	 * On creating the options menu by selecting the home icon,
 	 * the user can select "view photo annotation" from the menu.
 	 */
 	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        menu.add(0, ID_CREATE_ANNOTATION, 0, "View Photo Annotation");
-        return true;
-    }
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menu.add(0, ID_CREATE_ANNOTATION, 0, "View Photo Annotation");
+		return true;
+	}
 
 	/**
 	 * When the user selects an item from the options menu, this
@@ -135,9 +137,9 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 			//return true;
 		}
 
-            return super.onMenuItemSelected(featureId, item);
+		return super.onMenuItemSelected(featureId, item);
 	}
-	
+
 
 	/**
 	 * This method shows the annotation of a photo by creating
@@ -163,18 +165,18 @@ public class ViewPhotoActivity extends Activity implements FView<DbController>
 		}
 		popupBuilder.setView(annotation);
 		popupBuilder.setNeutralButton("Confirm", new DialogInterface.OnClickListener() {
-			
+
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				//When click confirm save the annotation into the photo?
 				photo.setAnnotation(annotation.getText().toString());
-				
+
 			}
 		});
 		popupBuilder.create();
 		popupBuilder.show();
 	}
-	
+
 	/**
 	 * Gets the timestamp of the photo that is selected.
 	 * This method shows the timestamp in textview.

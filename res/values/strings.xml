@@ -5,7 +5,7 @@
     <string name="app_name">Skin Observer</string>
     <string name="takeAPhoto">Take a photo</string>
     <string name="viewAllPhotos">View all photos</string>
-    <string name="groupByGroup">View photos by Group</string>
+    <string name="groupByGroup">View photos by Tag</string>
     <string name="groupByCondition">View photos by Skin Condition</string>
     <string name="mainMenu">Menu</string>
     <string name="edit_a_photo">Edit</string>
@@ -17,10 +17,10 @@
     <string name="Menu">Menu</string>
     <string name="comare_photos">Compare</string>
    
-    <string name="groupExpList">Body Group List</string>
+    <string name="groupExpList">Body Tag List</string>
     <string name="conditionExpList">Skin Condition List</string>
     <string name="confirm">Confirm selection</string>
-    <string name="add_a_group">Add a group</string>
+    <string name="add_a_group">Add a tag</string>
     <string name="add_a_condition">Add a Skin Condition</string>
     <string name="menu_delete">Delete</string>
 
@@ -42,6 +42,8 @@
     <string name="confirm_annotation">Confirm</string>
     <string name="update_alarm">Update</string>
     <string name="delete_alarm">Delete</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
     <string name="close">Exit</string>
     <string name="repeat">Repeat Every :</string>
     <string-array name="repeat_terms">

@@ -15,7 +15,7 @@
     <string name="Confirm_button">Confirm</string>
     <string name="label_name">Name</string>
     <string name="Menu">Menu</string>
-    <string name="comare_photos">Compare</string>
+    <string name="comare_photos">Compare by Transparent Layers</string>
    
     <string name="groupExpList">Body Tag List</string>
     <string name="conditionExpList">Skin Condition List</string>
@@ -53,6 +53,7 @@
         <item >Month (30 Days)</item>
         <item >Year</item>
     </string-array>
+    <string name="compareSideBySide">Compare Photos side-by-side</string>
 
 
 </resources>

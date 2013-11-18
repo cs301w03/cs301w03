@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, Project2Activity!</string>
+    <string name="app_name">Skin Observer</string>
+    <string name="takeAPhoto">Take a photo</string>
+    <string name="viewAllPhotos">View all photos</string>
+    <string name="groupByGroup">View photos by Tag</string>
+    <string name="groupByCondition">View photos by Skin Condition</string>
+    <string name="mainMenu">Menu</string>
+    <string name="edit_a_photo">Edit</string>
+    <string name="delete_a_photo">Delete</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="add_button">Add</string>
+    <string name="Confirm_button">Confirm</string>
+    <string name="label_name">Name</string>
+    <string name="Menu">Menu</string>
+    <string name="comare_photos">Compare by Transparent Layers</string>
+   
+    <string name="groupExpList">Body Tag List</string>
+    <string name="conditionExpList">Skin Condition List</string>
+    <string name="confirm">Confirm selection</string>
+    <string name="add_a_group">Add a tag</string>
+    <string name="add_a_condition">Add a Skin Condition</string>
+    <string name="menu_delete">Delete</string>
+
+    <string name="one_shot_alarm">One Time Alarm</string>
+    <string name="stop_repeating_alarm">Stop Alarm</string>
+    <string name="start_repeating_alarm">Repeat Alarm</string>
+    <string name="alarm_controller">Alarm Controller</string>
+    <string-array name="alarm_type">
+        <item >One Time Alarm</item>
+        <item >Repeating Alarm</item>
+    </string-array>
+    <string name="alarmtype">Alarm Type :    </string>
+    <string name="alarm_text">Alarm Text   :   </string>
+    <string name="create_alarm">Create</string>
+    <string name="set_time">Set Time</string>
+    <string name="set_date">Set Date</string>
+    <string name="reminders">Reminders</string>
+    <string name="confirm_view">Compare Selected Photos</string>
+    <string name="confirm_annotation">Confirm</string>
+    <string name="update_alarm">Update</string>
+    <string name="delete_alarm">Delete</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="close">Exit</string>
+    <string name="repeat">Repeat Every :</string>
+    <string-array name="repeat_terms">
+        <item >Hour</item>
+        <item >Day</item>
+        <item >Week</item>
+        <item >Month (30 Days)</item>
+        <item >Year</item>
+    </string-array>
+    <string name="compareSideBySide">Compare Photos side-by-side</string>
+    <string name="takeConsistPhoto">Take Consistent Photo</string>
+
+
+</resources>

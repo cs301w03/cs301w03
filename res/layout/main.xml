@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello" />
+
+    <Button
+        android:id="@+id/takeAPhoto"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/takeAPhoto" />
+
+    <Button
+        android:id="@+id/viewAllPhotos"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/viewAllPhotos" />
+
+    <Button
+        android:id="@+id/groupByGroup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/groupByGroup" />
+
+    <Button
+        android:id="@+id/groupByCondition"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/groupByCondition" />
+    
+    <Button
+        android:id="@+id/reminders"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reminders" />
+
+     <Button
+        android:id="@+id/close_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/close" />
+
+</LinearLayout>

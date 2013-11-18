@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.02"
+        android:text="@string/alarm_controller" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.02"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="118dp"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_text" />
+
+        <EditText
+            android:id="@+id/alarm_text_editview"
+            android:layout_width="194dp"
+            android:layout_height="wrap_content"
+            android:inputType="text" >
+            <requestFocus />
+        </EditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.02"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="118dp"
+            android:layout_height="wrap_content"
+            android:text="@string/alarmtype" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="198dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.02"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="118dp"
+            android:layout_height="wrap_content"
+            android:text="@string/repeat" />
+
+        <EditText
+            android:id="@+id/alarm_number_editview"
+            android:layout_width="76dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal" >
+            <requestFocus />
+        </EditText>
+        
+        <Spinner
+            android:id="@+id/repeat_spinner"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    
+    <Button
+        android:id="@+id/datepicker"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/set_date" />
+
+    <Button
+        android:id="@+id/timePicker"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text = "@string/set_time" />
+    
+    <Button
+        android:id="@+id/create_alarm_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_alarm" />
+
+</LinearLayout>

@@ -1,0 +1,17 @@
+
+Our New releaseplan is on our wikipage.
+
+
+---------Out Dated-----------
+--we will have two groups working simultaniously 
+--the first group will work on "take a photo" and implementing the android camera 
+--the second group will develop a DBAdapter, and a ListAdapter
+
+--after the two peices of software have been developed the groups will then focus on finishing the 
+other smaller parts of the project, ViewPhoto, ViewPhotos(listPhotos), ComparePhotos, and reminder.
+
+--There will be a "surprise" after project 2 is handed in, so we will require a bit of time to 
+revise our design probably until the end of this week. Then we could use a week to program and 
+implement the take a photo/db and list adapters. Another week to implement the smaller features. 
+This leaves us with 1 spare week to allocate into the first and second week of coding, or to be 
+used for debugging the final product
